@@ -1,0 +1,10 @@
+@import './entry-point';
+
+nav {
+    background-color: $c-light;
+    color: $c-dark;
+    .brand-logo {
+        color: $c-dark;
+        top: 10px;
+    }
+}

@@ -1,0 +1,62 @@
+@import './entry-point';
+
+.result-highlights {
+    em {
+        background-color: $c-highlight;
+    }
+}
+.result-meta {
+    font-size: 0.8em;
+    font-style: italic;
+    padding-bottom: 1em;
+}
+.result-pagination {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2em;
+    > .btn {
+        height: 2em;
+        min-width: 22%;
+        max-width: 25%;
+        line-height: 2em;
+        flex-basis: 100px;
+        align-content: center;
+
+        align-items: center;
+    }
+    > .result-pagination-msg {
+        flex: 1;
+    }
+    .boldy {
+        font-weight: bold;
+    }
+}
+.result-pagination-msg {
+    vertical-align: middle;
+    text-align: center;
+    font-style: italic;
+}
+.span-title {
+    text-transform: uppercase;
+    padding: 0 1em 0 0;
+    font-weight: bold;
+}
+
+.more-content {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 400ms ease-out, opacity 300ms ease-out;
+}
+
+.make-visible {
+    opacity: 1;
+    max-height: 400vh;
+    overflow: scroll;
+    transition: max-height 500ms ease-in, opacity 600ms ease-in;
+}
+
+.search-form {
+    border: 1px solid #dfdfdf;
+    padding: 10px;
+}

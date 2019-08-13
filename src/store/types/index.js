@@ -1,0 +1,16 @@
+// searchResultsReducer
+export const REQUEST_SEARCH_RESULTS = 'REQUEST_SEARCH_RESULTS'
+export const RECEIVE_SEARCH_RESULTS = 'RECEIVE_SEARCH_RESULTS'
+export const RECEIVE_CATALOGS = 'RECEIVE_CATALOGS'
+export const RECEIVE_TEXTS = 'RECEIVE_TEXTS'
+export const ERROR_SEARCH_RESULTS = 'ERROR_SEARCH_RESULTS'
+
+// addTermToHistory
+export const ADD_TERM_TO_HISTORY = 'ADD_TERM_TO_HISTORY'
+
+// setSearchTypeDisplay
+export const SET_SEARCH_TYPE_DISPLAY = 'SET_SEARCH_TYPE_DISPLAY'
+
+// setOffsets
+export const SET_OFFSETS = 'SET_OFFSETS'
+export const RESET_OFFSETS = 'RESET_OFFSETS'

@@ -1,0 +1,10 @@
+@import './entry-point';
+
+.page-footer {
+    background-color: $c-dark;
+    .footer-copyright,
+    a {
+        background-color: $c-darker;
+        color: $c-gold;
+    }
+}
