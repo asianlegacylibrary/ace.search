@@ -57,6 +57,18 @@
 }
 
 .search-form {
-    border: 1px solid #dfdfdf;
+    margin-top: 2em;
+}
+.search-results,
+.search-menu,
+.search-form {
+    width: $w-8;
+    border: 1px solid #222;
     padding: 10px;
+    .row .col {
+        padding: 0;
+    }
+}
+.card {
+    min-height: 40px;
 }

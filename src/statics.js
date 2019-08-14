@@ -1,4 +1,4 @@
-export const config = {
+export const statics = {
     menuItems: ['catalogs', 'texts'],
     searchOptions: {
         searchTerm: `BYANG GTER THUGS RJE CHEN PO`,
@@ -6,6 +6,7 @@ export const config = {
         resultSetSize: 10,
     },
     searchTerms: [
+        `DPAL 'KHOR LO BDE MCHOG`,
         `RGYAS PAR MDZAD PA`,
         `SHIS MKHAS GRUB KYIS BSKUL BA LTAR`,
         `'BRAS SGRUB NAS NAN GYIS BSKUL`,

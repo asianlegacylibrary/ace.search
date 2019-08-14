@@ -4,11 +4,12 @@ main {
     flex: 1 0 auto;
 }
 
-.search-bar {
+.search-form {
     margin-top: 2em;
     width: $w-8;
 }
-.search-results {
+.search-results,
+.search-menu {
     width: $w-8;
     .row .col {
         padding: 0;
@@ -24,7 +25,8 @@ main {
 
 @media #{$medium-and-down} {
     // styles for medium screens and down
-    .search-bar,
+    .search-form,
+    .search-menu,
     .search-results {
         width: $w-10;
     }
@@ -32,7 +34,8 @@ main {
 
 @media #{$small-and-down} {
     // styles for small screens and down
-    .search-bar,
+    .search-form,
+    .search-menu,
     .search-results {
         width: $w-11;
     }

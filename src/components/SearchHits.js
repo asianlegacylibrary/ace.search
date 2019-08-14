@@ -3,79 +3,55 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import { Card } from './Card'
+import SearchMenu from './SearchMenu'
 import { setSearchTypeDisplay } from '../store/actions'
-import { config } from '../config'
 
 class SearchHits extends React.Component {
-    handleClick = menuItem => {
-        this.props.setSearchTypeDisplay(menuItem)
-    }
-
     render() {
-        const { catalogs, texts } = this.props
+        const { catalogs, texts, searchTypeDisplay } = this.props
         if (!catalogs || !texts) {
             return null
         }
 
-        const results =
-            this.props.searchTypeDisplay === 'catalogs' ? catalogs : texts
-
-        const current = results.hits.map((result, i) => {
-            return (
-                // <div key={i} className="row">
-                // <div className="col s12">
-                <div key={i} className="card grey lighten-3">
-                    <Card type={this.props.searchTypeDisplay} result={result} />
-                    {/* </div> */}
+        let currentResults = (
+            <div className="card grey lighten-3">
+                <div className="card-content blue-grey-text darken-4">
+                    No Results
                 </div>
-                // </div>
-            )
-        })
+            </div>
+        )
+
+        const results = searchTypeDisplay === 'catalogs' ? catalogs : texts
+
+        if (results.hits.length > 0) {
+            currentResults = results.hits.map((result, i) => {
+                return (
+                    <div key={i} className="card grey lighten-3">
+                        <Card type={searchTypeDisplay} result={result} />
+                    </div>
+                )
+            })
+        }
 
         return (
-            <React.Fragment>
-                <div className="row">
-                    <div className="col s12">
-                        <ul className="tabs">
-                            {config.menuItems.map((menuItem, i) => {
-                                return (
-                                    <li key={i} className="tab col s3">
-                                        <a
-                                            href="#!"
-                                            className={
-                                                this.props.searchTypeDisplay ===
-                                                menuItem
-                                                    ? 'active'
-                                                    : ''
-                                            }
-                                            onClick={() =>
-                                                this.handleClick(menuItem)
-                                            }
-                                        >
-                                            {menuItem}
-                                        </a>
-                                    </li>
-                                )
-                            })}
-                        </ul>
+            <div className="row">
+                <SearchMenu />
+                <div className="search-results">
+                    <div className="row">
+                        <div className="col s12">{currentResults}</div>
                     </div>
                 </div>
-
-                <div className="row">
-                    <div className="col s12">{current}</div>
-                </div>
-            </React.Fragment>
+            </div>
         )
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        catalogs: state.results.catalogs,
-        texts: state.results.texts,
-        searchTypeDisplay: state.searchTypeDisplay,
-    }
-}
+const mapStateToProps = state => ({
+    catalogs: state.results.catalogs,
+    texts: state.results.texts,
+    searchTypeDisplay: state.searchTypeDisplay,
+})
+
 export default connect(
     mapStateToProps,
     { setSearchTypeDisplay }

@@ -19,9 +19,7 @@ export const fetchResults = (
 
     dispatch({ type: types.REQUEST_SEARCH_RESULTS })
 
-    if (offsetType === 'all') {
-        dispatch({ type: types.RESET_OFFSETS })
-    } else {
+    if (offsetType !== 'all') {
         dispatch({ type: types.SET_OFFSETS, offsetType, offset })
     }
 
@@ -39,7 +37,6 @@ export const fetchResults = (
         } else if (offsetType === 'texts') {
             dispatch({ type: types.RECEIVE_TEXTS, payload: response.data })
         }
-        dispatch({ type: types.ADD_TERM_TO_HISTORY, payload: term })
     } catch (error) {
         dispatch({
             type: types.ERROR_SEARCH_RESULTS,
@@ -48,33 +45,14 @@ export const fetchResults = (
     }
 }
 
-// Using Thunk, we can define a function to return a function
-export const fetchSearchResults = (
-    term,
-    offset,
-    type = 'all'
-) => async dispatch => {
-    let searchURL = '/search'
-    if (type === 'catalogs') {
-        searchURL = '/search/catalogs'
-    } else if (type === 'texts') {
-        searchURL = 'search/texts'
+export const addTermToHistory = term => {
+    // look into how to terminate action based on cache
+    //if (!store.getState().history.includes(term)) {
+    return {
+        type: types.ADD_TERM_TO_HISTORY,
+        term,
     }
-    dispatch({ type: types.REQUEST_SEARCH_RESULTS })
-    try {
-        const response = await expressURL.get(searchURL, {
-            params: {
-                term,
-                offset,
-            },
-        })
-        dispatch({ type: types.RECEIVE_SEARCH_RESULTS, payload: response.data })
-    } catch (error) {
-        dispatch({
-            type: types.ERROR_SEARCH_RESULTS,
-            payload: error.request.status,
-        })
-    }
+    //}
 }
 
 export const setSearchTypeDisplay = menuItem => {
@@ -89,5 +67,11 @@ export const setOffsets = (offsetType, offset) => {
         type: types.SET_OFFSETS,
         offsetType,
         offset,
+    }
+}
+
+export const resetOffsets = () => {
+    return {
+        type: types.RESET_OFFSETS,
     }
 }

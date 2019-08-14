@@ -1,16 +1,23 @@
 import '../assets/sass/search.scss'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchResults, setOffsets } from '../store/actions'
+import {
+    fetchResults,
+    setOffsets,
+    resetOffsets,
+    addTermToHistory,
+} from '../store/actions'
 import { getRandomInt } from '../store/utilities'
-import { config } from '../config'
+import { statics } from '../statics'
 
 class SearchForm extends Component {
     state = {
         term:
-            config.searchTerms[getRandomInt(0, config.searchTerms.length - 1)],
+            statics.searchTerms[
+                getRandomInt(0, statics.searchTerms.length - 1)
+            ],
         offsetCurrent: 0,
-        offsetSize: config.searchOptions.resultSetSize,
+        offsetSize: statics.searchOptions.resultSetSize,
         initialLoad: true,
     }
 
@@ -24,8 +31,8 @@ class SearchForm extends Component {
         const total = this.props[`total_${this.props.searchTypeDisplay}`]
         let newOffset = offset
 
-        if (total > offset + config.searchOptions.resultSetSize) {
-            newOffset = offset + config.searchOptions.resultSetSize
+        if (total > offset + statics.searchOptions.resultSetSize) {
+            newOffset = offset + statics.searchOptions.resultSetSize
             this.props.fetchResults(
                 this.state.term,
                 newOffset,
@@ -37,8 +44,8 @@ class SearchForm extends Component {
     handlePrev = () => {
         const offset = this.props[`offset_${this.props.searchTypeDisplay}`]
         let newOffset = 0
-        if (offset - config.searchOptions.resultSetSize >= 0) {
-            newOffset = offset - config.searchOptions.resultSetSize
+        if (offset - statics.searchOptions.resultSetSize >= 0) {
+            newOffset = offset - statics.searchOptions.resultSetSize
             this.props.fetchResults(
                 this.state.term,
                 newOffset,
@@ -51,27 +58,29 @@ class SearchForm extends Component {
 
     handleNewSearch = e => {
         e.preventDefault()
-
-        this.props.fetchResults(this.state.term, 0)
+        const { resetOffsets, fetchResults, addTermToHistory } = this.props
+        resetOffsets()
+        fetchResults(this.state.term, 0)
+        addTermToHistory(this.state.term)
     }
 
     setUpControls = () => {
         const offset = this.props[`offset_${this.props.searchTypeDisplay}`]
 
         const properOffset =
-            offset + config.searchOptions.resultSetSize >
+            offset + statics.searchOptions.resultSetSize >
             this.props[`total_${this.props.searchTypeDisplay}`]
                 ? this.props[`total_${this.props.searchTypeDisplay}`]
-                : offset + config.searchOptions.resultSetSize
+                : offset + statics.searchOptions.resultSetSize
 
         let disableNext =
             this.props[`total_${this.props.searchTypeDisplay}`] <=
-                offset + config.searchOptions.resultSetSize ||
+                offset + statics.searchOptions.resultSetSize ||
             this.props.currentlyFetchingResults
 
         let disablePrev =
             this.props[`total_${this.props.searchTypeDisplay}`] <=
-                config.searchOptions.resultSetSize ||
+                statics.searchOptions.resultSetSize ||
             offset <= 0 ||
             this.props.currentlyFetchingResults
 
@@ -90,7 +99,7 @@ class SearchForm extends Component {
         const { disableNext, disablePrev, paginationMsg } = this.setUpControls()
 
         return (
-            <React.Fragment>
+            <div className="row">
                 <div className="search-form">
                     <input
                         autoFocus
@@ -134,7 +143,7 @@ class SearchForm extends Component {
                         </button>
                     </div>
                 </div>
-            </React.Fragment>
+            </div>
         )
     }
 }
@@ -154,5 +163,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { fetchResults, setOffsets }
+    { fetchResults, setOffsets, resetOffsets, addTermToHistory }
 )(SearchForm)
