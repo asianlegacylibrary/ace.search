@@ -8,3 +8,27 @@ nav {
         top: 10px;
     }
 }
+
+.img-cover {
+    background-size: cover;
+}
+
+.sidenav .collapsible-body,
+.user-view p {
+    padding: 1em;
+    line-height: 1.2em;
+}
+
+nav a.sidenav-trigger {
+    color: $c-gold-dark;
+    height: 40px;
+    line-height: 40px;
+    background-color: transparent;
+    box-shadow: none;
+    transition: color 500ms;
+    &:hover {
+        color: $c-gold;
+        background-color: transparent;
+        box-shadow: none;
+    }
+}

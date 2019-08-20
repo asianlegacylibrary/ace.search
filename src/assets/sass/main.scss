@@ -4,39 +4,9 @@ main {
     flex: 1 0 auto;
 }
 
-.search-form {
-    margin-top: 2em;
-    width: $w-8;
-}
-.search-results,
-.search-menu {
-    width: $w-8;
-    .row .col {
-        padding: 0;
-    }
-}
-
 @media #{$medium-and-up} {
     // styles for medium screens and larger
     .container {
-        width: $w-11;
-    }
-}
-
-@media #{$medium-and-down} {
-    // styles for medium screens and down
-    .search-form,
-    .search-menu,
-    .search-results {
-        width: $w-10;
-    }
-}
-
-@media #{$small-and-down} {
-    // styles for small screens and down
-    .search-form,
-    .search-menu,
-    .search-results {
         width: $w-11;
     }
 }

@@ -1,7 +1,8 @@
 import '../assets/sass/nav.scss'
 import logo from '../assets/img/logo_acip.png'
 import React from 'react'
-export const NavBar = () => {
+
+export default () => {
     return (
         <div className="navbar-fixed">
             <nav>
@@ -10,9 +11,13 @@ export const NavBar = () => {
                         <a className="left brand-logo" href="/">
                             <img height="44px" src={logo} alt="ACIP" />
                         </a>
-                        <ul className="right">
-                            <li>MENU</li>
-                        </ul>
+                        <a
+                            className="btn right sidenav-trigger show-on-large valign-wrapper"
+                            data-target="slide-out"
+                            href="#!"
+                        >
+                            <i className="fal fa-bars" />
+                        </a>
                     </div>
                 </div>
             </nav>

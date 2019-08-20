@@ -13,11 +13,13 @@
 .result-pagination {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     margin-top: 2em;
     > .btn {
+        min-width: 30%;
         height: 2em;
-        min-width: 22%;
-        max-width: 25%;
+        // min-width: 22%;
+        // max-width: 25%;
         line-height: 2em;
         flex-basis: 100px;
         align-content: center;
@@ -27,13 +29,15 @@
     > .result-pagination-msg {
         flex: 1;
     }
-    .boldy {
-        font-weight: bold;
-    }
 }
+.boldy {
+    font-weight: bold;
+}
+
 .result-pagination-msg {
     vertical-align: middle;
-    text-align: center;
+    //text-align: center;
+    margin-top: 1em;
     font-style: italic;
 }
 .span-title {
@@ -58,12 +62,15 @@
 
 .search-form {
     margin-top: 2em;
+    > .btn {
+        min-width: 50%;
+    }
 }
 .search-results,
 .search-menu,
 .search-form {
     width: $w-8;
-    border: 1px solid #222;
+    //border: 1px solid #222;
     padding: 10px;
     .row .col {
         padding: 0;
@@ -71,4 +78,23 @@
 }
 .card {
     min-height: 40px;
+}
+
+@media #{$medium-and-down} {
+    // styles for medium screens and down
+    .search-form,
+    .search-menu,
+    .search-results {
+        width: $w-10;
+        padding: 4px;
+    }
+}
+
+@media #{$small-and-down} {
+    // styles for small screens and down
+    .search-form,
+    .search-menu,
+    .search-results {
+        width: $w-11;
+    }
 }

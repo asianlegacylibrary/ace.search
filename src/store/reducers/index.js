@@ -3,6 +3,7 @@ import searchResultsReducer from './searchResultsReducer'
 import addTermToHistoryReducer from './addTermToHistory'
 import setSearchTypeDisplay from './setSearchTypeDisplay'
 import setOffsets from './setOffsets'
+import setFavorites from './setFavorites'
 
 // REDUCERS
 
@@ -13,4 +14,5 @@ export default combineReducers({
     history: addTermToHistoryReducer,
     searchTypeDisplay: setSearchTypeDisplay,
     offsets: setOffsets,
+    favorites: setFavorites,
 })

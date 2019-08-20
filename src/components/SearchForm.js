@@ -112,7 +112,7 @@ class SearchForm extends Component {
                     />
 
                     <button
-                        className="waves-effect waves-light btn"
+                        className="waves-effect waves-light btn wide"
                         disabled={this.props.currentlyFetchingResults}
                         onClick={e => this.handleNewSearch(e)}
                     >
@@ -128,12 +128,7 @@ class SearchForm extends Component {
                         >
                             PREV
                         </button>
-                        <span
-                            className="result-pagination-msg"
-                            dangerouslySetInnerHTML={{
-                                __html: paginationMsg,
-                            }}
-                        />
+
                         <button
                             className="waves-effect waves-light btn"
                             disabled={disableNext}
@@ -142,6 +137,12 @@ class SearchForm extends Component {
                             NEXT
                         </button>
                     </div>
+                    <div
+                        className="result-pagination-msg"
+                        dangerouslySetInnerHTML={{
+                            __html: paginationMsg,
+                        }}
+                    />
                 </div>
             </div>
         )

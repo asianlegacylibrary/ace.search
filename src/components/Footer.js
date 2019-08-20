@@ -1,7 +1,7 @@
 import '../assets/sass/footer.scss'
 import React from 'react'
 
-export const Footer = () => {
+export default () => {
     return (
         <footer className="page-footer">
             <div className="container">

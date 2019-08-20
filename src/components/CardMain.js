@@ -1,5 +1,6 @@
 import React from 'react'
-export const CardMain = ({ type, result }) => {
+
+export default ({ type, result }) => {
     let remainder = []
     if (type === 'catalogs') {
         const highlightKeys = Object.keys(result.highlight)

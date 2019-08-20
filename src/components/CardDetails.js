@@ -2,7 +2,7 @@ import '../assets/sass/card.scss'
 
 import React from 'react'
 
-export const CardDetails = ({ source }) => {
+export default ({ source }) => {
     let ordered = {}
     const metaStrings = [
         'page',

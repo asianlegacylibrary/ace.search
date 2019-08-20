@@ -12,3 +12,18 @@
     margin: 0;
     font-size: 0.8em;
 }
+
+.favorites,
+.favorites-active {
+    float: right;
+}
+.favorites {
+    -webkit-text-stroke-width: 1px;
+    //-webkit-text-stroke-color: $c-gold-dark;
+    color: $c-blue-darker;
+}
+.favorites-active {
+    -webkit-text-stroke-width: 1px;
+    // -webkit-text-stroke-color: $c-gold-dark;
+    color: red;
+}
