@@ -1,27 +1,20 @@
 import '../assets/sass/nav.scss'
-import cloth from '../assets/img/purple_cloth.jpg'
+import M from 'materialize-css'
 import React from 'react'
 import { connect } from 'react-redux'
-import M from 'materialize-css'
 
 class NavSidebar extends React.Component {
     state = {
-        options: {
+        sidenavOptions: {
             edge: 'right',
             inDuration: 250,
-            onOpenStart: () => {
-                console.log('opening')
-            },
-            onCloseEnd: () => {
-                console.log('closing')
-            },
         },
     }
 
     componentDidMount() {
         const sidenavElems = document.querySelectorAll('.sidenav')
-        M.Sidenav.init(sidenavElems, this.state.options)
         const collapsibleElems = document.querySelectorAll('.collapsible')
+        M.Sidenav.init(sidenavElems, this.state.sidenavOptions)
         M.Collapsible.init(collapsibleElems)
     }
 
@@ -55,9 +48,12 @@ class NavSidebar extends React.Component {
             <React.Fragment>
                 <ul id="slide-out" className="sidenav collapsible">
                     <li>
+                        <a className="sidenav-close" href="#!">
+                            <i className="fal fa-times" />
+                        </a>
+                    </li>
+                    <li>
                         <div className="user-view">
-                            {/* <img src={cloth} alt="purple cloth" /> */}
-
                             <h4 className="blue-text text-darken-4">MENU</h4>
                             <p>
                                 Currently, this only shows you a listing of

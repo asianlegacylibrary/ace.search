@@ -7,6 +7,10 @@ nav {
         color: $c-dark;
         top: 10px;
     }
+    img {
+        height: 40px;
+        line-height: 40px;
+    }
 }
 
 .img-cover {
@@ -30,5 +34,15 @@ nav a.sidenav-trigger {
         color: $c-gold;
         background-color: transparent;
         box-shadow: none;
+    }
+}
+
+@media #{$small-and-down} {
+    // styles for medium screens and down
+    nav {
+        img {
+            height: 36px;
+            line-height: 36px;
+        }
     }
 }

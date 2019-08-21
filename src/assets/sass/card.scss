@@ -13,17 +13,18 @@
     font-size: 0.8em;
 }
 
-.favorites,
-.favorites-active {
-    float: right;
-}
-.favorites {
-    -webkit-text-stroke-width: 1px;
-    //-webkit-text-stroke-color: $c-gold-dark;
-    color: $c-blue-darker;
-}
-.favorites-active {
+.favorites-active,
+.text-active {
     -webkit-text-stroke-width: 1px;
     // -webkit-text-stroke-color: $c-gold-dark;
     color: red;
+}
+.full-text-selection {
+    color: $c-gold-dark;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    &:hover {
+        color: $c-blue-darker;
+    }
 }

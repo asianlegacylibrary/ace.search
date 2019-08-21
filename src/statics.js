@@ -1,11 +1,15 @@
 export const statics = {
     menuItems: ['catalogs', 'texts'],
+    fullTextItem: 'Full Text',
+    catalogs_keys: ['priauthtib', 'ttltib'],
+    texts_keys: ['authortib', 'titletib'],
     searchOptions: {
         searchTerm: `BYANG GTER THUGS RJE CHEN PO`,
         searchOffset: 0,
         resultSetSize: 10,
     },
     searchTerms: [
+        `THE GLORIOUS ATISHA`,
         `DPAL 'KHOR LO BDE MCHOG`,
         `RGYAS PAR MDZAD PA`,
         `SHIS MKHAS GRUB KYIS BSKUL BA LTAR`,

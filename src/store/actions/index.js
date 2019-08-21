@@ -45,13 +45,6 @@ export const fetchResults = (
     }
 }
 
-// export const addResultToFavorites = result => {
-//     return {
-//         type: types.ADD_RESULT_TO_FAVORITES,
-//         result,
-//     }
-// }
-
 export const addTermToHistory = term => {
     // look into how to terminate action based on cache
     //if (!store.getState().history.includes(term)) {

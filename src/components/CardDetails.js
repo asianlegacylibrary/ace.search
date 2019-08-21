@@ -1,8 +1,11 @@
 import '../assets/sass/card.scss'
 
 import React from 'react'
+import { connect } from 'react-redux'
+import * as types from '../store/types'
 
-export default ({ source }) => {
+const CardDetails = ({ result, dispatch }) => {
+    const { _source } = result
     let ordered = {}
     const metaStrings = [
         'page',
@@ -15,11 +18,12 @@ export default ({ source }) => {
     let main = []
     let auth = []
     let ttl = []
+    let full = []
 
-    Object.keys(source)
+    Object.keys(_source)
         .sort()
         .forEach(key => {
-            ordered[key] = source[key]
+            ordered[key] = _source[key]
         })
 
     Object.entries(ordered).forEach((s, i) => {
@@ -30,12 +34,29 @@ export default ({ source }) => {
                 })
             ) {
                 meta.push(
-                    <p key={i} className="meta-item">
+                    <React.Fragment key={i}>
                         <span className="span-title">{s[0]}</span>
                         <span>{s[1]}</span>
-                    </p>
+                        <br />
+                    </React.Fragment>
                 )
             } else if (s[0].includes('tibtext')) {
+                // do nothing with FULL TEXT for now...
+                full.push(
+                    <a
+                        key={i}
+                        href="#!"
+                        className="full-text-selection right"
+                        onClick={() =>
+                            dispatch({
+                                type: types.SET_FULL_TEXT,
+                                payload: result,
+                            })
+                        }
+                    >
+                        Select Full Text <i className="fal fa-file-alt fa-lg" />
+                    </a>
+                )
             } else if (s[0].includes('priauth', 'auth')) {
                 auth.push(
                     <p key={i} className="author-item flow-text">
@@ -63,7 +84,9 @@ export default ({ source }) => {
 
     return (
         <React.Fragment>
-            <div className="meta-items">{meta}</div>
+            <div className="meta-items">
+                <p className="meta-item">{meta}</p>
+            </div>
 
             {main}
 
@@ -80,6 +103,12 @@ export default ({ source }) => {
                     {ttl}
                 </div>
             ) : null}
+
+            <div className="meta-items">
+                <p className="meta-item">{full}</p>
+            </div>
         </React.Fragment>
     )
 }
+
+export default connect()(CardDetails)

@@ -9,7 +9,7 @@ export default () => {
                 <div className="nav-wrapper">
                     <div className="container">
                         <a className="left brand-logo" href="/">
-                            <img height="44px" src={logo} alt="ACIP" />
+                            <img src={logo} alt="ACIP" />
                         </a>
                         <a
                             className="btn right sidenav-trigger show-on-large valign-wrapper"

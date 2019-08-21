@@ -76,13 +76,15 @@ class SearchForm extends Component {
         let disableNext =
             this.props[`total_${this.props.searchTypeDisplay}`] <=
                 offset + statics.searchOptions.resultSetSize ||
-            this.props.currentlyFetchingResults
+            this.props.currentlyFetchingResults ||
+            this.props.searchTypeDisplay.includes(statics.fullTextItem)
 
         let disablePrev =
             this.props[`total_${this.props.searchTypeDisplay}`] <=
                 statics.searchOptions.resultSetSize ||
             offset <= 0 ||
-            this.props.currentlyFetchingResults
+            this.props.currentlyFetchingResults ||
+            this.props.searchTypeDisplay.includes(statics.fullTextItem)
 
         let paginationMsg =
             this.props[`total_${this.props.searchTypeDisplay}`] > 0
@@ -90,7 +92,7 @@ class SearchForm extends Component {
                       1} to ${properOffset} </span> of ${
                       this.props[`total_${this.props.searchTypeDisplay}`]
                   }`
-                : ``
+                : `&nbsp;`
 
         return { disableNext, disablePrev, paginationMsg }
     }

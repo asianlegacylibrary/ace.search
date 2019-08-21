@@ -76,6 +76,16 @@
         padding: 0;
     }
 }
+.search-menu {
+    li:nth-child(3) {
+        a {
+            overflow-wrap: break-word;
+            font-style: italic;
+        }
+        min-width: 40%;
+    }
+}
+
 .card {
     min-height: 40px;
 }
@@ -96,5 +106,14 @@
     .search-menu,
     .search-results {
         width: $w-11;
+    }
+    .search-menu {
+        li:nth-child(3) {
+            a {
+                font-size: 0.8em;
+                font-style: italic;
+                overflow-wrap: break-word;
+            }
+        }
     }
 }

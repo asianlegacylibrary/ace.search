@@ -1,18 +1,16 @@
 import { combineReducers } from 'redux'
-import searchResultsReducer from './searchResultsReducer'
-import addTermToHistoryReducer from './addTermToHistory'
+import searchResults from './searchResults'
+import addTermToHistory from './addTermToHistory'
 import setSearchTypeDisplay from './setSearchTypeDisplay'
 import setOffsets from './setOffsets'
 import setFavorites from './setFavorites'
-
-// REDUCERS
-
-// FAVORITES
+import setFullText from './setFullText'
 
 export default combineReducers({
-    results: searchResultsReducer,
-    history: addTermToHistoryReducer,
+    results: searchResults,
+    history: addTermToHistory,
     searchTypeDisplay: setSearchTypeDisplay,
     offsets: setOffsets,
     favorites: setFavorites,
+    selectedText: setFullText,
 })
