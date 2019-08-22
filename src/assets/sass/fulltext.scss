@@ -1,0 +1,45 @@
+@import './entry-point';
+
+.full-text {
+    line-height: 1.2em;
+}
+.full-text-ctls {
+    border: 1px dashed $c-blue;
+    padding: 1em;
+    display: flex;
+    flex: 1 0 0;
+    justify-content: space-around;
+    line-height: 32px;
+    margin: 2em;
+    .btn-flat {
+        &:active {
+            background-color: rgba(246, 178, 181, 0.2);
+        }
+        &:hover {
+            background-color: rgba(246, 178, 181, 0.4);
+        }
+    }
+    .btn {
+        margin-right: 1em;
+        min-width: 10%;
+        background-color: rgb(187, 184, 184);
+        height: 32px;
+    }
+}
+
+.full-text-pages {
+    font-size: 2em;
+    vertical-align: middle;
+}
+.full-text-details {
+    margin-bottom: 3em;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+@media #{$small-and-down} {
+    // styles for small screens and down
+    .full-text-ctls {
+        padding: 0.6em;
+        margin: 0.2em 0.4em 1em 0.4em;
+    }
+}

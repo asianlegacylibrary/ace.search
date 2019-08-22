@@ -55,6 +55,13 @@ export const addTermToHistory = term => {
     //}
 }
 
+export const setCurrentSearchTerm = term => {
+    return {
+        type: types.SET_CURRENT_SEARCH_TERM,
+        term,
+    }
+}
+
 export const setSearchTypeDisplay = menuItem => {
     return {
         type: types.SET_SEARCH_TYPE_DISPLAY,
@@ -73,5 +80,12 @@ export const setOffsets = (offsetType, offset) => {
 export const resetOffsets = () => {
     return {
         type: types.RESET_OFFSETS,
+    }
+}
+
+export const setFullText = text => {
+    return {
+        type: types.SET_FULL_TEXT,
+        payload: text,
     }
 }

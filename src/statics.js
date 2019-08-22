@@ -10,6 +10,7 @@ export const statics = {
     },
     searchTerms: [
         `THE GLORIOUS ATISHA`,
+        `GUHYASAMAJA`,
         `DPAL 'KHOR LO BDE MCHOG`,
         `RGYAS PAR MDZAD PA`,
         `SHIS MKHAS GRUB KYIS BSKUL BA LTAR`,

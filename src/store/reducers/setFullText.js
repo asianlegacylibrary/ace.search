@@ -1,5 +1,5 @@
 import * as types from '../types'
-import _ from 'lodash'
+
 // SEARCH RESULTS
 export default (state = null, action) => {
     switch (action.type) {

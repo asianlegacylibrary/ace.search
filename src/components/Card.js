@@ -59,7 +59,7 @@ class Card extends Component {
             ? 'favorites-active'
             : 'favorites'
         const activatedText = this.props.textActive ? 'text-active' : ''
-        const { result, type } = this.props
+        const { result, type, term } = this.props
 
         return (
             <React.Fragment>
@@ -101,7 +101,7 @@ class Card extends Component {
                     <div
                         className={`more-content ${activatedDetails} blue-grey-text darken-4`}
                     >
-                        <CardDetails result={result} />
+                        <CardDetails result={result} term={term} />
                     </div>
                 </div>
             </React.Fragment>
@@ -112,6 +112,7 @@ class Card extends Component {
 const mapStateToProps = state => ({
     favorites: state.favorites,
     selectedText: state.selectedText,
+    term: state.currentSearchTerm,
 })
 
 export default connect(mapStateToProps)(Card)

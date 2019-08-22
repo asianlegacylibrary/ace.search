@@ -6,6 +6,8 @@ import {
     setOffsets,
     resetOffsets,
     addTermToHistory,
+    setCurrentSearchTerm,
+    setFullText,
 } from '../store/actions'
 import { getRandomInt } from '../store/utilities'
 import { statics } from '../statics'
@@ -58,10 +60,18 @@ class SearchForm extends Component {
 
     handleNewSearch = e => {
         e.preventDefault()
-        const { resetOffsets, fetchResults, addTermToHistory } = this.props
+        const {
+            resetOffsets,
+            fetchResults,
+            addTermToHistory,
+            setCurrentSearchTerm,
+            setFullText,
+        } = this.props
         resetOffsets()
+        setFullText(null)
         fetchResults(this.state.term, 0)
         addTermToHistory(this.state.term)
+        setCurrentSearchTerm(this.state.term)
     }
 
     setUpControls = () => {
@@ -166,5 +176,12 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { fetchResults, setOffsets, resetOffsets, addTermToHistory }
+    {
+        fetchResults,
+        setOffsets,
+        resetOffsets,
+        addTermToHistory,
+        setCurrentSearchTerm,
+        setFullText,
+    }
 )(SearchForm)
