@@ -60,6 +60,21 @@ class FullText extends Component {
     render() {
         const { numPages, parsedText, paginationMsg } = this.state
         const counter = this.useCounter()
+        let btnEnables = {
+            disableMin: false,
+            disableMax: false,
+            disableInc: false,
+            disableDec: false,
+        }
+
+        if (counter.value <= 0) {
+            btnEnables.disableMin = true
+            btnEnables.disableDec = true
+        } else if (counter.value >= this.state.parsedText.length - 1) {
+            btnEnables.disableMax = true
+            btnEnables.disableInc = true
+        }
+
         if (
             (Object.entries(parsedText).length === 0 &&
                 parsedText.constructor === Object) ||
@@ -78,24 +93,34 @@ class FullText extends Component {
                             Details Pane (Coming Soon)
                         </span>
                     </div>
+                    <div className="full-text-details">
+                        <span className="full-text-details">
+                            <i className="fad fa-arrow-right" /> Controls for
+                            NEXT / PREV term match (Coming Soon)
+                        </span>
+                    </div>
                     <div className="full-text-ctls">
                         <a
                             href="#!"
+                            disabled={btnEnables.disableMin}
                             className="waves-effect waves-light btn-flat"
                             onClick={counter.min}
                         >{`<<`}</a>
                         <a
                             href="#!"
+                            disabled={btnEnables.disableDec}
                             className="waves-effect waves-light btn-flat"
                             onClick={counter.decrease}
                         >{`<`}</a>
                         <a
                             href="#!"
+                            disabled={btnEnables.disableInc}
                             className="waves-effect waves-light btn-flat"
                             onClick={counter.increase}
                         >{`>`}</a>
                         <a
                             href="#!"
+                            disabled={btnEnables.disableMax}
                             className="waves-effect waves-light btn-flat"
                             onClick={counter.max}
                         >{`>>`}</a>

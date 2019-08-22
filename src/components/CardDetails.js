@@ -32,7 +32,7 @@ const CardDetails = ({ result, dispatch, term }) => {
         if (typeof item === 'string' && item.length > 0 && isNaN(item)) {
             item = parseLines(item, term)
         }
-        console.log(term, item)
+
         if (s[1] && s[1].length > 1) {
             if (
                 metaStrings.some(v => {
@@ -71,7 +71,6 @@ const CardDetails = ({ result, dispatch, term }) => {
                     </p>
                 )
             } else if (s[0].includes('ttl', 'title')) {
-                console.log(item)
                 ttl.push(
                     <p key={i} className="title-item flow-text">
                         <span className="span-title">{s[0]}</span>
