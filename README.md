@@ -6,7 +6,7 @@
 
 **Note:**
 
--   `git submodule add server`
+-   `git submodule add server`, when you first add as submodule
 -   `cd server`, work as if in repo, then commit and push
 -   within parent, `git add server` <-- and this will update reference to server submodule
 
