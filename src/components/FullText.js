@@ -1,7 +1,7 @@
 import '../assets/sass/fulltext.scss'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { parseLines } from '../store/utilities'
+import { parseLines, createPages } from '../store/utilities'
 
 class FullText extends Component {
     state = {
@@ -10,10 +10,16 @@ class FullText extends Component {
         paginationMsg: ``,
         currentPage: null,
         count: 0,
+        currentKey: '',
     }
-    componentDidMount() {
-        const pages = this.createPages(this.props.text._source.tibtext)
 
+    componentDidMount() {
+        document.addEventListener('keydown', this.keyDowns, false)
+        const pages = createPages(
+            this.props.text._source.tibtext,
+            this.props.term
+        )
+        console.log(pages)
         this.setState({
             parsedText: pages,
             numPages: pages.length,
@@ -23,18 +29,20 @@ class FullText extends Component {
         })
     }
 
-    createPages = t => {
-        let r = `(@[0-9]\\w+)` //`(@[0-9]//w+)
-        let raw = t.split(new RegExp(r, 'g'))
+    componentWillUnmount() {
+        document.removeEventListener('keydown', this.keyDowns, false)
+    }
 
-        let o = []
-        raw.forEach((a, i) => {
-            if (a.charAt(0) === '@') {
-                return o.push({ id: a, data: raw[i + 1] })
+    keyDowns = e => {
+        if (e.key === 'ArrowRight') {
+            if (this.state.count < this.state.parsedText.length - 1) {
+                this.setState({ count: this.state.count + 1 })
             }
-        })
-
-        return o
+        } else if (e.key === 'ArrowLeft') {
+            if (this.state.count > 0) {
+                this.setState({ count: this.state.count - 1 })
+            }
+        }
     }
 
     useCounter = () => {
@@ -60,6 +68,7 @@ class FullText extends Component {
     render() {
         const { numPages, parsedText, paginationMsg } = this.state
         const counter = this.useCounter()
+
         let btnEnables = {
             disableMin: false,
             disableMax: false,
