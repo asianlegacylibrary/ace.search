@@ -7,7 +7,7 @@
 **Note:**
 
 -   `git submodule add server`, when you first add as submodule
--   `cd server`, work as if in repo, then commit and push
+-   `cd server`, work as if in repo, then commit and push (what branch are you working from?)
 -   within parent, `git add server` <-- and this will update reference to server submodule
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

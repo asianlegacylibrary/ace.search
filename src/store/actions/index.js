@@ -45,6 +45,10 @@ export const fetchResults = (
     }
 }
 
+export const fetchFullText = (term, id) => async dispatch => {
+    dispatch({ type: types.REQUEST_FULL_TEXT })
+}
+
 export const addTermToHistory = term => {
     // look into how to terminate action based on cache
     //if (!store.getState().history.includes(term)) {
