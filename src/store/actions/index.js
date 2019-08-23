@@ -27,6 +27,7 @@ export const fetchResults = (
         const response = await expressURL.get(searchURL, {
             params: { term, offset },
         })
+
         if (offsetType === 'all') {
             dispatch({
                 type: types.RECEIVE_SEARCH_RESULTS,
@@ -45,8 +46,35 @@ export const fetchResults = (
     }
 }
 
-export const fetchFullText = (term, id) => async dispatch => {
+export const fetchFullText = (term, result) => async dispatch => {
+    const getURL = `search/text/${result._id}`
     dispatch({ type: types.REQUEST_FULL_TEXT })
+    dispatch({ type: types.SET_FULL_TEXT_DETAILS, details: result })
+    try {
+        const response = await expressURL.get(getURL, {
+            params: { term },
+        })
+        console.log(response)
+        dispatch({
+            type: types.RECEIVE_FULL_TEXT,
+            fulltext: response.data.hits[0].highlight.tibtext,
+        })
+    } catch (error) {
+        dispatch({
+            type: types.ERROR_FULL_TEXT,
+            payload: error.request.status,
+        })
+    }
+}
+
+export const addToFavorites = result => {
+    return {
+        type: types.ADD_RESULT_TO_FAVORITES,
+        payload: result,
+    }
+}
+export const removeFromFavorites = id => {
+    return { type: types.DELETE_RESULT_FROM_FAVORITES, payload: id }
 }
 
 export const addTermToHistory = term => {
@@ -87,9 +115,13 @@ export const resetOffsets = () => {
     }
 }
 
-export const setFullText = text => {
+export const setFullTextDetails = details => {
     return {
-        type: types.SET_FULL_TEXT,
-        payload: text,
+        type: types.SET_FULL_TEXT_DETAILS,
+        details,
     }
+}
+
+export const deleteFullText = () => {
+    return { type: types.DELETE_FULL_TEXT }
 }

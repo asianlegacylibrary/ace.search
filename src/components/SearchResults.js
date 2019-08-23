@@ -23,7 +23,8 @@ const SearchResults = ({
 
     if (results.hits && results.hits.length > 0) {
         currentResults = results.hits.map(result => {
-            const textActive = selectedText && selectedText._id === result._id
+            const textActive =
+                selectedText && selectedText.details._id === result._id
             return (
                 <div key={result._id} className="card grey lighten-3 hoverable">
                     <Card

@@ -3,6 +3,13 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import CardDetails from './CardDetails'
 import CardHighlights from './CardHighlights'
+import {
+    fetchFullText,
+    deleteFullText,
+    setFullTextDetails,
+    addToFavorites,
+    removeFromFavorites,
+} from '../store/actions'
 import * as types from '../store/types'
 
 class Card extends Component {
@@ -25,14 +32,13 @@ class Card extends Component {
     handleSelectedText = (result, e) => {
         e.preventDefault()
         if (this.props.textActive) {
-            this.props.dispatch({
-                type: types.DELETE_FULL_TEXT,
-            })
+            this.props.deleteFullText()
         } else {
-            this.props.dispatch({
-                type: types.SET_FULL_TEXT,
-                payload: result,
-            })
+            if (result.highlight.tibtext) {
+                this.props.fetchFullText(this.props.term, result)
+            } else {
+                this.props.setFullTextDetails(result)
+            }
         }
     }
 
@@ -40,15 +46,9 @@ class Card extends Component {
         e.preventDefault()
         this.setState({ activeFavorite: !this.state.activeFavorite }, () => {
             if (this.state.activeFavorite) {
-                this.props.dispatch({
-                    type: types.ADD_RESULT_TO_FAVORITES,
-                    payload: result,
-                })
+                this.props.addToFavorites(result)
             } else {
-                this.props.dispatch({
-                    type: types.DELETE_RESULT_FROM_FAVORITES,
-                    payload: result._id,
-                })
+                this.props.removeFromFavorites(result._id)
             }
         })
     }
@@ -115,4 +115,13 @@ const mapStateToProps = state => ({
     term: state.currentSearchTerm,
 })
 
-export default connect(mapStateToProps)(Card)
+export default connect(
+    mapStateToProps,
+    {
+        addToFavorites,
+        removeFromFavorites,
+        fetchFullText,
+        deleteFullText,
+        setFullTextDetails,
+    }
+)(Card)

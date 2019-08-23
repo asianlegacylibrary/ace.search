@@ -17,15 +17,9 @@ TO-DO: FIND OUT FROM TRANSLATORS HOW TO PARSE TEXT PROPERLY
 -- right now I'm just guessing
 1. 
 */
-export const parseLines = (text, term) => {
-    let termRegex = new RegExp(`(${term})`, 'ig')
+export const parseLines = text => {
     let doubleComma = new RegExp(`(, ,)`, 'g')
-    //let comma = `( ,)`
-    //let rr = new RegExp(`(\\n\\r)`)
-    return text
-        .replace(termRegex, `<em>${term}</em>`)
-        .replace(doubleComma, `<br /><br />`)
-    //.replace(new RegExp(comma, 'g'), `<br />`)
+    return text.replace(doubleComma, `<br /><br />`)
 }
 
 /* Create pages from full text
@@ -36,27 +30,15 @@ export const parseLines = (text, term) => {
 - add a flag to object if there's a match with current term on that page
 --- this will be used for NEXT / PREV match btns on full text component
 */
-export const createPages = (text, term) => {
+export const createPages = text => {
     let r = `(@[0-9]\\w+)` //`(@[0-9]//w+)
     let raw = text.split(new RegExp(r, 'g'))
 
     let o = []
     raw.forEach((a, i) => {
         if (raw.length - 1 > i) {
-            let termMatch = false
-            const reSpace = new RegExp(/[\s,']/, 'g') //grab all spaces/commas/apostrophes in a string
-            let tempPage = raw[i + 1].replace(reSpace, '') // and cut them
-            let tempTerm = term.replace(reSpace, '')
-
-            console.log(tempTerm)
-            console.log(tempPage)
-
-            if (new RegExp(`(${tempTerm})`, 'im').test(tempPage)) {
-                termMatch = true
-            }
-
             if (a.charAt(0) === '@') {
-                return o.push({ id: a, termMatch: termMatch, data: raw[i + 1] })
+                return o.push({ id: a, data: raw[i + 1] })
             }
         }
     })

@@ -25,7 +25,7 @@ const SearchMenu = ({
     }
     let menu = [...statics.menuItems] // make a copy
     if (selectedText && !menu.includes(statics.fullTextItem)) {
-        menu.push(`${statics.fullTextItem} (${selectedText._id})`)
+        menu.push(`${statics.fullTextItem} (${selectedText.details._id})`)
     }
     return (
         <div className="search-menu">

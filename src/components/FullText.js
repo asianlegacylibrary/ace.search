@@ -15,11 +15,13 @@ class FullText extends Component {
 
     componentDidMount() {
         document.addEventListener('keydown', this.keyDowns, false)
-        const pages = createPages(
-            this.props.text._source.tibtext,
-            this.props.term
-        )
-        console.log(pages)
+        let pages
+        if (this.props.text.fulltext) {
+            pages = createPages(this.props.text.fulltext[0])
+        } else {
+            pages = createPages(this.props.text.details._source.tibtext)
+        }
+
         this.setState({
             parsedText: pages,
             numPages: pages.length,
@@ -143,8 +145,7 @@ class FullText extends Component {
                             className="full-text"
                             dangerouslySetInnerHTML={{
                                 __html: parseLines(
-                                    parsedText[counter.value].data,
-                                    this.props.term
+                                    parsedText[counter.value].data
                                 ),
                             }}
                         />
@@ -157,7 +158,6 @@ class FullText extends Component {
 
 const mapStateToProps = state => ({
     text: state.selectedText,
-    term: state.currentSearchTerm,
 })
 
 export default connect(mapStateToProps)(FullText)
