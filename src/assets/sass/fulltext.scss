@@ -4,7 +4,7 @@
     line-height: 1.2em;
 }
 .full-text-ctls {
-    border: 1px dashed $c-blue;
+    color: #039be5;
     padding: 1em;
     display: flex;
     flex: 1 0 0;
@@ -12,11 +12,18 @@
     line-height: 32px;
     margin: 2em;
     .btn-flat {
+        color: rgb(3, 155, 229);
         &:active {
-            background-color: rgba(246, 178, 181, 0.2);
+            color: rgba(3, 155, 229, 0.5);
         }
         &:hover {
-            background-color: rgba(246, 178, 181, 0.4);
+            color: rgba(3, 155, 229, 0.5);
+        }
+        &:focus {
+            background-color: transparent;
+        }
+        i {
+            font-size: 3em;
         }
     }
     .btn {
@@ -28,7 +35,8 @@
 }
 
 .full-text-pages {
-    font-size: 2em;
+    font-size: 2.4em;
+    font-weight: bold;
     vertical-align: middle;
 }
 .full-text-details {
@@ -41,5 +49,13 @@
     .full-text-ctls {
         padding: 0.6em;
         margin: 0.2em 0.4em 1em 0.4em;
+        .btn-flat {
+            i {
+                font-size: 1.6em;
+            }
+        }
+    }
+    .full-text-pages {
+        font-size: 1.4em;
     }
 }

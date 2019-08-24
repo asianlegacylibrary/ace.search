@@ -58,6 +58,7 @@ export const fetchFullText = (term, result) => async dispatch => {
         dispatch({
             type: types.RECEIVE_FULL_TEXT,
             fulltext: response.data.hits[0].highlight.tibtext,
+            term: term,
         })
     } catch (error) {
         dispatch({

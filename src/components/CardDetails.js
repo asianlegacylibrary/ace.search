@@ -3,7 +3,7 @@ import '../assets/sass/card.scss'
 import React from 'react'
 import { connect } from 'react-redux'
 import * as types from '../store/types'
-import { parseLines } from '../store/utilities'
+import { parseLinesAndHighlight } from '../store/utilities'
 
 const CardDetails = ({ result, dispatch, term }) => {
     const { _source } = result
@@ -30,7 +30,7 @@ const CardDetails = ({ result, dispatch, term }) => {
     Object.entries(ordered).forEach((s, i) => {
         let item = s[1]
         if (typeof item === 'string' && item.length > 0 && isNaN(item)) {
-            item = parseLines(item, term)
+            item = parseLinesAndHighlight(item, term)
         }
 
         if (s[1] && s[1].length > 1) {
@@ -55,8 +55,8 @@ const CardDetails = ({ result, dispatch, term }) => {
                         className="full-text-selection right"
                         onClick={() =>
                             dispatch({
-                                type: types.SET_FULL_TEXT,
-                                payload: result,
+                                type: types.SET_FULL_TEXT_DETAILS,
+                                details: result,
                             })
                         }
                     >

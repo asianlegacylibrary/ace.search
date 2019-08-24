@@ -25,9 +25,7 @@ class FullText extends Component {
         this.setState({
             parsedText: pages,
             numPages: pages.length,
-            paginationMsg: `Folios ${pages[0].id} to ${
-                pages[pages.length - 1].id
-            }.`,
+            paginationMsg: `Folios ${pages[0].id} to ${pages[pages.length - 1].id}.`,
         })
     }
 
@@ -114,27 +112,35 @@ class FullText extends Component {
                         <a
                             href="#!"
                             disabled={btnEnables.disableMin}
-                            className="waves-effect waves-light btn-flat"
+                            className="btn-flat"
                             onClick={counter.min}
-                        >{`<<`}</a>
+                        >
+                            <i className="fad fa-chevron-double-left" />
+                        </a>
                         <a
                             href="#!"
                             disabled={btnEnables.disableDec}
-                            className="waves-effect waves-light btn-flat"
+                            className="btn-flat"
                             onClick={counter.decrease}
-                        >{`<`}</a>
+                        >
+                            <i className="fad fa-chevron-left" />
+                        </a>
                         <a
                             href="#!"
                             disabled={btnEnables.disableInc}
-                            className="waves-effect waves-light btn-flat"
+                            className="btn-flat"
                             onClick={counter.increase}
-                        >{`>`}</a>
+                        >
+                            <i className="fad fa-chevron-right" />
+                        </a>
                         <a
                             href="#!"
                             disabled={btnEnables.disableMax}
-                            className="waves-effect waves-light btn-flat"
+                            className="btn-flat"
                             onClick={counter.max}
-                        >{`>>`}</a>
+                        >
+                            <i className="fad fa-chevron-double-right" />
+                        </a>
                         <p className="full-text-pages">
                             {parsedText[counter.value].id}
                         </p>

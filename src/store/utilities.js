@@ -22,6 +22,17 @@ export const parseLines = text => {
     return text.replace(doubleComma, `<br /><br />`)
 }
 
+export const parseLinesAndHighlight = (text, term) => {
+    let termRegex = new RegExp(`(${term})`, 'ig')
+    let doubleComma = new RegExp(`(, ,)`, 'g')
+    //let comma = `( ,)`
+    //let rr = new RegExp(`(\\n\\r)`)
+    return text
+        .replace(termRegex, `<em>${term}</em>`)
+        .replace(doubleComma, `<br /><br />`)
+    //.replace(new RegExp(comma, 'g'), `<br />`)
+}
+
 /* Create pages from full text
 ------------------------------
 1. split text on folio number (string > array)
