@@ -22,6 +22,7 @@ export const parseLines = text => {
     return text.replace(doubleComma, `<br /><br />`)
 }
 
+// currently used for CARD DETAILS
 export const parseLinesAndHighlight = (text, term) => {
     let termRegex = new RegExp(`(${term})`, 'ig')
     let doubleComma = new RegExp(`(, ,)`, 'g')
@@ -45,14 +46,54 @@ export const createPages = text => {
     let r = `(@[0-9]\\w+)` //`(@[0-9]//w+)
     let raw = text.split(new RegExp(r, 'g'))
 
+    let matchTest = new RegExp(/<em/, 'g')
+    let match = false
+
+    if (raw.length === 1) {
+        if (matchTest.test(raw[0])) {
+            match = true
+        }
+        return [{ id: `@000`, termMatch: match, data: raw[0] }]
+    }
+
     let o = []
+
     raw.forEach((a, i) => {
+        match = false
         if (raw.length - 1 > i) {
+            // check for <em and add MATCH! to obj
+            if (matchTest.test(raw[i + 1])) {
+                match = true
+            }
             if (a.charAt(0) === '@') {
-                return o.push({ id: a, data: raw[i + 1] })
+                return o.push({ id: a, termMatch: match, data: raw[i + 1] })
             }
         }
     })
 
     return o
 }
+
+// export const useADangCounter = (stateCountObject, referenceObject) => {
+//     let count = stateCountObject
+//     let max = referenceObject.length - 1
+
+//     return {
+//         value: count,
+//         max: () =>
+//             type === 'count'
+//                 ? this.setState({ count: max })
+//                 : this.setState({ matchCount: max }),
+//         min: () => this.setState({ count: 0 }),
+//         increase: () =>
+//             count === max
+//                 ? null
+//                 : this.setState({ count: this.state.count + 1 }),
+//         decrease: () =>
+//             count === 0
+//                 ? null
+//                 : this.setState(prevState => ({
+//                       count: prevState.count - 1,
+//                   })),
+//     }
+// }

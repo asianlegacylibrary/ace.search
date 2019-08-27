@@ -44,6 +44,28 @@
     font-weight: bold;
     text-transform: uppercase;
 }
+
+.go-to-span {
+    color: rgb(3, 155, 229);
+    cursor: pointer;
+
+    &:active {
+        color: rgba(3, 155, 229, 0.5);
+    }
+    &:hover {
+        color: rgba(3, 155, 229, 0.5);
+    }
+    &:focus {
+        background-color: transparent;
+    }
+    i {
+        font-size: 3em;
+    }
+}
+.disabled {
+    pointer-events: none;
+    color: #ccc;
+}
 @media #{$small-and-down} {
     // styles for small screens and down
     .full-text-ctls {

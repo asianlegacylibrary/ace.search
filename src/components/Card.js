@@ -10,7 +10,6 @@ import {
     addToFavorites,
     removeFromFavorites,
 } from '../store/actions'
-import * as types from '../store/types'
 
 class Card extends Component {
     state = {

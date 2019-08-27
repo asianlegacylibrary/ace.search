@@ -54,7 +54,6 @@ export const fetchFullText = (term, result) => async dispatch => {
         const response = await expressURL.get(getURL, {
             params: { term },
         })
-        console.log(response)
         dispatch({
             type: types.RECEIVE_FULL_TEXT,
             fulltext: response.data.hits[0].highlight.tibtext,
