@@ -4,19 +4,23 @@ import { connect } from 'react-redux'
 import { parseLines } from '../store/utilities'
 
 class FullText extends Component {
-    state = {
-        currentPage: null,
-        initialMatch: true,
-        count: 0,
-        matchCount: 0,
-        btnEnables: {
+    constructor(props) {
+        super(props)
+        this.state = {
+            currentPage: null,
+            initialMatch: true,
+            count: 0,
+            matchCount: 0,
+        }
+
+        this.btnEnables = {
             disableMin: false,
             disableMax: false,
             disableInc: false,
             disableDec: false,
             disableMatchDec: false,
             disableMatchInc: false,
-        },
+        }
     }
 
     componentDidMount() {
@@ -47,6 +51,9 @@ class FullText extends Component {
     setPage = name => {
         const { termLocations, fulltext } = this.props.text
         const { matchCount, count } = this.state
+        let matchIndex = termLocations.findIndex(
+            id => id === fulltext[count].id
+        )
         if (name === 'matchCount') {
             this.setState({
                 currentPage: termLocations[matchCount],
@@ -60,10 +67,14 @@ class FullText extends Component {
             this.setState({
                 currentPage: fulltext[count].id,
             })
+            if (matchIndex > 0) {
+                this.setState({ matchCount: matchIndex })
+            }
         }
     }
 
-    handleCounter = (name, type, referenceNum = 0) => {
+    handleCounter = (e, name, type, referenceNum = 0) => {
+        e.preventDefault()
         let max = referenceNum > 0 ? referenceNum - 1 : referenceNum
         switch (type) {
             case 'min':
@@ -73,13 +84,22 @@ class FullText extends Component {
                 this.setState({ [name]: max }, () => this.setPage(name))
                 break
             case 'increase':
-                if (this.state.initialMatch) {
-                    this.setState({ initialMatch: false })
-                    if (
-                        this.state.currentPage !==
-                        this.props.text.termLocations[0]
-                    ) {
-                        this.setState({ [name]: 0 }, () => this.setPage(name))
+                if (type === 'matchCount') {
+                    if (this.state.initialMatch) {
+                        this.setState({ initialMatch: false })
+                        if (
+                            this.state.currentPage !==
+                            this.props.text.termLocations[0]
+                        ) {
+                            this.setState({ [name]: 0 }, () =>
+                                this.setPage(name)
+                            )
+                        }
+                    } else {
+                        this.setState(
+                            prevState => ({ [name]: prevState[name] + 1 }),
+                            () => this.setPage(name)
+                        )
                     }
                 } else {
                     this.setState(
@@ -100,7 +120,7 @@ class FullText extends Component {
     }
 
     handleMatches = () => {
-        const { btnEnables, currentPage } = this.state
+        const { currentPage } = this.state
         const { termLocations, termOccurrences } = this.props.text
 
         let matches = termOccurrences > 1 ? 'matches' : 'match'
@@ -113,22 +133,24 @@ class FullText extends Component {
             let disabledGoToBtn =
                 termLocations[0] === currentPage ? 'disabled' : ''
             msgSupplement = (
-                <span
+                <a
+                    href="#/"
                     className={`go-to-span ${disabledGoToBtn}`}
-                    onClick={e => this.handleCounter('matchCount', 'min')}
+                    onClick={e => this.handleCounter(e, 'matchCount', 'min')}
                 >
                     {`  GO TO MATCH ${termLocations[0]}`}
-                </span>
+                </a>
             )
         } else {
             btns = (
                 <React.Fragment>
                     <a
-                        href="#!"
+                        href="#/"
                         className="btn-flat"
-                        disabled={btnEnables.disableMatchDec}
+                        disabled={this.btnEnables.disableMatchDec}
                         onClick={e =>
                             this.handleCounter(
+                                e,
                                 'matchCount',
                                 'decrease',
                                 termLocations.length
@@ -138,11 +160,12 @@ class FullText extends Component {
                         PREV MATCH
                     </a>
                     <a
-                        href="#!"
+                        href="#/"
                         className="btn-flat"
-                        disabled={btnEnables.disableMatchInc}
+                        disabled={this.btnEnables.disableMatchInc}
                         onClick={e =>
                             this.handleCounter(
+                                e,
                                 'matchCount',
                                 'increase',
                                 termLocations.length
@@ -167,73 +190,83 @@ class FullText extends Component {
     }
 
     setUpCtls = renderedPageId => {
-        const { btnEnables, matchCount, count } = this.state
+        const { matchCount, count } = this.state
         const { fulltext, termLocations } = this.props.text
 
         if (count <= 0) {
-            btnEnables.disableMin = true
-            btnEnables.disableDec = true
+            this.btnEnables.disableMin = true
+            this.btnEnables.disableDec = true
         } else {
-            btnEnables.disableMin = false
-            btnEnables.disableDec = false
+            this.btnEnables.disableMin = false
+            this.btnEnables.disableDec = false
         }
 
         if (count >= fulltext.length - 1) {
-            btnEnables.disableMax = true
-            btnEnables.disableInc = true
+            this.btnEnables.disableMax = true
+            this.btnEnables.disableInc = true
         } else {
-            btnEnables.disableMax = false
-            btnEnables.disableInc = false
+            this.btnEnables.disableMax = false
+            this.btnEnables.disableInc = false
         }
 
         if (matchCount <= 0) {
-            btnEnables.disableMatchDec = true
+            this.btnEnables.disableMatchDec = true
         } else {
-            btnEnables.disableMatchDec = false
+            this.btnEnables.disableMatchDec = false
         }
 
         if (matchCount >= termLocations.length - 1) {
-            btnEnables.disableMatchInc = true
+            this.btnEnables.disableMatchInc = true
         } else {
-            btnEnables.disableMatchInc = false
+            this.btnEnables.disableMatchInc = false
         }
 
         return (
             <div className="full-text-ctls">
                 <a
                     href="#!"
-                    disabled={btnEnables.disableMin}
+                    disabled={this.btnEnables.disableMin}
                     className="btn-flat"
-                    onClick={() => this.handleCounter('count', 'min')}
+                    onClick={e => this.handleCounter(e, 'count', 'min')}
                 >
                     <i className="fad fa-chevron-double-left" />
                 </a>
                 <a
                     href="#!"
-                    disabled={btnEnables.disableDec}
+                    disabled={this.btnEnables.disableDec}
                     className="btn-flat"
-                    onClick={() =>
-                        this.handleCounter('count', 'decrease', fulltext.length)
+                    onClick={e =>
+                        this.handleCounter(
+                            e,
+                            'count',
+                            'decrease',
+                            fulltext.length
+                        )
                     }
                 >
                     <i className="fad fa-chevron-left" />
                 </a>
                 <a
                     href="#!"
-                    disabled={btnEnables.disableInc}
+                    disabled={this.btnEnables.disableInc}
                     className="btn-flat"
-                    onClick={() =>
-                        this.handleCounter('count', 'increase', fulltext.length)
+                    onClick={e =>
+                        this.handleCounter(
+                            e,
+                            'count',
+                            'increase',
+                            fulltext.length
+                        )
                     }
                 >
                     <i className="fad fa-chevron-right" />
                 </a>
                 <a
                     href="#!"
-                    disabled={btnEnables.disableMax}
+                    disabled={this.btnEnables.disableMax}
                     className="btn-flat"
-                    onClick={() =>
-                        this.handleCounter('count', 'max', fulltext.length)
+                    onClick={e =>
+                        this.handleCounter(e, 'count', 'max', fulltext.length)
                     }
                 >
                     <i className="fad fa-chevron-double-right" />
