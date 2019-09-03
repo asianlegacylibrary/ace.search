@@ -18,8 +18,9 @@ TO-DO: FIND OUT FROM TRANSLATORS HOW TO PARSE TEXT PROPERLY
 1. 
 */
 export const parseLines = text => {
-    let doubleComma = new RegExp(`(, ,)`, 'g')
-    return text.replace(doubleComma, `<br /><br />`)
+    //let doubleComma = new RegExp(`(, ,)`, 'g')
+    //return text.replace(doubleComma, `<br /><br />`)
+    return text.split(', ,').join('\r\n')
 }
 
 // currently used for CARD DETAILS

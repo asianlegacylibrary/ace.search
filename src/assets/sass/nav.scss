@@ -16,11 +16,51 @@ nav {
 .img-cover {
     background-size: cover;
 }
+.sidenav {
+    background-color: $c-darker;
+    color: $c-light;
+    li {
+        a {
+            &:hover {
+                background-color: $c-dark;
+                > i {
+                    color: rgba($color: $c-light, $alpha: 1);
+                }
+            }
+            i {
+                color: rgba($color: $c-light, $alpha: 0.54);
+            }
+        }
+    }
+    .collapsible-header {
+        &:hover,
+        &:focus {
+            background-color: $c-darker;
+            opacity: 0.6;
+        }
+    }
+    .collapsible-body {
+        border-bottom: 1px dashed #666;
+        background-color: $c-dark;
+        padding: 0 1em;
+    }
+    .user-view {
+        padding: 1em 2em;
+        p {
+            padding: 0 0 1em 0;
+            line-height: 1.2em;
+            font-size: 1.1em;
+        }
+        h4 {
+            letter-spacing: 0.1em;
+            font-family: 'Noto Serif', serif;
+            color: $c-gold-dark;
+        }
+    }
+}
 
-.sidenav .collapsible-body,
-.user-view p {
-    padding: 1em;
-    line-height: 1.2em;
+.collapsible {
+    border-left: 1px solid $c-gold-dark;
 }
 
 nav a.sidenav-trigger {
@@ -29,7 +69,7 @@ nav a.sidenav-trigger {
     line-height: 40px;
     background-color: transparent;
     box-shadow: none;
-    transition: color 500ms;
+    transition: color 600ms;
     &:hover {
         color: $c-gold;
         background-color: transparent;

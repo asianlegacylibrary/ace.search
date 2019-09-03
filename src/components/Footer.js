@@ -8,7 +8,7 @@ export default () => {
                 <div className="row">
                     <div className="col l6 s12">
                         <h5 className="white-text">
-                            Asian Classics Input Project
+                            Asian Classics Explorer (ACE)
                         </h5>
                         <p className="grey-text text-lighten-4">
                             We travel the globe searching for surviving texts in
@@ -27,7 +27,7 @@ export default () => {
                         <ul>
                             <li>
                                 <a
-                                    className="grey-text text-lighten-3"
+                                    className="grey-text text-lighten-3 footer-link"
                                     href="http://asianclassics.org"
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -37,7 +37,7 @@ export default () => {
                             </li>
                             <li>
                                 <a
-                                    className="grey-text text-lighten-3"
+                                    className="grey-text text-lighten-3 footer-link"
                                     href="http://nlm.asianclassics.org"
                                     target="_blank"
                                     rel="noopener noreferrer"

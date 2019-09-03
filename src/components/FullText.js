@@ -84,13 +84,14 @@ class FullText extends Component {
                 this.setState({ [name]: max }, () => this.setPage(name))
                 break
             case 'increase':
-                if (type === 'matchCount') {
+                if (name === 'matchCount') {
                     if (this.state.initialMatch) {
                         this.setState({ initialMatch: false })
                         if (
                             this.state.currentPage !==
                             this.props.text.termLocations[0]
                         ) {
+                            console.log('setting matchCount to 0')
                             this.setState({ [name]: 0 }, () =>
                                 this.setPage(name)
                             )
@@ -124,9 +125,13 @@ class FullText extends Component {
         const { termLocations, termOccurrences } = this.props.text
 
         let matches = termOccurrences > 1 ? 'matches' : 'match'
-        let pages = termLocations.length > 1 ? 'pages' : 'page'
+        let msg
+        if (termLocations.length > 1) {
+            msg = `<em>${this.props.term}</em> ${termOccurrences} ${matches} found on ${termLocations.length} pages.`
+        } else {
+            msg = `<em>${this.props.term}</em> ${termOccurrences} ${matches} found.`
+        }
 
-        let msg = `${termOccurrences} ${matches} found over ${termLocations.length} ${pages}.`
         let msgSupplement = null
         let btns = null
         if (termLocations.length === 1) {
@@ -181,8 +186,8 @@ class FullText extends Component {
         return (
             <div className="full-text-details">
                 <p className="meta-item">
-                    {msg}
-                    {msgSupplement}
+                    <span dangerouslySetInnerHTML={{ __html: msg }} />
+                    <span>{msgSupplement}</span>
                 </p>
                 <span className="full-text-details">{btns}</span>
             </div>
@@ -291,12 +296,12 @@ class FullText extends Component {
             <div className="card grey lighten-3">
                 <div className="card-content blue-grey-text darken-4">
                     <p className="result-meta">{`This text has approximately ${fulltext.length} pages. ${paginationMsg}`}</p>
-                    <div className="full-text-details">
+                    {/* <div className="full-text-details">
                         <span className="full-text-details">
                             <i className="fad fa-arrow-right" /> Expandable
                             Details Pane (Coming Soon)
                         </span>
-                    </div>
+                    </div> */}
                     {termLocations.length && fulltext.length > 1
                         ? this.handleMatches()
                         : null}
@@ -305,9 +310,9 @@ class FullText extends Component {
                     <div className="flow-text">
                         <p
                             className="full-text"
+                            style={{ whiteSpace: 'pre-wrap' }}
                             dangerouslySetInnerHTML={{
-                                // __html: parseLines(selectedPage.data),
-                                __html: selectedPage.data,
+                                __html: parseLines(selectedPage.data),
                             }}
                         />
                     </div>
@@ -319,6 +324,7 @@ class FullText extends Component {
 
 const mapStateToProps = state => ({
     text: state.selectedText,
+    term: state.currentSearchTerm,
 })
 
 export default connect(mapStateToProps)(FullText)

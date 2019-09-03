@@ -54,7 +54,7 @@ class NavSidebar extends React.Component {
                     </li>
                     <li>
                         <div className="user-view">
-                            <h4 className="blue-text text-darken-4">MENU</h4>
+                            <h4>ACE</h4>
                             <p>
                                 Currently, this only shows you a listing of
                                 starred items and search term history. Actual

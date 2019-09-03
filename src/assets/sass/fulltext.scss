@@ -38,6 +38,9 @@
     font-size: 2.4em;
     font-weight: bold;
     vertical-align: middle;
+    .btn-flat {
+        color: rgb(3, 155, 229);
+    }
 }
 .full-text-details {
     margin-bottom: 3em;
@@ -65,32 +68,6 @@
 .disabled {
     pointer-events: none;
     color: #ccc;
-}
-
-.yo:target {
-    animation: highlight 3s forwards;
-    background-color: blue;
-}
-#hlt:target {
-    animation: highlight 3s forwards;
-    background-color: red;
-}
-.overlayclose:target {
-    animation: highlight 3s forwards;
-    background-color: red;
-}
-.overlayclose {
-    position: fixed;
-    top: 0;
-}
-
-@keyframes highlight {
-    80% {
-        background-color: red;
-    }
-    100% {
-        background-color: yellow;
-    }
 }
 
 @media #{$small-and-down} {
