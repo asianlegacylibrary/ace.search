@@ -3,10 +3,10 @@
 .card .card-content,
 .card .card-action {
     padding: 18px;
-    a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
+    a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):not(.disabled) {
         color: $c-gold-dark;
     }
-    a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover {
+    a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):not(.disabled):hover {
         color: $c-gold;
     }
 }
@@ -23,7 +23,7 @@
 .text-active {
     -webkit-text-stroke-width: 1px;
     // -webkit-text-stroke-color: $c-gold-dark;
-    color: red;
+    color: $c-red;
 }
 .full-text-selection {
     color: $c-gold-dark;

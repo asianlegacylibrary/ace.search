@@ -1,17 +1,9 @@
 import React from 'react'
-import { statics } from '../statics'
+import { getRemainderAfterHighlights } from '../store/utilities'
 
 export default ({ type, result }) => {
     let remainder = []
-
-    const highlightKeys = Object.keys(result.highlight)
-
-    const remainingKeys = statics[`${type}_keys`].filter(m => {
-        if (result._source[m].length <= 0) {
-            return null
-        }
-        return highlightKeys.indexOf(m) === -1
-    })
+    const remainingKeys = getRemainderAfterHighlights(result, type)
 
     remainder = remainingKeys.map((r, i) => {
         return (

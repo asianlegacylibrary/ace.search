@@ -22,11 +22,13 @@ export default (state = null, action) => {
 
             // get count of term occurrences in full-text
             let count = (action.fulltext[0].match(/<em/g) || []).length
+            console.log('pre div', count)
             if (count > 0) {
                 count = Math.round(
                     count / action.term.trim().split(/\s+/).length
                 )
             }
+            console.log('post div', count)
 
             // create array of term locations
             let termLocs = pages.reduce((acc, cur, i) => {

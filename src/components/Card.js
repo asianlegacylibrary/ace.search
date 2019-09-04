@@ -64,8 +64,14 @@ class Card extends Component {
             <React.Fragment>
                 <div className="card-content blue-grey-text darken-4">
                     <div className="result-meta">
-                        <span>ID: {result._id} </span>
-                        <span>Score: {result._score}</span>
+                        <span className="boldy">ID: </span>
+                        <span> {result._id} </span>
+                        {type === 'texts' ? (
+                            <React.Fragment>
+                                <span className="boldy"> Catalog Number: </span>
+                                <span> {result._source.catalognumber}</span>
+                            </React.Fragment>
+                        ) : null}
                     </div>
                     <CardHighlights type={type} result={result} />
                 </div>

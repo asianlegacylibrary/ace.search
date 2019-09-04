@@ -84,6 +84,11 @@ nav a.sidenav-trigger {
     }
 }
 
+.side-dagger {
+    transform-origin: 24% 56%;
+    margin-left: 0.6em;
+}
+
 @media #{$small-and-down} {
     // styles for medium screens and down
     nav {

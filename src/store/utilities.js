@@ -1,3 +1,5 @@
+import { statics } from '../statics'
+
 export function getRandomInt(min, max) {
     min = Math.ceil(min)
     max = Math.floor(max)
@@ -35,6 +37,19 @@ export const parseLinesAndHighlight = (text, term) => {
     //.replace(new RegExp(comma, 'g'), `<br />`)
 }
 
+export const getRemainderAfterHighlights = (result, type) => {
+    const highlightKeys = Object.keys(result.highlight)
+
+    const remainingKeys = statics[`${type}_keys`].filter(m => {
+        if (result._source[m].length <= 0) {
+            return null
+        }
+        return highlightKeys.indexOf(m) === -1
+    })
+
+    return remainingKeys
+}
+
 /* Create pages from full text
 ------------------------------
 1. split text on folio number (string > array)
@@ -68,6 +83,29 @@ export const createPages = text => {
             }
             if (a.charAt(0) === '@') {
                 return o.push({ id: a, termMatch: match, data: raw[i + 1] })
+            } else {
+                let pageID = null
+                if (i === 0) {
+                    pageID = '@000'
+                } else {
+                    pageID = `NO_ID_${i}`
+                }
+                if (
+                    (a.length > 0 && a.charAt(0) !== '@' && i === 0) ||
+                    (i > 0 &&
+                        a.length > 0 &&
+                        a.charAt(0) !== '@' &&
+                        raw[i - 1].charAt(0) !== '@')
+                ) {
+                    if (matchTest.test(a)) {
+                        match = true
+                    }
+                    return o.push({
+                        id: pageID,
+                        termMatch: match,
+                        data: a,
+                    })
+                }
             }
         }
     })

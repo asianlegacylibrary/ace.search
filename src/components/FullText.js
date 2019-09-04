@@ -198,6 +198,10 @@ class FullText extends Component {
         const { matchCount, count } = this.state
         const { fulltext, termLocations } = this.props.text
 
+        if (fulltext.length === 1) {
+            return null
+        }
+
         if (count <= 0) {
             this.btnEnables.disableMin = true
             this.btnEnables.disableDec = true
@@ -302,7 +306,7 @@ class FullText extends Component {
                             Details Pane (Coming Soon)
                         </span>
                     </div> */}
-                    {termLocations.length && fulltext.length > 1
+                    {termLocations.length && fulltext.length > 0
                         ? this.handleMatches()
                         : null}
 
