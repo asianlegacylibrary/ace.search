@@ -35,6 +35,7 @@ class SearchForm extends Component {
 
         if (total > offset + statics.searchOptions.resultSetSize) {
             newOffset = offset + statics.searchOptions.resultSetSize
+
             this.props.fetchResults(
                 this.state.term,
                 newOffset,
@@ -130,7 +131,7 @@ class SearchForm extends Component {
                     >
                         {this.props.currentlyFetchingResults
                             ? 'Searching'
-                            : 'Search'}
+                            : `Search`}
                     </button>
                     <div className="result-pagination">
                         <button

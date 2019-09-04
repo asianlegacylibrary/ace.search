@@ -3,6 +3,12 @@
 .card .card-content,
 .card .card-action {
     padding: 18px;
+    a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
+        color: $c-gold-dark;
+    }
+    a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover {
+        color: $c-gold;
+    }
 }
 
 .meta-items {

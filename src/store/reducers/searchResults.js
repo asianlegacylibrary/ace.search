@@ -8,20 +8,20 @@ export default (state = [], action) => {
             return {
                 ...state,
                 isFetching: false,
-                catalogs: action.payload.catalogs,
-                texts: action.payload.texts,
+                catalogs: action.payload.catalogs.hits,
+                texts: action.payload.texts.hits,
             }
         case types.RECEIVE_CATALOGS:
             return {
                 ...state,
                 isFetching: false,
-                catalogs: action.payload,
+                catalogs: action.payload.hits,
             }
         case types.RECEIVE_TEXTS:
             return {
                 ...state,
                 isFetching: false,
-                texts: action.payload,
+                texts: action.payload.hits,
             }
         case types.ERROR_SEARCH_RESULTS:
             return {

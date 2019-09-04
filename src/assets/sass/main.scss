@@ -4,9 +4,23 @@ main {
     flex: 1 0 auto;
 }
 
+.absolute-diamond {
+    position: absolute;
+    color: $c-gold-dark;
+    opacity: 0.2;
+    top: 120px;
+    right: 100px;
+}
+
 @media #{$medium-and-up} {
     // styles for medium screens and larger
     .container {
         width: $w-11;
+    }
+}
+
+@media #{$medium-and-down} {
+    .absolute-diamond {
+        opacity: 0;
     }
 }

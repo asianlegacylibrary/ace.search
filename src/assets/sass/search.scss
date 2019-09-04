@@ -70,7 +70,22 @@
     .row .col {
         padding: 0;
     }
+    .tabs .tab a {
+        color: $c-gold-dark;
+        &.active,
+        &:focus.active,
+        &:focus {
+            background-color: rgba($color: $c-gold-dark, $alpha: 0.4);
+            color: $c-dark;
+        }
+        &:hover.active,
+        &:hover {
+            background-color: rgba($color: $c-gold-dark, $alpha: 0.6);
+            color: $c-dark;
+        }
+    }
 }
+
 .search-menu {
     li:nth-child(3) {
         a {

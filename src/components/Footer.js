@@ -52,9 +52,9 @@ export default () => {
             <div className="footer-copyright">
                 <div className="container">
                     © 2018 Asian Classics Input Project
-                    <a className="grey-text text-lighten-4 right" href="#!">
+                    {/* <a className="grey-text text-lighten-4 right" href="#!">
                         More Links
-                    </a>
+                    </a> */}
                 </div>
             </div>
         </footer>

@@ -1,5 +1,8 @@
 import '../assets/sass/nav.scss'
 import logo from '../assets/img/logo_acip.png'
+import cloth from '../assets/img/yellow-stacks-focus.jpg'
+import cloth1 from '../assets/img/purple-dark-stacks-beauty.jpg'
+import cloth2 from '../assets/img/purple-dark-stacks-beauty-crop.jpg'
 import React from 'react'
 
 export default () => {

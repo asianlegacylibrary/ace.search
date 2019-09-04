@@ -7,18 +7,18 @@
         background-color: $c-darker;
         color: $c-gold;
     }
-}
-.footer-copyright {
-    background-color: $c-darker !important;
-}
-
-.footer-link {
-    padding: 0.2em;
-    line-height: 1.4em;
-    background-color: transparent;
-    transition: 400ms ease-in-out background-color, 100ms ease-in color;
-    &:hover {
-        background-color: $c-gold;
-        color: #222 !important;
+    .footer-copyright {
+        background-color: $c-darker !important;
+        color: $c-gold;
+    }
+    .footer-link {
+        padding: 0.2em;
+        line-height: 1.4em;
+        background-color: transparent;
+        transition: 400ms ease-in-out background-color, 100ms ease-in color;
+        &:hover {
+            background-color: $c-gold;
+            color: #222 !important;
+        }
     }
 }

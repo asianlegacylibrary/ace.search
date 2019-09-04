@@ -12,6 +12,9 @@ nav {
         line-height: 40px;
     }
 }
+.nav-wrapper {
+    background-color: $c-dark;
+}
 
 .img-cover {
     background-size: cover;
@@ -41,6 +44,8 @@ nav {
     }
     .collapsible-body {
         border-bottom: 1px dashed #666;
+        border-top: none;
+        border-right: none;
         background-color: $c-dark;
         padding: 0 1em;
     }
@@ -48,30 +53,32 @@ nav {
         padding: 1em 2em;
         p {
             padding: 0 0 1em 0;
-            line-height: 1.2em;
+            line-height: 1.4em;
             font-size: 1.1em;
         }
         h4 {
-            letter-spacing: 0.1em;
+            letter-spacing: 0.2em;
             font-family: 'Noto Serif', serif;
-            color: $c-gold-dark;
+            color: $c-gold;
         }
     }
 }
 
 .collapsible {
     border-left: 1px solid $c-gold-dark;
+    border-top: none;
+    border-right: none;
 }
 
 nav a.sidenav-trigger {
-    color: $c-gold-dark;
+    color: $c-gold;
     height: 40px;
     line-height: 40px;
     background-color: transparent;
     box-shadow: none;
     transition: color 600ms;
     &:hover {
-        color: $c-gold;
+        color: $c-gold-dark;
         background-color: transparent;
         box-shadow: none;
     }
