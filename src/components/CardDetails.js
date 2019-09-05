@@ -47,7 +47,7 @@ const CardDetails = ({ result, dispatch, term }) => {
                     </React.Fragment>
                 )
             } else if (s[0].includes('tibtext')) {
-                // do nothing with FULL TEXT for now...
+                // just set state and create link
                 full.push(
                     <a
                         key={i}

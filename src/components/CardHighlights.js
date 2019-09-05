@@ -1,11 +1,13 @@
 import React from 'react'
-import { getRemainderAfterHighlights } from '../store/utilities'
+import { getHighlightsAndRemainder } from '../store/utilities'
 
 export default ({ type, result }) => {
-    let remainder = []
-    const remainingKeys = getRemainderAfterHighlights(result, type)
+    const { highlightKeys, highlightRemainingKeys } = getHighlightsAndRemainder(
+        result,
+        type
+    )
 
-    remainder = remainingKeys.map((r, i) => {
+    const remainder = highlightRemainingKeys.map((r, i) => {
         return (
             <p key={i}>
                 <span className="span-title">{r}</span>
@@ -19,14 +21,16 @@ export default ({ type, result }) => {
         )
     })
 
-    const highlightSection = Object.entries(result.highlight).map((k, i) => {
+    const highlightSection = highlightKeys.map((k, i) => {
         return (
             <div key={i} className="result-highlights">
                 <p>
-                    <span className="span-title">{k[0]}</span>
+                    <span className="span-title">{k}</span>
                     <span
                         className="span-details"
-                        dangerouslySetInnerHTML={{ __html: k[1] }}
+                        dangerouslySetInnerHTML={{
+                            __html: result.highlight[k],
+                        }}
                     />
                 </p>
             </div>

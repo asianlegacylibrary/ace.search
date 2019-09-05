@@ -10,6 +10,7 @@ import {
     addToFavorites,
     removeFromFavorites,
 } from '../store/actions'
+import { getHighlightsAndRemainder } from '../store/utilities'
 
 class Card extends Component {
     state = {
@@ -21,6 +22,7 @@ class Card extends Component {
         if (this.props.result._id in this.props.favorites) {
             this.setState({ activeFavorite: true })
         }
+        this.createSections(this.props.result, this.props.type)
     }
 
     handleDetails = e => {
@@ -50,6 +52,18 @@ class Card extends Component {
                 this.props.removeFromFavorites(result._id)
             }
         })
+    }
+
+    createSections = (result, type) => {
+        const {
+            highlightKeys,
+            highlightRemainingKeys,
+        } = getHighlightsAndRemainder(result, type)
+        // console.log(
+        //     'going to create sections',
+        //     highlightKeys,
+        //     highlightRemainingKeys
+        // )
     }
 
     render() {

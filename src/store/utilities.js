@@ -37,17 +37,41 @@ export const parseLinesAndHighlight = (text, term) => {
     //.replace(new RegExp(comma, 'g'), `<br />`)
 }
 
-export const getRemainderAfterHighlights = (result, type) => {
+export const getHighlightsAndRemainder = (result, type) => {
     const highlightKeys = Object.keys(result.highlight)
 
-    const remainingKeys = statics[`${type}_keys`].filter(m => {
+    const highlightRemainingKeys = statics[`${type}_keys`].filter(m => {
         if (result._source[m].length <= 0) {
             return null
         }
         return highlightKeys.indexOf(m) === -1
     })
 
-    return remainingKeys
+    const runningKeys = highlightKeys.concat(highlightRemainingKeys)
+
+    /*
+    HIGHLIGHTS
+    PRIMARY KEYS WITH NO HITS (NO HIGHLIGHTS)
+
+    REMAINING
+    - meta
+    const metaStrings = [
+        'page',
+        'size',
+        'volume',
+        'catalognumber',
+        'collection',
+    ]
+
+    - full text (tibtext)
+    - authors (priauth, auth)
+    - titles (ttl, title)
+    - colophon (colophon)
+    - other 
+
+    */
+
+    return { highlightKeys, highlightRemainingKeys }
 }
 
 /* Create pages from full text
@@ -59,12 +83,11 @@ export const getRemainderAfterHighlights = (result, type) => {
 --- this will be used for NEXT / PREV match btns on full text component
 */
 export const createPages = text => {
-    let r = `(@[0-9]\\w+)` //`(@[0-9]//w+)
+    let r = `(@[0-9]\\s+|@[0-9]\\w+|@[a-z]\\s+|@[a-z]\\w+)` //`(@[0-9]//w+)
     let raw = text.split(new RegExp(r, 'g'))
 
     let matchTest = new RegExp(/<em/, 'g')
     let match = false
-
     if (raw.length === 1) {
         if (matchTest.test(raw[0])) {
             match = true
