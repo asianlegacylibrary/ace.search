@@ -6,6 +6,7 @@ const buildDetails = result => {
     let meta = []
     let author = []
     let title = []
+    let colophon = []
     const checkLoc = (result, key) => {
         let type = ''
         if (result.highlight[key]) {
@@ -62,13 +63,28 @@ const buildDetails = result => {
             )
         }
     })
+    if (result._source.colophon && result._source.colophon.length > 0) {
+        let type = checkLoc(result, 'colophon')
+        if (type.length > 0) {
+            colophon.push(
+                <p key="colophon" className="author-item flow-text">
+                    <span className="span-title">COLOPHON</span>
+                    <span
+                        dangerouslySetInnerHTML={{
+                            __html: result[type].colophon,
+                        }}
+                    />
+                </p>
+            )
+        }
+    }
 
-    return { meta, author, title }
+    return { meta, author, title, colophon }
 }
 
 export default ({ result, handleSelectedText }) => {
     let full = []
-    const { meta, author, title } = buildDetails(result)
+    const { meta, author, title, colophon } = buildDetails(result)
 
     if (result._source.tibtext && result._source.tibtext.length > 0) {
         full.push(
@@ -103,9 +119,13 @@ export default ({ result, handleSelectedText }) => {
                 </div>
             ) : null}
 
-            <div className="meta-items">
-                <p className="meta-item">{full}</p>
-            </div>
+            {colophon.length > 0 ? colophon : null}
+
+            {full.length > 0 ? (
+                <div className="meta-items">
+                    <p className="meta-item">{full}</p>
+                </div>
+            ) : null}
         </React.Fragment>
     )
 }

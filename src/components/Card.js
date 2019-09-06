@@ -10,7 +10,6 @@ import {
     addToFavorites,
     removeFromFavorites,
 } from '../store/actions'
-import { getKeysForCard } from '../store/utilities'
 import { statics } from '../statics'
 
 class Card extends Component {

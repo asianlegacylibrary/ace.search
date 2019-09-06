@@ -1,5 +1,3 @@
-import { statics } from '../statics'
-
 export function getRandomInt(min, max) {
     min = Math.ceil(min)
     max = Math.floor(max)

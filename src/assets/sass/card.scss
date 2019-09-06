@@ -25,15 +25,16 @@
     margin-right: 0.5em;
     line-height: 1.4em;
     padding: 0.3em 0.16em 0.3em 0.3em;
+    color: white;
 }
 .col-gold {
-    background-color: rgba($color: $c-gold, $alpha: 0.6);
+    background-color: rgba($color: $c-gold-dark, $alpha: 0.9);
 }
 .col-blue {
-    background-color: rgba($color: $c-blue, $alpha: 0.6);
+    background-color: rgba($color: $c-blue, $alpha: 0.8);
 }
 .col-red {
-    background-color: rgba($color: $c-red, $alpha: 0.4);
+    background-color: rgba($color: $c-red, $alpha: 0.5);
 }
 .favorites-active,
 .text-active {
