@@ -7,10 +7,23 @@ const SearchResults = ({
     texts,
     searchTypeDisplay,
     selectedText,
+    searching,
 }) => {
     if (!catalogs || !texts) {
         return null
     }
+    if (searching) {
+        return (
+            <div className="search-results">
+                <div className="card grey lighten-3">
+                    <div className="card-content blue-grey-text darken-4">
+                        SEARCHING...
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     let currentResults = (
         <div className="card grey lighten-3">
             <div className="card-content blue-grey-text darken-4">
@@ -40,6 +53,7 @@ const SearchResults = ({
 }
 
 const mapStateToProps = state => ({
+    searching: state.results.isFetching,
     catalogs: state.results.catalogs,
     texts: state.results.texts,
     searchTypeDisplay: state.searchTypeDisplay,

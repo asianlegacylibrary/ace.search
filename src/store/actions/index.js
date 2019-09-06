@@ -116,6 +116,12 @@ export const resetOffsets = () => {
     }
 }
 
+export const clearResults = () => {
+    return {
+        type: types.CLEAR_RESULTS,
+    }
+}
+
 export const setFullTextDetails = details => {
     return {
         type: types.SET_FULL_TEXT_DETAILS,

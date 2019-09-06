@@ -23,6 +23,12 @@ export default (state = [], action) => {
                 isFetching: false,
                 texts: action.payload.hits,
             }
+        case types.CLEAR_RESULTS:
+            return {
+                ...state,
+                texts: null,
+                catalogs: null,
+            }
         case types.ERROR_SEARCH_RESULTS:
             return {
                 ...state,

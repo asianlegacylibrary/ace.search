@@ -32,7 +32,7 @@ export default (state = null, action) => {
             // create array of term locations
             let termLocs = pages.reduce((acc, cur, i) => {
                 if (cur.termMatch) {
-                    acc.push(cur.id)
+                    acc.push(i)
                 }
                 return acc
             }, [])

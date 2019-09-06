@@ -7,7 +7,7 @@ class FullText extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            currentPageIdx: 0,
+            currentPage: null,
             initialMatch: true,
             count: 0,
             matchCount: 0,
@@ -25,7 +25,7 @@ class FullText extends Component {
 
     componentDidMount() {
         document.addEventListener('keydown', this.keyDowns, false)
-        //this.setState({ currentPageIdx: 0 })
+        this.setState({ currentPage: this.props.text.fulltext[0].id })
     }
 
     componentWillUnmount() {
@@ -44,22 +44,29 @@ class FullText extends Component {
         }
     }
 
-    selectedPage = renderedPageIdx => {
-        return this.props.text.fulltext[renderedPageIdx]
+    selectedPage = renderedPageId => {
+        return this.props.text.fulltext.find(p => p.id === renderedPageId)
     }
 
     setPage = name => {
-        const { termLocations } = this.props.text
+        const { termLocations, fulltext } = this.props.text
         const { matchCount, count } = this.state
-        let matchIndex = termLocations.findIndex(id => id === count)
-
+        let matchIndex = termLocations.findIndex(
+            id => id === fulltext[count].id
+        )
         if (name === 'matchCount') {
             this.setState({
-                currentPageIdx: termLocations[matchCount],
-                count: termLocations[matchCount],
+                currentPage: termLocations[matchCount],
+                // set count to array index of fulltext[idx].id
+                count: fulltext.findIndex(
+                    x =>
+                        x.id === this.selectedPage(termLocations[matchCount]).id
+                ),
             })
         } else {
-            this.setState({ currentPageIdx: count })
+            this.setState({
+                currentPage: fulltext[count].id,
+            })
             if (matchIndex > 0) {
                 this.setState({ matchCount: matchIndex })
             }
@@ -81,7 +88,7 @@ class FullText extends Component {
                     if (this.state.initialMatch) {
                         this.setState({ initialMatch: false })
                         if (
-                            this.state.currentPageIdx !==
+                            this.state.currentPage !==
                             this.props.text.termLocations[0]
                         ) {
                             console.log('setting matchCount to 0')
@@ -113,9 +120,18 @@ class FullText extends Component {
         }
     }
 
+    // handleMatches = (e, name, type, referenceNum = 0) => {
+    //     const { termLocations, termOccurrences } = this.props.text
+
+    //     // check if there's a match on that page
+
+    //     // send to handleCounter and change state
+    //     this.handleCounter(e, name, type, referenceNum)
+    // }
+
     setUpMatches = () => {
-        const { currentPageIdx } = this.state
-        const { termLocations, termOccurrences, fulltext } = this.props.text
+        const { currentPage } = this.state
+        const { termLocations, termOccurrences } = this.props.text
 
         let matches = termOccurrences > 1 ? 'matches' : 'match'
         let msg
@@ -129,14 +145,14 @@ class FullText extends Component {
         let btns = null
         if (termLocations.length === 1) {
             let disabledGoToBtn =
-                termLocations[0] === currentPageIdx ? 'disabled' : ''
+                termLocations[0] === currentPage ? 'disabled' : ''
             msgSupplement = (
                 <a
                     href="#/"
                     className={`go-to-span ${disabledGoToBtn}`}
                     onClick={e => this.handleCounter(e, 'matchCount', 'min')}
                 >
-                    {`  GO TO MATCH ${fulltext[termLocations[0]].id}`}
+                    {`  GO TO MATCH ${termLocations[0]}`}
                 </a>
             )
         } else {
@@ -187,7 +203,7 @@ class FullText extends Component {
         )
     }
 
-    setUpCtls = renderedPageIdx => {
+    setUpCtls = renderedPageId => {
         const { matchCount, count } = this.state
         const { fulltext, termLocations } = this.props.text
 
@@ -273,9 +289,7 @@ class FullText extends Component {
                 >
                     <i className="fad fa-chevron-double-right" />
                 </a>
-                <p className="full-text-pages">
-                    {fulltext[renderedPageIdx].id}
-                </p>
+                <p className="full-text-pages">{renderedPageId}</p>
             </div>
         )
     }
@@ -286,8 +300,8 @@ class FullText extends Component {
         }
 
         const { fulltext, termLocations } = this.props.text
-        const renderedPageIdx = this.state.currentPageIdx || 0
-        const selectedPage = this.selectedPage(renderedPageIdx)
+        const renderedPageId = this.state.currentPage || fulltext[0].id
+        const selectedPage = this.selectedPage(renderedPageId)
 
         const paginationMsg = `Folios ${fulltext[0].id} to ${fulltext[fulltext.length - 1].id}.`
 
@@ -305,7 +319,7 @@ class FullText extends Component {
                         ? this.setUpMatches()
                         : null}
 
-                    {this.setUpCtls(renderedPageIdx)}
+                    {this.setUpCtls(renderedPageId)}
                     <div className="flow-text">
                         <p
                             className="full-text"

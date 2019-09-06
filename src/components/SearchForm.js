@@ -8,6 +8,7 @@ import {
     addTermToHistory,
     setCurrentSearchTerm,
     deleteFullText,
+    clearResults,
 } from '../store/actions'
 import { getRandomInt } from '../store/utilities'
 import { statics } from '../statics'
@@ -69,6 +70,7 @@ class SearchForm extends Component {
             deleteFullText,
         } = this.props
         resetOffsets()
+        clearResults()
         deleteFullText()
         fetchResults(this.state.term, 0)
         addTermToHistory(this.state.term)
@@ -184,5 +186,6 @@ export default connect(
         addTermToHistory,
         setCurrentSearchTerm,
         deleteFullText,
+        clearResults,
     }
 )(SearchForm)
