@@ -18,7 +18,23 @@
     margin: 0;
     font-size: 0.8em;
 }
-
+.meta-collection {
+    //background-color controlled in component based on content
+    font-size: 1.4em;
+    font-weight: bold;
+    margin-right: 0.5em;
+    line-height: 1.4em;
+    padding: 0.3em 0.16em 0.3em 0.3em;
+}
+.col-gold {
+    background-color: rgba($color: $c-gold, $alpha: 0.6);
+}
+.col-blue {
+    background-color: rgba($color: $c-blue, $alpha: 0.6);
+}
+.col-red {
+    background-color: rgba($color: $c-red, $alpha: 0.4);
+}
 .favorites-active,
 .text-active {
     -webkit-text-stroke-width: 1px;

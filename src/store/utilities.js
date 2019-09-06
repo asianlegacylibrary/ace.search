@@ -37,43 +37,6 @@ export const parseLinesAndHighlight = (text, term) => {
     //.replace(new RegExp(comma, 'g'), `<br />`)
 }
 
-export const getHighlightsAndRemainder = (result, type) => {
-    const highlightKeys = Object.keys(result.highlight)
-
-    const highlightRemainingKeys = statics[`${type}_keys`].filter(m => {
-        if (result._source[m].length <= 0) {
-            return null
-        }
-        return highlightKeys.indexOf(m) === -1
-    })
-
-    const runningKeys = highlightKeys.concat(highlightRemainingKeys)
-
-    /*
-    HIGHLIGHTS
-    PRIMARY KEYS WITH NO HITS (NO HIGHLIGHTS)
-
-    REMAINING
-    - meta
-    const metaStrings = [
-        'page',
-        'size',
-        'volume',
-        'catalognumber',
-        'collection',
-    ]
-
-    - full text (tibtext)
-    - authors (priauth, auth)
-    - titles (ttl, title)
-    - colophon (colophon)
-    - other 
-
-    */
-
-    return { highlightKeys, highlightRemainingKeys }
-}
-
 /* Create pages from full text
 ------------------------------
 1. split text on folio number (string > array)
@@ -83,8 +46,8 @@ export const getHighlightsAndRemainder = (result, type) => {
 --- this will be used for NEXT / PREV match btns on full text component
 */
 export const createPages = text => {
-    let r = `(@[0-9]\\s+|@[0-9]\\w+|@[a-z]\\s+|@[a-z]\\w+)` //`(@[0-9]//w+)
-    let raw = text.split(new RegExp(r, 'g'))
+    let r = new RegExp(`(@[0-9]\\s+|@[0-9]\\w+|@[a-z]\\s+|@[a-z]\\w+)`, 'g') //`(@[0-9]//w+)
+    let raw = text.split(r) //new RegExp(r, 'g')
 
     let matchTest = new RegExp(/<em/, 'g')
     let match = false

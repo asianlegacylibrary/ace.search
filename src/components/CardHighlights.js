@@ -1,12 +1,23 @@
 import React from 'react'
-import { getHighlightsAndRemainder } from '../store/utilities'
+import { statics } from '../statics'
 
-export default ({ type, result }) => {
-    const { highlightKeys, highlightRemainingKeys } = getHighlightsAndRemainder(
+const getKeysForHighlights = (result, type) => {
+    const highlightKeys = Object.keys(result.highlight)
+
+    const highlightRemainingKeys = statics[`hlt_${type}_keys`].filter(m => {
+        if (result._source[m].length <= 0) {
+            return null
+        }
+        return highlightKeys.indexOf(m) === -1
+    })
+    return { highlightKeys, highlightRemainingKeys }
+}
+
+export default ({ result, type }) => {
+    const { highlightKeys, highlightRemainingKeys } = getKeysForHighlights(
         result,
         type
     )
-
     const remainder = highlightRemainingKeys.map((r, i) => {
         return (
             <p key={i}>
