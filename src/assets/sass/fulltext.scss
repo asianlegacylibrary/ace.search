@@ -64,6 +64,12 @@
     i {
         font-size: 3em;
     }
+    &.disabled,
+    &.go-to-span[disabled] {
+        background-color: transparent !important;
+        color: #b3b2b2 !important;
+        cursor: default;
+    }
 }
 .disabled {
     pointer-events: none;
