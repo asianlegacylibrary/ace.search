@@ -83,18 +83,6 @@ class FullText extends Component {
                         matchIdx: termLocations.length,
                     })
                 }
-                // else {
-                //     let closest
-                //     termLocations.forEach((key, i) => {
-                //         closest = 'none'
-                //         console.log(key, i, this.state.currentPageIdx)
-                //         if (key < this.state.currentPageIdx) {
-                //             return
-                //         }
-                //         closest = i
-                //     })
-                //     console.log('closest', closest)
-                // }
             }
         }
     }
@@ -167,9 +155,6 @@ class FullText extends Component {
         let msgSupplement = null
         let btns = null
         if (termLocations.length === 1) {
-            // let disabledGoToBtn =
-            //     termLocations[0] === currentPageIdx ? 'disabled' : ''
-            //${disabledGoToBtn}
             msgSupplement = (
                 <a
                     href="#/"
@@ -328,12 +313,7 @@ class FullText extends Component {
             <div className="card grey lighten-3">
                 <div className="card-content blue-grey-text darken-4">
                     <p className="result-meta">{`This text has approximately ${fulltext.length} pages. ${paginationMsg}`}</p>
-                    {/* <div className="full-text-details">
-                        <span className="full-text-details">
-                            <i className="fad fa-arrow-right" /> Expandable
-                            Details Pane (Coming Soon)
-                        </span>
-                    </div> */}
+
                     {termLocations.length && fulltext.length > 0
                         ? this.setUpMatches()
                         : null}

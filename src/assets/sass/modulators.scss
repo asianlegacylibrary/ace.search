@@ -1,0 +1,10 @@
+@import './vars.scss';
+
+.bg-circle {
+    color: transparent;
+    transition: color 200ms ease-in-out;
+    padding: 1em;
+    &:hover {
+        color: aquamarine;
+    }
+}

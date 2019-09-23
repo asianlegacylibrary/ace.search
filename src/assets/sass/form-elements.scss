@@ -15,11 +15,12 @@ input[type='search']:not(.browser-default):focus:not([readonly]),
 textarea.materialize-textarea:focus:not([readonly]) {
     border-bottom: 1px solid $c-gold;
     box-shadow: 0 1px 0 0 $c-gold;
+    margin: 0 0 1em 0;
 }
 
 input[type='text'] {
     font-size: 2em !important;
-    margin-bottom: 1.2em !important;
+    margin-bottom: 0.2em !important;
 }
 
 .btn,

@@ -1,6 +1,7 @@
 import '../assets/sass/search.scss'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import SearchPlus from './SearchPlus'
 import {
     fetchResults,
     setOffsets,
@@ -22,6 +23,7 @@ class SearchForm extends Component {
         offsetCurrent: 0,
         offsetSize: statics.searchOptions.resultSetSize,
         initialLoad: true,
+        numberOfPlusSearch: 0,
     }
 
     handleChange = e => {
@@ -77,6 +79,18 @@ class SearchForm extends Component {
         setCurrentSearchTerm(this.state.term)
     }
 
+    handlePlusSearch = e => {
+        e.preventDefault()
+        this.setState(
+            { numberOfPlusSearch: this.state.numberOfPlusSearch + 1 },
+            () => {
+                console.log(
+                    `i want more search by ${this.state.numberOfPlusSearch} times.`
+                )
+            }
+        )
+    }
+
     setUpControls = () => {
         const offset = this.props[`offset_${this.props.searchTypeDisplay}`]
 
@@ -117,6 +131,7 @@ class SearchForm extends Component {
             <div className="row">
                 <div className="search-form">
                     <input
+                        className="search-input"
                         autoFocus
                         type="text"
                         value={this.state.term}
@@ -125,6 +140,13 @@ class SearchForm extends Component {
                             e.key === 'Enter' ? this.handleNewSearch(e) : null
                         }
                     />
+                    <SearchPlus number={this.state.numberOfPlusSearch} />
+                    <button
+                        className="search-plus btn-flat"
+                        onClick={e => this.handlePlusSearch(e)}
+                    >
+                        <i className="fal fa-plus" />
+                    </button>
 
                     <button
                         className="waves-effect waves-light btn wide"
