@@ -4,6 +4,19 @@ export function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
+export function ID() {
+    // Math.random should be unique because of its seeding algorithm.
+    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
+    // after the decimal.
+    return (
+        '_' +
+        Date.now().toString(36) +
+        Math.random()
+            .toString(36)
+            .substr(2, 9)
+    )
+}
+
 /* PARSING FULL TEXT ************************************************
 REGEX flags: 
 - g (global), through entire string

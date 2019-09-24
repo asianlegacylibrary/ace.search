@@ -6,9 +6,11 @@ import setSearchTypeDisplay from './setSearchTypeDisplay'
 import setOffsets from './setOffsets'
 import setFavorites from './setFavorites'
 import setFullText from './setFullText'
+import setCurrentSearchDefinition from './setCurrentSearchDefinition'
 
 export default combineReducers({
     currentSearchTerm: setCurrentSearchTerm,
+    searchDefinition: setCurrentSearchDefinition,
     results: searchResults,
     history: addTermToHistory,
     searchTypeDisplay: setSearchTypeDisplay,

@@ -58,7 +58,7 @@
 
 .search-form {
     margin-top: 2em;
-    border: 1px solid blue;
+    //border: 1px solid blue;
     > .btn {
         min-width: 50%;
     }
@@ -123,17 +123,20 @@
     min-height: 40px;
 }
 .new-input-row {
-    border: 1px solid purple;
-    padding: 0.1em;
-    margin: 0.2em;
+    border: 1px dashed $c-blue;
+    padding: 0.3em;
+    margin: 0.4em 0;
     display: flex;
     justify-content: space-between;
     flex-wrap: nowrap;
     align-content: center;
-    align-items: flex-end;
+    .btn-flat {
+        align-self: flex-end;
+    }
 }
 .new-input {
     flex-grow: 1;
+    padding: 0 0 0 0.8em !important;
 }
 .new-input-icon {
     // flex-basis: 30%;

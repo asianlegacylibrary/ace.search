@@ -8,6 +8,7 @@ import {
     resetOffsets,
     addTermToHistory,
     setCurrentSearchTerm,
+    setCurrentSearchDefinition,
     deleteFullText,
     clearResults,
 } from '../store/actions'
@@ -23,7 +24,7 @@ class SearchForm extends Component {
         offsetCurrent: 0,
         offsetSize: statics.searchOptions.resultSetSize,
         initialLoad: true,
-        numberOfPlusSearch: 0,
+        searchDefinition: {},
     }
 
     handleChange = e => {
@@ -62,6 +63,18 @@ class SearchForm extends Component {
         }
     }
 
+    modifySearchDefinition = stateFromSearchPlus => {
+        this.setState(
+            {
+                searchDefinition: {
+                    term: this.state.term,
+                    modifiers: stateFromSearchPlus,
+                },
+            },
+            () => console.log(this.state.searchDefinition)
+        )
+    }
+
     handleNewSearch = e => {
         e.preventDefault()
         const {
@@ -69,6 +82,7 @@ class SearchForm extends Component {
             fetchResults,
             addTermToHistory,
             setCurrentSearchTerm,
+            setCurrentSearchDefinition,
             deleteFullText,
         } = this.props
         resetOffsets()
@@ -77,18 +91,7 @@ class SearchForm extends Component {
         fetchResults(this.state.term, 0)
         addTermToHistory(this.state.term)
         setCurrentSearchTerm(this.state.term)
-    }
-
-    handlePlusSearch = e => {
-        e.preventDefault()
-        this.setState(
-            { numberOfPlusSearch: this.state.numberOfPlusSearch + 1 },
-            () => {
-                console.log(
-                    `i want more search by ${this.state.numberOfPlusSearch} times.`
-                )
-            }
-        )
+        setCurrentSearchDefinition(this.state.searchDefinition)
     }
 
     setUpControls = () => {
@@ -140,13 +143,11 @@ class SearchForm extends Component {
                             e.key === 'Enter' ? this.handleNewSearch(e) : null
                         }
                     />
-                    <SearchPlus number={this.state.numberOfPlusSearch} />
-                    <button
-                        className="search-plus btn-flat"
-                        onClick={e => this.handlePlusSearch(e)}
-                    >
-                        <i className="fal fa-plus" />
-                    </button>
+
+                    <SearchPlus
+                        updateSearchDefinition={this.modifySearchDefinition}
+                        handleNewSearch={this.handleNewSearch}
+                    />
 
                     <button
                         className="waves-effect waves-light btn wide"
@@ -207,6 +208,7 @@ export default connect(
         resetOffsets,
         addTermToHistory,
         setCurrentSearchTerm,
+        setCurrentSearchDefinition,
         deleteFullText,
         clearResults,
     }

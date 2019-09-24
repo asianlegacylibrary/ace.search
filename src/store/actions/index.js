@@ -95,6 +95,13 @@ export const setCurrentSearchTerm = term => {
     }
 }
 
+export const setCurrentSearchDefinition = definition => {
+    return {
+        type: types.SET_CURRENT_SEARCH_DEFINITION,
+        definition,
+    }
+}
+
 export const setSearchTypeDisplay = menuItem => {
     return {
         type: types.SET_SEARCH_TYPE_DISPLAY,
