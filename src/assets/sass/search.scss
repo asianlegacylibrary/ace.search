@@ -124,6 +124,7 @@
 }
 .new-input-row {
     border: 1px dashed $c-blue;
+    color: #555;
     padding: 0.3em;
     margin: 0.4em 0;
     display: flex;
@@ -137,6 +138,7 @@
 .new-input {
     flex-grow: 1;
     padding: 0 0 0 0.8em !important;
+    color: rgba($color: $c-dark, $alpha: 0.8);
 }
 .new-input-icon {
     // flex-basis: 30%;

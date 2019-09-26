@@ -8,7 +8,20 @@ const SearchResults = ({
     searchTypeDisplay,
     selectedText,
     searching,
+    resultsProp,
 }) => {
+    if (resultsProp.error) {
+        return (
+            <div className="search-results">
+                <div className="card grey lighten-3">
+                    <div className="card-content blue-grey-text darken-4">
+                        THERE HAS BEEN A NETWORK ERROR.
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
     if (!catalogs || !texts) {
         return null
     }
@@ -55,6 +68,7 @@ const SearchResults = ({
 const mapStateToProps = state => ({
     searching: state.results.isFetching,
     catalogs: state.results.catalogs,
+    resultsProp: state.results,
     texts: state.results.texts,
     searchTypeDisplay: state.searchTypeDisplay,
     selectedText: state.selectedText,

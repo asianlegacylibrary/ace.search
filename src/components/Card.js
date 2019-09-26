@@ -32,11 +32,12 @@ class Card extends Component {
 
     handleSelectedText = (result, e) => {
         e.preventDefault()
-        if (this.props.textActive) {
+        const { textActive, term, definition } = this.props
+        if (textActive) {
             this.props.deleteFullText()
         } else {
             if (result.highlight.tibtext) {
-                this.props.fetchFullText(this.props.term, result)
+                this.props.fetchFullText(term, definition, result)
             } else {
                 this.props.setFullTextDetails(result)
             }
@@ -54,13 +55,13 @@ class Card extends Component {
         })
     }
 
-    createSections = (result, type) => {
-        // console.log(
-        //     'going to create sections',
-        //     highlightKeys,
-        //     highlightRemainingKeys
-        // )
-    }
+    // createSections = (result, type) => {
+    //     // console.log(
+    //     //     'going to create sections',
+    //     //     highlightKeys,
+    //     //     highlightRemainingKeys
+    //     // )
+    // }
 
     setColColor = col => {
         let colColor
@@ -80,9 +81,9 @@ class Card extends Component {
         let title = []
         const checkLoc = (result, key) => {
             let type = ''
-            if (result.highlight[key]) {
+            if (result.highlight && result.highlight[key]) {
                 type = 'highlight'
-            } else if (result._source[key]) {
+            } else if (result._source && result._source[key]) {
                 type = '_source'
             }
             return type
@@ -224,6 +225,7 @@ const mapStateToProps = state => ({
     favorites: state.favorites,
     selectedText: state.selectedText,
     term: state.currentSearchTerm,
+    definition: state.searchDefinition,
 })
 
 export default connect(

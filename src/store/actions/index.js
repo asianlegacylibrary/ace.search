@@ -1,5 +1,6 @@
 import expressURL from '../apis/express'
 import * as types from '../types'
+import { groupBy } from '../utilities'
 
 // ACTIONS CREATORS
 // if needed you can check current state in action creator (getState()) before continuing
@@ -11,10 +12,28 @@ export const fetchResults = (
     offsetType = 'all'
 ) => async dispatch => {
     let searchURL = '/search'
+    let def = null
+    console.log('fetch with term', term)
+    if (offsetType === 'all') {
+        def = groupBy(term, 'operator', 'term')
+        term = def['PRIMARY'][0]
+        console.log(def, term)
+        dispatch({ type: types.SET_CURRENT_SEARCH_TERM, payload: term })
+        dispatch({
+            type: types.SET_CURRENT_SEARCH_DEFINITION,
+            payload: def ? def : term,
+        })
+    }
     if (offsetType === 'catalogs') {
         searchURL = '/search/catalogs'
+        def = term
+        term = def['PRIMARY'][0]
+        console.log(def, term)
     } else if (offsetType === 'texts') {
         searchURL = 'search/texts'
+        def = term
+        term = def['PRIMARY'][0]
+        console.log(def, term)
     }
 
     dispatch({ type: types.REQUEST_SEARCH_RESULTS })
@@ -25,9 +44,9 @@ export const fetchResults = (
 
     try {
         const response = await expressURL.get(searchURL, {
-            params: { term, offset },
+            params: { term, def, offset },
         })
-
+        console.log('response', response)
         if (offsetType === 'all') {
             dispatch({
                 type: types.RECEIVE_SEARCH_RESULTS,
@@ -41,29 +60,30 @@ export const fetchResults = (
     } catch (error) {
         dispatch({
             type: types.ERROR_SEARCH_RESULTS,
-            payload: error.request.status,
+            payload: error,
         })
     }
 }
 
-export const fetchFullText = (term, result) => async dispatch => {
+export const fetchFullText = (term, def = null, result) => async dispatch => {
     const getURL = `search/text/${result._id}`
     dispatch({ type: types.REQUEST_FULL_TEXT })
     dispatch({ type: types.SET_FULL_TEXT_DETAILS, details: result })
     try {
         const response = await expressURL.get(getURL, {
-            params: { term },
+            params: { term, def },
         })
 
         dispatch({
             type: types.RECEIVE_FULL_TEXT,
             fulltext: response.data.hits[0].highlight.tibtext,
+            definition: def,
             term: term,
         })
     } catch (error) {
         dispatch({
             type: types.ERROR_FULL_TEXT,
-            payload: error.request.status,
+            payload: error,
         })
     }
 }
@@ -91,14 +111,14 @@ export const addTermToHistory = term => {
 export const setCurrentSearchTerm = term => {
     return {
         type: types.SET_CURRENT_SEARCH_TERM,
-        term,
+        payload: term,
     }
 }
 
 export const setCurrentSearchDefinition = definition => {
     return {
         type: types.SET_CURRENT_SEARCH_DEFINITION,
-        definition,
+        payload: definition,
     }
 }
 

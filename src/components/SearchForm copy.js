@@ -2,7 +2,7 @@ import '../assets/sass/search.scss'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import _ from 'lodash'
-import SearchPlusItem from './SearchPlusItem'
+import SearchPlus from './SearchPlus'
 import {
     fetchResults,
     setOffsets,
@@ -27,31 +27,6 @@ class SearchForm extends Component {
         initialLoad: true,
         searchDefinition: [],
         refreshDefinition: false,
-        items: [],
-    }
-
-    updateItems = (id, type, itemState) => {
-        this.setState(prevState => ({
-            items: prevState.items.map(item =>
-                item.id === id ? { ...item, [type]: itemState } : item
-            ),
-        }))
-    }
-
-    handleDelete = id => {
-        this.setState({
-            items: this.state.items.filter(item => item.id !== id),
-        })
-    }
-
-    handleAddSearch = e => {
-        e.preventDefault()
-        this.setState(prevState => ({
-            items: [
-                ...prevState.items,
-                { id: ID(), term: '', operator: 'AND' },
-            ],
-        }))
     }
 
     handleChange = e => {
@@ -60,15 +35,15 @@ class SearchForm extends Component {
     }
 
     handleNext = () => {
-        const offset = this.props.offsets[this.props.searchTypeDisplay]
-        const total = this.props.results[this.props.searchTypeDisplay].total
+        const offset = this.props[`offset_${this.props.searchTypeDisplay}`]
+        const total = this.props[`total_${this.props.searchTypeDisplay}`]
         let newOffset = offset
 
         if (total > offset + statics.searchOptions.resultSetSize) {
             newOffset = offset + statics.searchOptions.resultSetSize
 
             this.props.fetchResults(
-                this.props.searchDef,
+                this.state.term,
                 newOffset,
                 this.props.searchTypeDisplay
             )
@@ -76,12 +51,12 @@ class SearchForm extends Component {
     }
 
     handlePrev = () => {
-        const offset = this.props.offsets[this.props.searchTypeDisplay]
+        const offset = this.props[`offset_${this.props.searchTypeDisplay}`]
         let newOffset = 0
         if (offset - statics.searchOptions.resultSetSize >= 0) {
             newOffset = offset - statics.searchOptions.resultSetSize
             this.props.fetchResults(
-                this.props.searchDef,
+                this.state.term,
                 newOffset,
                 this.props.searchTypeDisplay
             )
@@ -90,71 +65,115 @@ class SearchForm extends Component {
         }
     }
 
-    updateSearchDefinitionAndFetch = () => {
-        let newSearchDefinition = [...this.state.items]
+    modifySearchDefinition = stateFromSearchPlus => {
+        let newSearchDefinition = [...stateFromSearchPlus]
 
-        let primaryObj = {
+        let primaryTermObj = { id: ID(), term: this.state.term }
+        if (
+            stateFromSearchPlus.length &&
+            stateFromSearchPlus[0].operator === 'OR'
+        ) {
+            primaryTermObj['operator'] = 'OR'
+        } else {
+            primaryTermObj['operator'] = 'AND'
+        }
+
+        newSearchDefinition.unshift(primaryTermObj)
+        this.setState({ searchDefinition: newSearchDefinition })
+    }
+
+    refreshDefinition = () => {
+        this.setState({ refreshDefinition: true })
+    }
+
+    componentDidUpdate = (_, prevState) => {
+        if (prevState.term !== this.state.term) {
+            console.log(
+                'looks like term changed!',
+                prevState.term,
+                this.state.term
+            )
+        }
+    }
+
+    // got to figure out the function of 'temp' and 'primary'
+    // they overlap so are confusing the logic
+    finalDefinitionUpdate = () => {
+        this.refreshDefinition()
+
+        let currentState = _.filter(
+            this.state.searchDefinition,
+            def => def.operator !== 'PRIMARY'
+        )
+        let primaryObj = []
+        if (currentState.length === 0) {
+            primaryObj.push({
+                id: ID(),
+                term: this.state.term,
+                operator: 'AND',
+            })
+        }
+        //console.log(currentState)
+        primaryObj.push({
             id: ID(),
             term: this.state.term,
             operator: 'PRIMARY',
-        }
-        let primaryOperatorObj = { id: ID(), term: this.state.term }
-
-        if (
-            newSearchDefinition.length &&
-            newSearchDefinition[0].operator === 'OR'
-        ) {
-            primaryOperatorObj['operator'] = 'OR'
-        } else {
-            primaryOperatorObj['operator'] = 'AND'
-        }
-
-        newSearchDefinition.push(primaryOperatorObj, primaryObj)
-        this.setState({ searchDefinition: newSearchDefinition }, () => {
-            this.props.fetchResults(this.state.searchDefinition, 0)
         })
+        this.setState(
+            { searchDefinition: [...currentState, ...primaryObj] },
+            () => {
+                console.log('state of def', this.state.searchDefinition)
+                //this.props.fetchResults(this.state.searchDefinition, 0)
+            }
+        )
     }
 
     handleNewSearch = e => {
         e.preventDefault()
-        this.updateSearchDefinitionAndFetch()
+        this.finalDefinitionUpdate()
         const {
             resetOffsets,
-            clearResults,
+            fetchResults,
             addTermToHistory,
+            setCurrentSearchTerm,
             deleteFullText,
         } = this.props
         resetOffsets()
         clearResults()
         deleteFullText()
         addTermToHistory(this.state.term)
+        //setCurrentSearchTerm(this.state.term)
+        //setCurrentSearchDefinition(def)
     }
 
     setUpControls = () => {
-        const offset = this.props.offsets[this.props.searchTypeDisplay]
-        const total = this.props.results[this.props.searchTypeDisplay]
-            ? this.props.results[this.props.searchTypeDisplay].total
-            : 0
+        const offset = this.props[`offset_${this.props.searchTypeDisplay}`]
+
         const properOffset =
-            offset + statics.searchOptions.resultSetSize > total
-                ? total
+            offset + statics.searchOptions.resultSetSize >
+            this.props[`total_${this.props.searchTypeDisplay}`]
+                ? this.props[`total_${this.props.searchTypeDisplay}`]
                 : offset + statics.searchOptions.resultSetSize
 
         let disableNext =
-            total <= offset + statics.searchOptions.resultSetSize ||
+            this.props[`total_${this.props.searchTypeDisplay}`] <=
+                offset + statics.searchOptions.resultSetSize ||
             this.props.currentlyFetchingResults ||
             this.props.searchTypeDisplay.includes(statics.fullTextItem)
 
         let disablePrev =
-            total <= statics.searchOptions.resultSetSize ||
+            this.props[`total_${this.props.searchTypeDisplay}`] <=
+                statics.searchOptions.resultSetSize ||
             offset <= 0 ||
             this.props.currentlyFetchingResults ||
             this.props.searchTypeDisplay.includes(statics.fullTextItem)
 
         let paginationMsg =
-            total > 0
+            this.props[`total_${this.props.searchTypeDisplay}`] > 0
                 ? `Showing <span class="boldy">${offset +
-                      1} to ${properOffset} </span> of ${total}`
+                      1} to ${properOffset} </span> of ${
+                      this.props[`total_${this.props.searchTypeDisplay}`]
+                  }`
                 : `&nbsp;`
 
         return { disableNext, disablePrev, paginationMsg }
@@ -162,21 +181,6 @@ class SearchForm extends Component {
 
     render() {
         const { disableNext, disablePrev, paginationMsg } = this.setUpControls()
-
-        let items = null
-        if (this.state.items.length > 0) {
-            items = this.state.items.map(item => {
-                return (
-                    <SearchPlusItem
-                        key={item.id}
-                        item={item}
-                        updateItem={this.updateItems}
-                        handleDelete={this.handleDelete}
-                        handleNewSearch={e => this.handleNewSearch(e)}
-                    />
-                )
-            })
-        }
 
         return (
             <div className="row">
@@ -192,21 +196,20 @@ class SearchForm extends Component {
                         }
                     />
 
-                    {items}
-
-                    <button
-                        className="search-plus btn-flat"
-                        onClick={e => this.handleAddSearch(e)}
-                    >
-                        <i className="fal fa-plus" />
-                    </button>
+                    <SearchPlus
+                        updateSearchDefinition={this.modifySearchDefinition}
+                        handleNewSearch={this.handleNewSearch}
+                        refreshDefinition={this.state.refreshDefinition}
+                    />
 
                     <button
                         className="waves-effect waves-light btn wide"
-                        disabled={this.props.results.isFetching}
+                        disabled={this.props.currentlyFetchingResults}
                         onClick={e => this.handleNewSearch(e)}
                     >
-                        {this.props.results.isFetching ? 'Searching' : `Search`}
+                        {this.props.currentlyFetchingResults
+                            ? 'Searching'
+                            : `Search`}
                     </button>
                     <div className="result-pagination">
                         <button
@@ -239,11 +242,14 @@ class SearchForm extends Component {
 
 const mapStateToProps = state => {
     return {
-        results: state.results,
-        offsets: state.offsets,
+        total_catalogs: state.results.catalogs
+            ? state.results.catalogs.total
+            : 0,
+        total_texts: state.results.texts ? state.results.texts.total : 0,
+        offset_catalogs: state.offsets.catalogs,
+        offset_texts: state.offsets.texts,
         searchTypeDisplay: state.searchTypeDisplay,
         currentlyFetchingResults: state.results.isFetching,
-        searchDef: state.searchDefinition,
     }
 }
 

@@ -42,6 +42,23 @@ input[type='text'] {
     background-color: $c-blue-darker;
 }
 
+.select-wrapper {
+    > * {
+        color: rgba($color: $c-dark, $alpha: 0.8);
+    }
+    .caret {
+        fill: rgba($color: $c-dark, $alpha: 0.8);
+    }
+}
+
+.select-wrapper input.select-dropdown:focus {
+    border-bottom: 1px solid $c-gold;
+}
+.dropdown-content li > a,
+.dropdown-content li > span {
+    color: $c-dark;
+}
+
 @media #{$small-and-down} {
     input[type='text'] {
         font-size: 1.2em !important;

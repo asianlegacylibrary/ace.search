@@ -8,6 +8,8 @@ export default (state = [], action) => {
             return {
                 ...state,
                 isFetching: false,
+                error: false,
+                errorStatus: null,
                 catalogs: action.payload.catalogs.hits,
                 texts: action.payload.texts.hits,
             }
@@ -15,12 +17,16 @@ export default (state = [], action) => {
             return {
                 ...state,
                 isFetching: false,
+                error: false,
+                errorStatus: null,
                 catalogs: action.payload.hits,
             }
         case types.RECEIVE_TEXTS:
             return {
                 ...state,
                 isFetching: false,
+                error: false,
+                errorStatus: null,
                 texts: action.payload.hits,
             }
         case types.CLEAR_RESULTS:

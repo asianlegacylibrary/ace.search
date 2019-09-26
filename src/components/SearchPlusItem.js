@@ -41,9 +41,6 @@ class SearchPlusItem extends React.Component {
                     <option key="NOT" value="NOT">
                         NOT
                     </option>
-                    <option key="PROX" value="PROX">
-                        PROX
-                    </option>
                 </select>
 
                 <input

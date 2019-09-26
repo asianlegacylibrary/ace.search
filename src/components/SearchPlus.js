@@ -8,6 +8,14 @@ class SearchPlus extends React.Component {
         items: [],
     }
 
+    componentDidUpdate = prevProps => {
+        if (prevProps.refreshDefinition !== prevProps.refreshDefinition) {
+            console.log('prev PROPS', prevProps.refreshDefinition)
+            this.props.updateSearchDefinition(this.state.items)
+        }
+        return null
+    }
+
     updateItems = (id, type, itemState) => {
         this.setState(
             prevState => ({

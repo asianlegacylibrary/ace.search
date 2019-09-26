@@ -17,6 +17,24 @@ export function ID() {
     )
 }
 
+export function groupBy(data, key, valueOfInterest) {
+    // `data` = array of objects,
+    // `key` = property accessor to group
+    // `valueOfInterest` = array of values for group
+    if (Object.entries(data).length === 0 && data.constructor === Object) {
+        return null
+    }
+    console.log(data)
+    return data.reduce((storage, item) => {
+        let group = item[key]
+        // set `storage` for this instance of group to the outer scope
+        // (if not empty) or initialize it
+        storage[group] = storage[group] || []
+        storage[group].push(item[valueOfInterest])
+        return storage
+    }, {})
+}
+
 /* PARSING FULL TEXT ************************************************
 REGEX flags: 
 - g (global), through entire string
@@ -109,27 +127,3 @@ export const createPages = text => {
 
     return o
 }
-
-// export const useADangCounter = (stateCountObject, referenceObject) => {
-//     let count = stateCountObject
-//     let max = referenceObject.length - 1
-
-//     return {
-//         value: count,
-//         max: () =>
-//             type === 'count'
-//                 ? this.setState({ count: max })
-//                 : this.setState({ matchCount: max }),
-//         min: () => this.setState({ count: 0 }),
-//         increase: () =>
-//             count === max
-//                 ? null
-//                 : this.setState({ count: this.state.count + 1 }),
-//         decrease: () =>
-//             count === 0
-//                 ? null
-//                 : this.setState(prevState => ({
-//                       count: prevState.count - 1,
-//                   })),
-//     }
-// }

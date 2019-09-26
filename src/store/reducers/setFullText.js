@@ -42,6 +42,7 @@ export default (state = null, action) => {
                 fulltext: pages,
                 termLocations: termLocs,
                 term: action.term,
+                definition: action.definition,
                 termOccurrences: count,
                 isFetching: false,
             }

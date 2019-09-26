@@ -146,6 +146,8 @@ class FullText extends Component {
 
         let matches = termOccurrences > 1 ? 'matches' : 'match'
         let msg
+        // $$$ switch out term for definition
+        // to do this must parse out to readable string
         if (termLocations.length > 1) {
             msg = `<em>${this.props.term}</em> ${termOccurrences} ${matches} found on ${termLocations.length} pages.`
         } else {
@@ -338,6 +340,7 @@ class FullText extends Component {
 const mapStateToProps = state => ({
     text: state.selectedText,
     term: state.currentSearchTerm,
+    def: state.searchDefinition,
 })
 
 export default connect(mapStateToProps)(FullText)
