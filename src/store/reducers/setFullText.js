@@ -1,33 +1,38 @@
 import * as types from '../types'
-import { createPages } from '../utilities'
+import { getPagesAndCounts } from '../utilities'
 
 // SEARCH RESULTS
 export default (state = null, action) => {
+    let highlight = false
     let pages
+    let count
     switch (action.type) {
         case types.REQUEST_FULL_TEXT:
             return { ...state, isFetching: true }
         case types.SET_FULL_TEXT_DETAILS:
-            pages = createPages(action.details._source.tibtext)
+            ;({ pages, count } = getPagesAndCounts(
+                action.details._source.tibtext,
+                highlight
+            ))
+
             return {
                 ...state,
                 details: action.details,
                 fulltext: pages,
-                termOccurrences: 0,
+                termOccurrences: count,
                 termLocations: [],
             }
         case types.RECEIVE_FULL_TEXT:
-            // split fulltext into pages
-            pages = createPages(action.fulltext[0])
+            // rewrite HIGHLIGHT tags to highlight full phrase
+            // then split fulltext into pages
+            ;({ pages, count } = getPagesAndCounts(
+                action.fulltext[0],
+                (highlight = true)
+            ))
 
-            // get count of term occurrences in full-text
-            let count = (action.fulltext[0].match(/<em/g) || []).length
-
-            if (count > 0) {
-                count = Math.round(
-                    count / action.term.trim().split(/\s+/).length
-                )
-            }
+            // if (count > 0) {
+            //     count = Math.round(count / selectedDefinitionCount)
+            // }
 
             // create array of term locations
             let termLocs = pages.reduce((acc, cur, i) => {
@@ -41,7 +46,7 @@ export default (state = null, action) => {
                 ...state,
                 fulltext: pages,
                 termLocations: termLocs,
-                term: action.term,
+                //term: action.term,
                 definition: action.definition,
                 termOccurrences: count,
                 isFetching: false,

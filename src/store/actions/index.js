@@ -1,6 +1,6 @@
 import expressURL from '../apis/express'
 import * as types from '../types'
-import { groupBy } from '../utilities'
+//import { groupBy } from '../utilities'
 
 // ACTIONS CREATORS
 // if needed you can check current state in action creator (getState()) before continuing
@@ -12,12 +12,13 @@ export const fetchResults = (
     offsetType = 'all'
 ) => async dispatch => {
     let searchURL = '/search'
-    let def = null
+    let def = term
+
     console.log('fetch with term', term)
     if (offsetType === 'all') {
-        def = groupBy(term, 'operator', 'term')
-        term = def['PRIMARY'][0]
-        console.log(def, term)
+        //def = groupBy(term, 'operator', 'term')
+        //term = def['PRIMARY'][0]
+        //console.log(def, term)
         dispatch({ type: types.SET_CURRENT_SEARCH_TERM, payload: term })
         dispatch({
             type: types.SET_CURRENT_SEARCH_DEFINITION,
@@ -26,14 +27,14 @@ export const fetchResults = (
     }
     if (offsetType === 'catalogs') {
         searchURL = '/search/catalogs'
-        def = term
-        term = def['PRIMARY'][0]
-        console.log(def, term)
+        // def = term
+        // term = def['PRIMARY'][0]
+        // console.log(def, term)
     } else if (offsetType === 'texts') {
         searchURL = 'search/texts'
-        def = term
-        term = def['PRIMARY'][0]
-        console.log(def, term)
+        // def = term
+        // term = def['PRIMARY'][0]
+        // console.log(def, term)
     }
 
     dispatch({ type: types.REQUEST_SEARCH_RESULTS })
@@ -46,7 +47,7 @@ export const fetchResults = (
         const response = await expressURL.get(searchURL, {
             params: { term, def, offset },
         })
-        console.log('response', response)
+
         if (offsetType === 'all') {
             dispatch({
                 type: types.RECEIVE_SEARCH_RESULTS,
@@ -73,6 +74,8 @@ export const fetchFullText = (term, def = null, result) => async dispatch => {
         const response = await expressURL.get(getURL, {
             params: { term, def },
         })
+
+        console.log('full text resp', response.data, def)
 
         dispatch({
             type: types.RECEIVE_FULL_TEXT,

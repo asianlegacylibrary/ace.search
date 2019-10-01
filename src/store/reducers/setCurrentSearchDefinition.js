@@ -1,5 +1,4 @@
 import * as types from '../types'
-import { groupBy } from '../utilities'
 
 // SEARCH RESULTS
 export default (state = {}, action) => {

@@ -1,7 +1,7 @@
 import '../assets/sass/search.scss'
+import M from 'materialize-css'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import _ from 'lodash'
 import SearchPlusItem from './SearchPlusItem'
 import {
     fetchResults,
@@ -13,7 +13,12 @@ import {
     deleteFullText,
     clearResults,
 } from '../store/actions'
-import { getRandomInt, ID } from '../store/utilities'
+import {
+    getRandomInt,
+    ID,
+    createBooleanBlocks,
+    groupBy2,
+} from '../store/utilities'
 import { statics } from '../statics'
 
 class SearchForm extends Component {
@@ -28,6 +33,15 @@ class SearchForm extends Component {
         searchDefinition: [],
         refreshDefinition: false,
         items: [],
+        blocks: [],
+    }
+
+    componentDidMount = () => {
+        const elems = document.querySelectorAll('.fixed-action-btn')
+        M.FloatingActionButton.init(elems, {
+            direction: 'right',
+            hoverEnabled: true,
+        })
     }
 
     updateItems = (id, type, itemState) => {
@@ -44,14 +58,23 @@ class SearchForm extends Component {
         })
     }
 
-    handleAddSearch = e => {
+    handleAddSearchNew = (e, type) => {
         e.preventDefault()
-        this.setState(prevState => ({
-            items: [
-                ...prevState.items,
-                { id: ID(), term: '', operator: 'AND' },
-            ],
-        }))
+        if (type.toUpperCase() === 'OR') {
+            this.setState(prevState => ({
+                items: [
+                    ...prevState.items,
+                    { id: ID(), operator: type.toUpperCase() },
+                ],
+            }))
+        } else {
+            this.setState(prevState => ({
+                items: [
+                    ...prevState.items,
+                    { id: ID(), term: '', operator: type.toUpperCase() },
+                ],
+            }))
+        }
     }
 
     handleChange = e => {
@@ -91,26 +114,17 @@ class SearchForm extends Component {
     }
 
     updateSearchDefinitionAndFetch = () => {
+        let update = []
         let newSearchDefinition = [...this.state.items]
-
-        let primaryObj = {
+        let primaryOperatorObj = {
             id: ID(),
             term: this.state.term,
-            operator: 'PRIMARY',
-        }
-        let primaryOperatorObj = { id: ID(), term: this.state.term }
-
-        if (
-            newSearchDefinition.length &&
-            newSearchDefinition[0].operator === 'OR'
-        ) {
-            primaryOperatorObj['operator'] = 'OR'
-        } else {
-            primaryOperatorObj['operator'] = 'AND'
+            operator: 'AND',
         }
 
-        newSearchDefinition.push(primaryOperatorObj, primaryObj)
-        this.setState({ searchDefinition: newSearchDefinition }, () => {
+        newSearchDefinition.unshift(primaryOperatorObj)
+        update = createBooleanBlocks(newSearchDefinition)
+        this.setState({ searchDefinition: update }, () => {
             this.props.fetchResults(this.state.searchDefinition, 0)
         })
     }
@@ -153,30 +167,31 @@ class SearchForm extends Component {
 
         let paginationMsg =
             total > 0
-                ? `Showing <span class="boldy">${offset +
+                ? `Showing <span className="boldy">${offset +
                       1} to ${properOffset} </span> of ${total}`
                 : `&nbsp;`
 
         return { disableNext, disablePrev, paginationMsg }
     }
 
+    buildItems = () => {
+        return this.state.items.map(item => {
+            return (
+                <SearchPlusItem
+                    key={item.id}
+                    item={item}
+                    updateItem={this.updateItems}
+                    handleDelete={this.handleDelete}
+                    handleNewSearch={e => this.handleNewSearch(e)}
+                />
+            )
+        })
+    }
+
     render() {
         const { disableNext, disablePrev, paginationMsg } = this.setUpControls()
 
-        let items = null
-        if (this.state.items.length > 0) {
-            items = this.state.items.map(item => {
-                return (
-                    <SearchPlusItem
-                        key={item.id}
-                        item={item}
-                        updateItem={this.updateItems}
-                        handleDelete={this.handleDelete}
-                        handleNewSearch={e => this.handleNewSearch(e)}
-                    />
-                )
-            })
-        }
+        let items = this.state.items.length > 0 ? this.buildItems() : null
 
         return (
             <div className="row">
@@ -193,13 +208,54 @@ class SearchForm extends Component {
                     />
 
                     {items}
-
-                    <button
+                    <div className="search-plus-btn">
+                        <div className="fixed-action-btn definition-type">
+                            <a href="#!" className="btn-floating btn-large">
+                                <i className="fa fa-plus" />
+                            </a>
+                            <ul>
+                                <li>
+                                    <a
+                                        href="#!"
+                                        onClick={e =>
+                                            this.handleAddSearchNew(e, 'and')
+                                        }
+                                        className="btn-floating definition-type-sub"
+                                    >
+                                        AND
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="#!"
+                                        onClick={e =>
+                                            this.handleAddSearchNew(e, 'or')
+                                        }
+                                        className="btn-floating definition-type-sub"
+                                    >
+                                        OR
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="#!"
+                                        onClick={e =>
+                                            this.handleAddSearchNew(e, 'not')
+                                        }
+                                        className="btn-floating definition-type-sub"
+                                    >
+                                        NOT
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    {/* <button
                         className="search-plus btn-flat"
                         onClick={e => this.handleAddSearch(e)}
                     >
                         <i className="fal fa-plus" />
-                    </button>
+                    </button> */}
 
                     <button
                         className="waves-effect waves-light btn wide"

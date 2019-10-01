@@ -1,3 +1,4 @@
+import '../assets/sass/search.scss'
 import React from 'react'
 import M from 'materialize-css'
 class SearchPlusItem extends React.Component {
@@ -26,42 +27,42 @@ class SearchPlusItem extends React.Component {
     render() {
         const { item, handleDelete, handleNewSearch } = this.props
 
-        return (
-            <div key={item.id} className="new-input-row">
-                <select
-                    value={this.state.operator}
-                    onChange={e => this.handleSelectChange(item.id, e)}
-                >
-                    <option key="AND" value="AND">
-                        AND
-                    </option>
-                    <option key="OR" value="OR">
-                        OR
-                    </option>
-                    <option key="NOT" value="NOT">
-                        NOT
-                    </option>
-                </select>
+        if (item.operator === 'OR') {
+            return (
+                <div key={item.id} className="new-input-row-or">
+                    <p className="big-or">{item.operator}</p>
+                    <button
+                        className="btn-flat"
+                        onClick={() => handleDelete(item.id)}
+                    >
+                        <i className="right fad fa-trash new-input-icon" />
+                    </button>
+                </div>
+            )
+        } else {
+            return (
+                <div key={item.id} className="new-input-row">
+                    <p>{item.operator}</p>
 
-                <input
-                    className="new-input"
-                    autoFocus
-                    type="text"
-                    value={this.state.term}
-                    onChange={e => this.handleInputChange(item.id, e)}
-                    onKeyDown={e =>
-                        e.key === 'Enter' ? handleNewSearch(e) : null
-                    }
-                />
-
-                <button
-                    className="btn-flat"
-                    onClick={() => handleDelete(item.id)}
-                >
-                    <i className="right fad fa-trash new-input-icon" />
-                </button>
-            </div>
-        )
+                    <input
+                        className="new-input"
+                        autoFocus
+                        type="text"
+                        value={this.state.term}
+                        onChange={e => this.handleInputChange(item.id, e)}
+                        onKeyDown={e =>
+                            e.key === 'Enter' ? handleNewSearch(e) : null
+                        }
+                    />
+                    <button
+                        className="btn-flat"
+                        onClick={() => handleDelete(item.id)}
+                    >
+                        <i className="right fad fa-trash new-input-icon" />
+                    </button>
+                </div>
+            )
+        }
     }
 }
 export default SearchPlusItem

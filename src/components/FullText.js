@@ -149,9 +149,9 @@ class FullText extends Component {
         // $$$ switch out term for definition
         // to do this must parse out to readable string
         if (termLocations.length > 1) {
-            msg = `<em>${this.props.term}</em> ${termOccurrences} ${matches} found on ${termLocations.length} pages.`
+            msg = `${termOccurrences} ${matches} found on ${termLocations.length} pages.`
         } else {
-            msg = `<em>${this.props.term}</em> ${termOccurrences} ${matches} found.`
+            msg = `${termOccurrences} ${matches} found.`
         }
 
         let msgSupplement = null

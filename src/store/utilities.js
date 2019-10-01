@@ -17,6 +17,34 @@ export function ID() {
     )
 }
 
+export function createBooleanBlocks(definition) {
+    let blks = []
+    let final = []
+    let workingDefinition = [...definition]
+    let i = 0
+    do {
+        if (workingDefinition[i].operator === 'OR') {
+            let thisBlk = [...workingDefinition]
+            thisBlk.splice(i + 1)
+            thisBlk.pop()
+            workingDefinition = workingDefinition.splice(i + 1)
+            i = 0
+            blks.push(thisBlk)
+        } else {
+            i += 1
+        }
+    } while (i < workingDefinition.length)
+    blks.push(workingDefinition)
+
+    blks.forEach(b => {
+        final.push(groupBy(b, 'operator', 'term'))
+    })
+
+    console.log('FINAL', final)
+
+    return final
+}
+
 export function groupBy(data, key, valueOfInterest) {
     // `data` = array of objects,
     // `key` = property accessor to group
@@ -33,6 +61,36 @@ export function groupBy(data, key, valueOfInterest) {
         storage[group].push(item[valueOfInterest])
         return storage
     }, {})
+}
+
+export function selectDef(def) {
+    if (def.length === 1) {
+        if ('AND' in def[0]) {
+            return def[0]['AND']
+                .join(' ')
+                .trim()
+                .split(/\s+/).length
+        }
+    } else {
+        // this option is more complex
+        // 1. figure out which boolean block is being matched
+        // 2. then return count like above
+
+        let counts = []
+        def.forEach(d => {
+            if ('AND' in d) {
+                counts.push(
+                    d['AND']
+                        .join(' ')
+                        .trim()
+                        .split(/\s+/).length
+                )
+            }
+        })
+        let sum = counts.reduce((a, b) => a + b, 0)
+        let avg = Math.ceil(sum / counts.length)
+        return avg
+    }
 }
 
 /* PARSING FULL TEXT ************************************************
@@ -74,7 +132,13 @@ export const parseLinesAndHighlight = (text, term) => {
 - add a flag to object if there's a match with current term on that page
 --- this will be used for NEXT / PREV match btns on full text component
 */
-export const createPages = text => {
+export function getPagesAndCounts(text, highlight = false) {
+    let count = 0
+    if (highlight) {
+        let rx = new RegExp(`(<\/em>)([,']?\\s+[,']?)(<em class="hlt1">)`, 'g')
+        text = text.replace(rx, '$2')
+        count = (text.match(/<em/g) || []).length
+    }
     let r = new RegExp(`(@[0-9]\\s+|@[0-9]\\w+|@[a-z]\\s+|@[a-z]\\w+)`, 'g') //`(@[0-9]//w+)
     let raw = text.split(r) //new RegExp(r, 'g')
 
@@ -84,7 +148,10 @@ export const createPages = text => {
         if (matchTest.test(raw[0])) {
             match = true
         }
-        return [{ id: `@000`, termMatch: match, data: raw[0] }]
+        return {
+            pages: { id: `@000`, termMatch: match, data: raw[0] },
+            count: count,
+        }
     }
 
     let o = []
@@ -125,5 +192,5 @@ export const createPages = text => {
         }
     })
 
-    return o
+    return { pages: o, count: count }
 }

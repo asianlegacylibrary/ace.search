@@ -5,6 +5,7 @@
     font-style: italic;
     padding-bottom: 1em;
 }
+
 .result-pagination {
     display: flex;
     flex-direction: row;
@@ -25,6 +26,7 @@
         flex: 1;
     }
 }
+
 .boldy {
     font-weight: bold;
     padding-left: 0.6em;
@@ -36,6 +38,7 @@
     margin-top: 1em;
     font-style: italic;
 }
+
 .span-title {
     text-transform: uppercase;
     padding: 0 1em 0 0;
@@ -63,6 +66,7 @@
         min-width: 50%;
     }
 }
+
 .search-results,
 .search-menu,
 .search-form {
@@ -97,9 +101,11 @@
         min-width: 40%;
     }
 }
+
 .search-input {
     margin: 0 0 1em 0;
 }
+
 .search-plus {
     display: block;
     padding: 0;
@@ -122,6 +128,7 @@
 .card {
     min-height: 40px;
 }
+
 .new-input-row {
     border: 1px dashed $c-blue;
     color: #555;
@@ -135,15 +142,74 @@
         align-self: flex-end;
     }
 }
+
+.new-input-row-or {
+    color: #555;
+    padding: 0.3em;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    align-content: center;
+    .btn-flat {
+        align-self: flex-end;
+    }
+}
+
 .new-input {
     flex-grow: 1;
     padding: 0 0 0 0.8em !important;
     color: rgba($color: $c-dark, $alpha: 0.8);
 }
+
 .new-input-icon {
     // flex-basis: 30%;
     padding-bottom: 0.4em;
 }
+
+.search-plus-btn {
+    margin-bottom: 2em;
+    transition: box-shadow 900ms ease-in-out;
+    a {
+        background-color: rgba($color: $c-gold-dark, $alpha: 0.2);
+        box-shadow: none;
+        color: $c-dark;
+        &.focus {
+            background-color: rgba($color: $c-gold-dark, $alpha: 0.2);
+        }
+    }
+}
+
+.definition-type {
+    right: unset;
+    bottom: unset;
+    position: relative;
+    .direction-right {
+        padding: 0;
+    }
+    li {
+        text-align: center;
+    }
+    i {
+        color: rgba($color: $c-dark, $alpha: 0.6);
+    }
+    & > a {
+        cursor: none;
+        pointer-events: none;
+    }
+}
+
+.definition-type-sub {
+    &.btn-floating {
+        background-color: rgba($color: $c-gold-dark, $alpha: 0.4);
+        color: $c-dark;
+    }
+}
+
+.big-or {
+    font-size: 2em;
+}
+
 @media #{$medium-and-down} {
     // styles for medium screens and down
     .search-form,
