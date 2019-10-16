@@ -2,6 +2,7 @@ import '../assets/sass/nav.scss'
 import M from 'materialize-css'
 import React from 'react'
 import { connect } from 'react-redux'
+import { removeFromFavorites } from '../store/actions'
 
 class NavSidebar extends React.Component {
     state = {
@@ -24,8 +25,18 @@ class NavSidebar extends React.Component {
             return (
                 <div key={f}>
                     <span className="result-meta">{f}</span>
+
+                    {/* <span className="meta-item right">
+                        <button
+                            className="btn-flat"
+                            onClick={() => this.props.removeFromFavorites(f)}
+                        >
+                            <i className="fal fa-times" />
+                        </button>
+                    </span> */}
                     <span className="meta-item right">
-                        ({favorites[f]._index})
+                        <i className="fal fa-arrow-right nav-indent" />
+                        {favorites[f]._index}
                     </span>
                 </div>
             )
@@ -98,5 +109,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    null
+    { removeFromFavorites }
 )(NavSidebar)

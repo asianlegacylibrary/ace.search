@@ -39,14 +39,19 @@ class Card extends Component {
             if (result.highlight.tibtext) {
                 this.props.fetchFullText(term, definition, result)
             } else {
-                this.props.setFullTextDetails(result)
+                if (result._source.tibtext) {
+                    this.props.setFullTextDetails(result)
+                } else {
+                    console.log('what to do?')
+                }
             }
         }
     }
 
     handleFavorites = (result, e) => {
         e.preventDefault()
-        this.setState({ activeFavorite: !this.state.activeFavorite }, () => {
+        const setFave = result._id in this.props.favorites ? false : true
+        this.setState({ activeFavorite: setFave }, () => {
             if (this.state.activeFavorite) {
                 this.props.addToFavorites(result)
             } else {
@@ -54,14 +59,6 @@ class Card extends Component {
             }
         })
     }
-
-    // createSections = (result, type) => {
-    //     // console.log(
-    //     //     'going to create sections',
-    //     //     highlightKeys,
-    //     //     highlightRemainingKeys
-    //     // )
-    // }
 
     setColColor = col => {
         let colColor
@@ -139,12 +136,28 @@ class Card extends Component {
         return { meta, author, title }
     }
 
+    buildFullTextButton = result => {
+        const activatedText = this.props.textActive ? 'text-active' : ''
+        return (
+            <React.Fragment>
+                <a
+                    key={result._id}
+                    href="#!"
+                    onClick={e => this.handleSelectedText(result, e)}
+                    className="text right"
+                >
+                    <i className={`fal fa-file-alt fa-lg ${activatedText}`} />
+                </a>
+            </React.Fragment>
+        )
+    }
+
     render() {
         const activatedDetails = this.state.activeDetails ? 'make-visible' : ''
         const activatedFavorite = this.state.activeFavorite
             ? 'favorites-active'
             : 'favorites'
-        const activatedText = this.props.textActive ? 'text-active' : ''
+
         const { result, type, term } = this.props
         if (!result || !type) {
             return null
@@ -190,18 +203,10 @@ class Card extends Component {
                             className={`fal fa-star fa-lg ${activatedFavorite}`}
                         />
                     </a>
-                    {type === 'texts' ? (
-                        <a
-                            key={result._id}
-                            href="#!"
-                            onClick={e => this.handleSelectedText(result, e)}
-                            className="text right"
-                        >
-                            <i
-                                className={`fal fa-file-alt fa-lg ${activatedText}`}
-                            />
-                        </a>
-                    ) : null}
+
+                    {type === 'texts' && !!result._source.tibtext
+                        ? this.buildFullTextButton(result)
+                        : null}
 
                     <div
                         className={`more-content ${activatedDetails} blue-grey-text darken-4`}

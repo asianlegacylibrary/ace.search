@@ -7,6 +7,12 @@
 
 em {
     background-color: yellow;
+    &.hlt1 {
+        background-color: yellow;
+    }
+    &.hlt2 {
+        background-color: goldenrod;
+    }
 }
 
 h4,

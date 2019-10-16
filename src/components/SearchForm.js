@@ -13,12 +13,7 @@ import {
     deleteFullText,
     clearResults,
 } from '../store/actions'
-import {
-    getRandomInt,
-    ID,
-    createBooleanBlocks,
-    groupBy2,
-} from '../store/utilities'
+import { getRandomInt, ID, createBooleanBlocks } from '../store/utilities'
 import { statics } from '../statics'
 
 class SearchForm extends Component {
@@ -104,7 +99,7 @@ class SearchForm extends Component {
         if (offset - statics.searchOptions.resultSetSize >= 0) {
             newOffset = offset - statics.searchOptions.resultSetSize
             this.props.fetchResults(
-                this.props.searchDef,
+                this.state.searchDefinition,
                 newOffset,
                 this.props.searchTypeDisplay
             )
@@ -115,7 +110,9 @@ class SearchForm extends Component {
 
     updateSearchDefinitionAndFetch = () => {
         let update = []
-        let newSearchDefinition = [...this.state.items]
+        let newSearchDefinition = [...this.state.items].filter(
+            a => a.term.length > 0
+        )
         let primaryOperatorObj = {
             id: ID(),
             term: this.state.term,
@@ -250,12 +247,6 @@ class SearchForm extends Component {
                             </ul>
                         </div>
                     </div>
-                    {/* <button
-                        className="search-plus btn-flat"
-                        onClick={e => this.handleAddSearch(e)}
-                    >
-                        <i className="fal fa-plus" />
-                    </button> */}
 
                     <button
                         className="waves-effect waves-light btn wide"

@@ -10,10 +10,15 @@ export default (state = null, action) => {
         case types.REQUEST_FULL_TEXT:
             return { ...state, isFetching: true }
         case types.SET_FULL_TEXT_DETAILS:
-            ;({ pages, count } = getPagesAndCounts(
-                action.details._source.tibtext,
-                highlight
-            ))
+            if (!action.details._source.tibtext) {
+                pages = null
+                count = 0
+            } else {
+                ;({ pages, count } = getPagesAndCounts(
+                    action.details._source.tibtext,
+                    highlight
+                ))
+            }
 
             return {
                 ...state,

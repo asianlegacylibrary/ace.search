@@ -52,7 +52,7 @@ export function groupBy(data, key, valueOfInterest) {
     if (Object.entries(data).length === 0 && data.constructor === Object) {
         return null
     }
-    console.log(data)
+
     return data.reduce((storage, item) => {
         let group = item[key]
         // set `storage` for this instance of group to the outer scope
@@ -149,7 +149,7 @@ export function getPagesAndCounts(text, highlight = false) {
             match = true
         }
         return {
-            pages: { id: `@000`, termMatch: match, data: raw[0] },
+            pages: [{ id: `@000`, termMatch: match, data: raw[0] }],
             count: count,
         }
     }

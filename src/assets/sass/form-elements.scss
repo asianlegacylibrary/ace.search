@@ -42,6 +42,10 @@ input[type='text'] {
     background-color: $c-blue-darker;
 }
 
+.fixed-action-btn {
+    z-index: 0;
+}
+
 .select-wrapper {
     > * {
         color: rgba($color: $c-dark, $alpha: 0.8);

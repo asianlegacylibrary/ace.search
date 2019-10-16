@@ -75,8 +75,6 @@ export const fetchFullText = (term, def = null, result) => async dispatch => {
             params: { term, def },
         })
 
-        console.log('full text resp', response.data, def)
-
         dispatch({
             type: types.RECEIVE_FULL_TEXT,
             fulltext: response.data.hits[0].highlight.tibtext,

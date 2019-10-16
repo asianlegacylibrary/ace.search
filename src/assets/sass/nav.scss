@@ -15,7 +15,9 @@ nav {
 .nav-wrapper {
     background-color: $c-dark;
 }
-
+.nav-indent {
+    padding-right: 1em;
+}
 .img-cover {
     background-size: cover;
 }
