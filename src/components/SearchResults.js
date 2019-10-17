@@ -25,6 +25,7 @@ const SearchResults = ({
     if (!catalogs || !texts) {
         return null
     }
+
     if (searching) {
         return (
             <div className="search-results">

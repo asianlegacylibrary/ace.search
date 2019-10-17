@@ -22,7 +22,6 @@ class Card extends Component {
         if (this.props.result._id in this.props.favorites) {
             this.setState({ activeFavorite: true })
         }
-        //this.createSections(this.props.result, this.props.type)
     }
 
     handleDetails = e => {

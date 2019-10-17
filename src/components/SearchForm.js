@@ -110,9 +110,14 @@ class SearchForm extends Component {
 
     updateSearchDefinitionAndFetch = () => {
         let update = []
+
+        // filter out empty search fields
         let newSearchDefinition = [...this.state.items].filter(
-            a => a.term.length > 0
+            a =>
+                a.operator === 'OR' ||
+                (a.operator !== 'OR' && a.term.length > 0)
         )
+
         let primaryOperatorObj = {
             id: ID(),
             term: this.state.term,
