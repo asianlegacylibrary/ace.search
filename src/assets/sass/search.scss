@@ -253,15 +253,19 @@
     .search-form,
     .search-menu,
     .search-results {
-        width: $w-11;
-    }
-    .search-menu {
-        li:nth-child(3) {
-            a {
-                font-size: 0.8em;
-                font-style: italic;
-                overflow-wrap: break-word;
-            }
+        width: 100%;
+        padding: 0 !important;
+        + .col {
+            padding: 0;
         }
     }
+    // .search-menu {
+    //     li:nth-child(3) {
+    //         a {
+    //             font-size: 0.8em;
+    //             font-style: italic;
+    //             overflow-wrap: break-word;
+    //         }
+    //     }
+    // }
 }
