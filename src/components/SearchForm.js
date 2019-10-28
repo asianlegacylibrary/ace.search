@@ -29,6 +29,18 @@ class SearchForm extends Component {
         refreshDefinition: false,
         items: [],
         blocks: [],
+        texts_Collections: ['SB', 'TG', 'KG'],
+        texts_CollectionFilter: [
+            { term: { 'collection.keyword': 'SB' } },
+            { term: { 'collection.keyword': 'TG' } },
+            { term: { 'collection.keyword': 'KG' } },
+        ],
+        catalogs_Collections: ['mongolia', 'ladakh', 'stpetersburg'],
+        catalogs_CollectionFilter: [
+            { term: { 'collection.keyword': 'mongolia' } },
+            { term: { 'collection.keyword': 'ladakh' } },
+            { term: { 'collection.keyword': 'stpetersburg' } },
+        ],
     }
 
     componentDidMount = () => {
@@ -88,7 +100,8 @@ class SearchForm extends Component {
             this.props.fetchResults(
                 this.props.searchDef,
                 newOffset,
-                this.props.searchTypeDisplay
+                this.props.searchTypeDisplay,
+                this.props.filters
             )
         }
     }
@@ -101,7 +114,8 @@ class SearchForm extends Component {
             this.props.fetchResults(
                 this.state.searchDefinition,
                 newOffset,
-                this.props.searchTypeDisplay
+                this.props.searchTypeDisplay,
+                this.props.filters
             )
         } else {
             this.props.setOffsets(this.props.searchTypeDisplay, 0)
@@ -110,7 +124,6 @@ class SearchForm extends Component {
 
     updateSearchDefinitionAndFetch = () => {
         let update = []
-
         // filter out empty search fields
         let newSearchDefinition = [...this.state.items].filter(
             a =>
@@ -127,7 +140,13 @@ class SearchForm extends Component {
         newSearchDefinition.unshift(primaryOperatorObj)
         update = createBooleanBlocks(newSearchDefinition)
         this.setState({ searchDefinition: update }, () => {
-            this.props.fetchResults(this.state.searchDefinition, 0)
+            this.props.fetchResults(
+                this.state.searchDefinition,
+                0,
+                'all',
+                this.props.filters,
+                this.props.limiters
+            )
         })
     }
 
@@ -197,7 +216,7 @@ class SearchForm extends Component {
 
         return (
             <div className="row">
-                <div className="search-form">
+                <div className="search-form col">
                     <input
                         className="search-input"
                         autoFocus
@@ -296,6 +315,11 @@ const mapStateToProps = state => {
         searchTypeDisplay: state.searchTypeDisplay,
         currentlyFetchingResults: state.results.isFetching,
         searchDef: state.searchDefinition,
+        limiters: state.limiters,
+        filters:
+            state.collections.isFetching || !state.collections.filters
+                ? []
+                : state.collections.filters,
     }
 }
 

@@ -6,19 +6,29 @@ import * as types from '../types'
 // if needed you can check current state in action creator (getState()) before continuing
 // if additional logic required around dispatching action
 
+export const fetchCollections = () => async dispatch => {
+    let searchURL = '/collections'
+    dispatch({ type: types.REQUEST_COLLECTIONS })
+    try {
+        const response = await expressURL.get(searchURL)
+        dispatch({ type: types.RECEIVE_COLLECTIONS, payload: response })
+    } catch (error) {
+        console.log(error)
+        dispatch({ type: types.ERROR_COLLECTIONS, payload: error })
+    }
+}
+
 export const fetchResults = (
     term,
     offset,
-    offsetType = 'all'
+    offsetType = 'all',
+    filterClause = null,
+    limiters = null
 ) => async dispatch => {
     let searchURL = '/search'
     let def = term
 
-    console.log('fetch with term', term)
     if (offsetType === 'all') {
-        //def = groupBy(term, 'operator', 'term')
-        //term = def['PRIMARY'][0]
-        //console.log(def, term)
         dispatch({ type: types.SET_CURRENT_SEARCH_TERM, payload: term })
         dispatch({
             type: types.SET_CURRENT_SEARCH_DEFINITION,
@@ -27,14 +37,8 @@ export const fetchResults = (
     }
     if (offsetType === 'catalogs') {
         searchURL = '/search/catalogs'
-        // def = term
-        // term = def['PRIMARY'][0]
-        // console.log(def, term)
     } else if (offsetType === 'texts') {
         searchURL = 'search/texts'
-        // def = term
-        // term = def['PRIMARY'][0]
-        // console.log(def, term)
     }
 
     dispatch({ type: types.REQUEST_SEARCH_RESULTS })
@@ -45,8 +49,10 @@ export const fetchResults = (
 
     try {
         const response = await expressURL.get(searchURL, {
-            params: { term, def, offset },
+            params: { def, offset, filterClause, limiters },
         })
+
+        console.log(limiters)
 
         if (offsetType === 'all') {
             dispatch({
@@ -127,6 +133,23 @@ export const setSearchTypeDisplay = menuItem => {
     return {
         type: types.SET_SEARCH_TYPE_DISPLAY,
         payload: menuItem,
+    }
+}
+
+export const setFilter = (filterType, filter) => {
+    return {
+        type: types.SET_FILTER,
+        filterType,
+        filter,
+    }
+}
+
+export const setLimiter = (entityType, limiterType, limiter) => {
+    return {
+        type: types.SET_LIMITER,
+        entityType,
+        limiterType,
+        limiter,
     }
 }
 

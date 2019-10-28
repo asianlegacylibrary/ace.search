@@ -6,10 +6,13 @@ import { Provider } from 'react-redux'
 
 import App from './components/App'
 import configureStore from './store'
+import { fetchCollections } from './store/actions'
 
 import * as serviceWorker from './serviceWorker'
 
 export const store = configureStore()
+
+store.dispatch(fetchCollections())
 
 const Root = () => {
     return (

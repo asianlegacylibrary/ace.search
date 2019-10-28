@@ -1,14 +1,60 @@
 export const statics = {
     menuItems: ['catalogs', 'texts'],
-    fullTextItem: 'Full Text',
-    hlt_catalogs_keys: ['priauthtib', 'ttltib'],
+    fullTextItem: 'FullText',
+    collections: {
+        texts: [
+            { key: 'SB', name: 'Sungbum', color: 'col-gold' },
+            { key: 'KG', name: 'Kangyur', color: 'col-blue' },
+            { key: 'TG', name: 'Tengyur', color: 'col-red' },
+        ],
+        catalogs: [
+            { key: 'mongolia', name: 'Mongolia', color: 'col-gold' },
+            { key: 'ladakh', name: 'Ladakh', color: 'col-blue' },
+            { key: 'stpetersburg', name: 'St. Petersburg', color: 'col-red' },
+        ],
+    },
+    limiters: {
+        texts: {
+            author: {
+                key: 'texts_author',
+                type: 'author',
+                on: false,
+            },
+            title: {
+                key: 'texts_title',
+                type: 'title',
+                on: false,
+            },
+        },
+        catalogs: {
+            author: {
+                name: 'Author',
+                key: 'catalogs_author',
+                type: 'author',
+                on: false,
+            },
+            title: {
+                name: 'Title',
+                key: 'catalogs_title',
+                type: 'title',
+                on: false,
+            },
+        },
+    },
+    hlt_catalogs_keys: ['authortibprimary', 'ttltib'],
     hlt_texts_keys: ['authortib', 'titletib'],
     meta_keys: [
         'pagenumbers',
         'sizepages',
+        'pagesize',
+        'pageprintedareasize',
+        'folios',
+        'foliosno',
         'sizeprtarea',
         'volume',
+        'volumendx',
         'catalognumber',
+        'newcatno',
         'collection',
     ],
     author_keys: [
@@ -16,6 +62,8 @@ export const statics = {
         'authorskt',
         'priautheng',
         'priauthtib',
+        'authortibprimary',
+        'authorengprimary',
         'authortib',
         'authordates',
     ],

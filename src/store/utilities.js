@@ -40,8 +40,6 @@ export function createBooleanBlocks(definition) {
         final.push(groupBy(b, 'operator', 'term'))
     })
 
-    console.log('FINAL', final)
-
     return final
 }
 
@@ -61,36 +59,6 @@ export function groupBy(data, key, valueOfInterest) {
         storage[group].push(item[valueOfInterest])
         return storage
     }, {})
-}
-
-export function selectDef(def) {
-    if (def.length === 1) {
-        if ('AND' in def[0]) {
-            return def[0]['AND']
-                .join(' ')
-                .trim()
-                .split(/\s+/).length
-        }
-    } else {
-        // this option is more complex
-        // 1. figure out which boolean block is being matched
-        // 2. then return count like above
-
-        let counts = []
-        def.forEach(d => {
-            if ('AND' in d) {
-                counts.push(
-                    d['AND']
-                        .join(' ')
-                        .trim()
-                        .split(/\s+/).length
-                )
-            }
-        })
-        let sum = counts.reduce((a, b) => a + b, 0)
-        let avg = Math.ceil(sum / counts.length)
-        return avg
-    }
 }
 
 /* PARSING FULL TEXT ************************************************

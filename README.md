@@ -16,3 +16,5 @@
     -- `git pull`
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+-   test TIBTEXT full text for all the results from '"STONG TSUL THA""

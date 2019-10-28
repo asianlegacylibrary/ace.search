@@ -65,7 +65,13 @@ class Card extends Component {
             colColor = 'col-gold'
         } else if (col === 'KG') {
             colColor = 'col-blue'
-        } else {
+        } else if (col === 'SB') {
+            colColor = 'col-red'
+        } else if (col === 'mongolia') {
+            colColor = 'col-blue'
+        } else if (col === 'ladakh') {
+            colColor = 'col-gold'
+        } else if (col === 'stpetersburg') {
             colColor = 'col-red'
         }
         return colColor
@@ -164,15 +170,17 @@ class Card extends Component {
 
         const { meta, author, title } = this.buildDetails(result)
 
-        const colColor = this.setColColor(result._source.collection)
-
+        //const colColor = this.setColColor(result._source.collection)
+        const coll = statics.collections[type].find(
+            c => result._source.collection === c.key
+        )
         return (
             <React.Fragment>
                 <div className="card-content blue-grey-text darken-4">
                     <div className="result-meta">
-                        {type === 'texts' ? (
-                            <span className={`meta-collection ${colColor}`}>
-                                {result._source.collection}
+                        {type !== 'FullText' ? (
+                            <span className={`meta-collection ${coll.color}`}>
+                                {coll.name.toUpperCase()}
                                 {'    '}
                             </span>
                         ) : null}
@@ -181,7 +189,7 @@ class Card extends Component {
                         {type === 'texts' ? (
                             <React.Fragment>
                                 <span className="boldy"> Catalog: </span>
-                                <span> {result._source.catalognumber}</span>
+                                <span> {result._source.newcatno}</span>
                             </React.Fragment>
                         ) : null}
                     </div>

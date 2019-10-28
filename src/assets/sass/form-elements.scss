@@ -23,6 +23,11 @@ input[type='text'] {
     margin-bottom: 0.2em !important;
 }
 
+input[type='checkbox'].filled-in:checked + span:not(.lever):after {
+    border: 2px solid $c-gold-dark;
+    background-color: $c-gold;
+}
+
 .btn,
 .btn-large,
 .btn-small {

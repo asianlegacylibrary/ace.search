@@ -12,7 +12,7 @@ const SearchResults = ({
 }) => {
     if (resultsProp.error) {
         return (
-            <div className="search-results">
+            <div className="search-results col">
                 <div className="card grey lighten-3">
                     <div className="card-content blue-grey-text darken-4">
                         THERE HAS BEEN A NETWORK ERROR.
@@ -28,7 +28,7 @@ const SearchResults = ({
 
     if (searching) {
         return (
-            <div className="search-results">
+            <div className="search-results col">
                 <div className="card grey lighten-3">
                     <div className="card-content blue-grey-text darken-4">
                         SEARCHING...
@@ -63,7 +63,7 @@ const SearchResults = ({
             )
         })
     }
-    return <div className="search-results">{currentResults}</div>
+    return <div className="search-results col">{currentResults}</div>
 }
 
 const mapStateToProps = state => ({
