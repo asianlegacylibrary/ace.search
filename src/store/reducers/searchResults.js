@@ -5,7 +5,6 @@ export default (state = [], action) => {
         case types.REQUEST_SEARCH_RESULTS:
             return { ...state, isFetching: true }
         case types.RECEIVE_SEARCH_RESULTS:
-            console.log('reducer', action.payload.catalogs.hits)
             return {
                 ...state,
                 isFetching: false,

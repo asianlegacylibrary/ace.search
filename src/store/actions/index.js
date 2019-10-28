@@ -52,8 +52,6 @@ export const fetchResults = (
             params: { def, offset, filterClause, limiters },
         })
 
-        console.log(limiters)
-
         if (offsetType === 'all') {
             dispatch({
                 type: types.RECEIVE_SEARCH_RESULTS,
