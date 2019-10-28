@@ -101,7 +101,8 @@ class SearchForm extends Component {
                 this.props.searchDef,
                 newOffset,
                 this.props.searchTypeDisplay,
-                this.props.filters
+                this.props.filters,
+                this.props.limiters
             )
         }
     }
@@ -115,7 +116,8 @@ class SearchForm extends Component {
                 this.state.searchDefinition,
                 newOffset,
                 this.props.searchTypeDisplay,
-                this.props.filters
+                this.props.filters,
+                this.props.limiters
             )
         } else {
             this.props.setOffsets(this.props.searchTypeDisplay, 0)
