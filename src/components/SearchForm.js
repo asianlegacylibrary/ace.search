@@ -31,15 +31,15 @@ class SearchForm extends Component {
         blocks: [],
         texts_Collections: ['SB', 'TG', 'KG'],
         texts_CollectionFilter: [
-            { term: { 'collection.keyword': 'SB' } },
-            { term: { 'collection.keyword': 'TG' } },
-            { term: { 'collection.keyword': 'KG' } },
+            { term: { collection: 'SB' } },
+            { term: { collection: 'TG' } },
+            { term: { collection: 'KG' } },
         ],
         catalogs_Collections: ['mongolia', 'ladakh', 'stpetersburg'],
         catalogs_CollectionFilter: [
-            { term: { 'collection.keyword': 'mongolia' } },
-            { term: { 'collection.keyword': 'ladakh' } },
-            { term: { 'collection.keyword': 'stpetersburg' } },
+            { term: { collection: 'mongolia' } },
+            { term: { collection: 'ladakh' } },
+            { term: { collection: 'stpetersburg' } },
         ],
     }
 
@@ -52,30 +52,30 @@ class SearchForm extends Component {
     }
 
     updateItems = (id, type, itemState) => {
-        this.setState(prevState => ({
-            items: prevState.items.map(item =>
+        this.setState((prevState) => ({
+            items: prevState.items.map((item) =>
                 item.id === id ? { ...item, [type]: itemState } : item
             ),
         }))
     }
 
-    handleDelete = id => {
+    handleDelete = (id) => {
         this.setState({
-            items: this.state.items.filter(item => item.id !== id),
+            items: this.state.items.filter((item) => item.id !== id),
         })
     }
 
     handleAddSearchNew = (e, type) => {
         e.preventDefault()
         if (type.toUpperCase() === 'OR') {
-            this.setState(prevState => ({
+            this.setState((prevState) => ({
                 items: [
                     ...prevState.items,
                     { id: ID(), operator: type.toUpperCase() },
                 ],
             }))
         } else {
-            this.setState(prevState => ({
+            this.setState((prevState) => ({
                 items: [
                     ...prevState.items,
                     { id: ID(), term: '', operator: type.toUpperCase() },
@@ -84,7 +84,7 @@ class SearchForm extends Component {
         }
     }
 
-    handleChange = e => {
+    handleChange = (e) => {
         e.preventDefault()
         this.setState({ term: e.target.value.toUpperCase() })
     }
@@ -128,7 +128,7 @@ class SearchForm extends Component {
         let update = []
         // filter out empty search fields
         let newSearchDefinition = [...this.state.items].filter(
-            a =>
+            (a) =>
                 a.operator === 'OR' ||
                 (a.operator !== 'OR' && a.term.length > 0)
         )
@@ -152,7 +152,7 @@ class SearchForm extends Component {
         })
     }
 
-    handleNewSearch = e => {
+    handleNewSearch = (e) => {
         e.preventDefault()
         this.updateSearchDefinitionAndFetch()
         const {
@@ -190,22 +190,23 @@ class SearchForm extends Component {
 
         let paginationMsg =
             total > 0
-                ? `Showing <span className="boldy">${offset +
-                      1} to ${properOffset} </span> of ${total}`
+                ? `Showing <span className="boldy">${
+                      offset + 1
+                  } to ${properOffset} </span> of ${total}`
                 : `&nbsp;`
 
         return { disableNext, disablePrev, paginationMsg }
     }
 
     buildItems = () => {
-        return this.state.items.map(item => {
+        return this.state.items.map((item) => {
             return (
                 <SearchPlusItem
                     key={item.id}
                     item={item}
                     updateItem={this.updateItems}
                     handleDelete={this.handleDelete}
-                    handleNewSearch={e => this.handleNewSearch(e)}
+                    handleNewSearch={(e) => this.handleNewSearch(e)}
                 />
             )
         })
@@ -224,8 +225,8 @@ class SearchForm extends Component {
                         autoFocus
                         type="text"
                         value={this.state.term}
-                        onChange={e => this.handleChange(e)}
-                        onKeyDown={e =>
+                        onChange={(e) => this.handleChange(e)}
+                        onKeyDown={(e) =>
                             e.key === 'Enter' ? this.handleNewSearch(e) : null
                         }
                     />
@@ -240,7 +241,7 @@ class SearchForm extends Component {
                                 <li>
                                     <a
                                         href="#!"
-                                        onClick={e =>
+                                        onClick={(e) =>
                                             this.handleAddSearchNew(e, 'and')
                                         }
                                         className="btn-floating definition-type-sub"
@@ -251,7 +252,7 @@ class SearchForm extends Component {
                                 <li>
                                     <a
                                         href="#!"
-                                        onClick={e =>
+                                        onClick={(e) =>
                                             this.handleAddSearchNew(e, 'or')
                                         }
                                         className="btn-floating definition-type-sub"
@@ -262,7 +263,7 @@ class SearchForm extends Component {
                                 <li>
                                     <a
                                         href="#!"
-                                        onClick={e =>
+                                        onClick={(e) =>
                                             this.handleAddSearchNew(e, 'not')
                                         }
                                         className="btn-floating definition-type-sub"
@@ -277,7 +278,7 @@ class SearchForm extends Component {
                     <button
                         className="waves-effect waves-light btn wide"
                         disabled={this.props.results.isFetching}
-                        onClick={e => this.handleNewSearch(e)}
+                        onClick={(e) => this.handleNewSearch(e)}
                     >
                         {this.props.results.isFetching ? 'Searching' : `Search`}
                     </button>
@@ -310,7 +311,7 @@ class SearchForm extends Component {
     }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
         results: state.results,
         offsets: state.offsets,
@@ -325,16 +326,13 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(
-    mapStateToProps,
-    {
-        fetchResults,
-        setOffsets,
-        resetOffsets,
-        addTermToHistory,
-        setCurrentSearchTerm,
-        setCurrentSearchDefinition,
-        deleteFullText,
-        clearResults,
-    }
-)(SearchForm)
+export default connect(mapStateToProps, {
+    fetchResults,
+    setOffsets,
+    resetOffsets,
+    addTermToHistory,
+    setCurrentSearchTerm,
+    setCurrentSearchDefinition,
+    deleteFullText,
+    clearResults,
+})(SearchForm)

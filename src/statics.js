@@ -41,7 +41,7 @@ export const statics = {
             },
         },
     },
-    hlt_catalogs_keys: ['authortibprimary', 'ttltib'],
+    hlt_catalogs_keys: ['primary-author-tibetan', 'title-tibetan'],
     hlt_texts_keys: ['authortib', 'titletib'],
     meta_keys: [
         'pagenumbers',
@@ -68,13 +68,13 @@ export const statics = {
         'authordates',
     ],
     title_keys: [
-        'titleeng',
+        'title-tibetan',
+        'title-english',
+        'title-sanskrit',
         'titletib',
         'titleskt',
-        'ttleng',
-        'ttltibbrf',
-        'ttltib',
-        'ttlskt',
+        'titletibbrf',
+        'titleeng',
     ],
     searchOptions: {
         searchOffset: 0,

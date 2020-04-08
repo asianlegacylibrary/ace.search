@@ -4,15 +4,15 @@ import { statics } from '../../statics'
 
 const createDataObj = (data, statics) => {
     let updatedCollection = []
-    statics.filter(e => {
-        data.forEach(c => {
+    statics.filter((e) => {
+        data.forEach((c) => {
             if (e.key === c.key) {
                 updatedCollection.push({
                     key: c.key,
                     doc_count: c.doc_count,
                     name: e.name,
                     filter: {
-                        term: { 'collection.keyword': `${c.key}` },
+                        term: { collection: `${c.key}` },
                     },
                 })
             }
