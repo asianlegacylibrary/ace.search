@@ -5,7 +5,7 @@ import { statics } from '../../statics'
 const createDataObj = (data, statics) => {
     let updatedCollection = []
     statics.filter((e) => {
-        data.forEach((c) => {
+        return data.forEach((c) => {
             if (e.key === c.key) {
                 updatedCollection.push({
                     key: c.key,

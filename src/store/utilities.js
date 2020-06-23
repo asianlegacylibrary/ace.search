@@ -9,11 +9,7 @@ export function ID() {
     // Convert it to base 36 (numbers + letters), and grab the first 9 characters
     // after the decimal.
     return (
-        '_' +
-        Date.now().toString(36) +
-        Math.random()
-            .toString(36)
-            .substr(2, 9)
+        '_' + Date.now().toString(36) + Math.random().toString(36).substr(2, 9)
     )
 }
 
@@ -36,7 +32,7 @@ export function createBooleanBlocks(definition) {
     } while (i < workingDefinition.length)
     blks.push(workingDefinition)
 
-    blks.forEach(b => {
+    blks.forEach((b) => {
         final.push(groupBy(b, 'operator', 'term'))
     })
 
@@ -74,7 +70,7 @@ TO-DO: FIND OUT FROM TRANSLATORS HOW TO PARSE TEXT PROPERLY
 -- right now I'm just guessing
 1. 
 */
-export const parseLines = text => {
+export const parseLines = (text) => {
     //let doubleComma = new RegExp(`(, ,)`, 'g')
     //return text.replace(doubleComma, `<br /><br />`)
     return text.split(', ,').join('\r\n')
@@ -100,10 +96,11 @@ export const parseLinesAndHighlight = (text, term) => {
 - add a flag to object if there's a match with current term on that page
 --- this will be used for NEXT / PREV match btns on full text component
 */
+
 export function getPagesAndCounts(text, highlight = false) {
     let count = 0
     if (highlight) {
-        let rx = new RegExp(`(<\/em>)([,']?\\s+[,']?)(<em class="hlt1">)`, 'g')
+        let rx = new RegExp(`(</em>)([,']?\\s+[,']?)(<em class="hlt1">)`, 'g')
         text = text.replace(rx, '$2')
         count = (text.match(/<em/g) || []).length
     }
