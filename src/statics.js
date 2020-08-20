@@ -44,7 +44,7 @@ export const statics = {
     hlt_catalogs_keys: ['primary-author-tibetan', 'title-tibetan'],
     hlt_texts_keys: ['authortib', 'titletib'],
     meta_keys: [
-        'pagenumbers',
+        //'pagenumbers',
         'sizepages',
         'pagesize',
         'pageprintedareasize',
@@ -55,6 +55,7 @@ export const statics = {
         'volumendx',
         'catalognumber',
         'newcatno',
+        'catno',
         'collection',
     ],
     author_keys: [
@@ -65,10 +66,16 @@ export const statics = {
         'authortibprimary',
         'authorengprimary',
         'authortib',
+        'author-tibetan',
+        'author-english',
+        'author-sanskrit',
+        'primary-author-tibetan',
+        'primary-author-english',
         'authordates',
     ],
     title_keys: [
         'title-tibetan',
+        'title-tibetan-brief',
         'title-english',
         'title-sanskrit',
         'titletib',

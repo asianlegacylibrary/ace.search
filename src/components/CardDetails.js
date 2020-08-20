@@ -2,13 +2,14 @@ import '../assets/sass/card.scss'
 import React from 'react'
 import { statics } from '../statics'
 
-const buildDetails = result => {
+const buildDetails = (result) => {
     let meta = []
     let author = []
     let title = []
     let colophon = []
     const checkLoc = (result, key) => {
         let type = ''
+
         if (result.highlight[key]) {
             type = 'highlight'
         } else if (result._source[key]) {
@@ -92,7 +93,7 @@ export default ({ result, handleSelectedText }) => {
                 key={result._id}
                 href="#!"
                 className="full-text-selection right"
-                onClick={e => handleSelectedText(result, e)}
+                onClick={(e) => handleSelectedText(result, e)}
             >
                 Select Full Text <i className="fal fa-file-alt fa-lg" />
             </a>

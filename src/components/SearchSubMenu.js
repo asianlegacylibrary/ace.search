@@ -42,7 +42,7 @@ class SearchSubMenu extends React.Component {
                 {
                     [selectedCollections]: this.state[
                         selectedCollections
-                    ].filter(c => c !== e.target.id),
+                    ].filter((c) => c !== e.target.id),
                 },
                 () => this.updateCollections(type)
             )
@@ -53,7 +53,7 @@ class SearchSubMenu extends React.Component {
         e.persist()
         this.props.setLimiter(entityType, limiterType, e.target.checked)
         this.setState(
-            produce(draft => {
+            produce((draft) => {
                 draft.limiters[entityType][limiterType] = e.target.checked
             })
         )
@@ -64,7 +64,7 @@ class SearchSubMenu extends React.Component {
         let updatedFilterCollection = []
 
         data.filter(
-            f =>
+            (f) =>
                 this.state[`${type}_selectedCollections`].indexOf(f.key) > -1 &&
                 updatedFilterCollection.push(f.filter)
         )
@@ -72,8 +72,8 @@ class SearchSubMenu extends React.Component {
         this.props.setFilter(type, updatedFilterCollection)
     }
 
-    renderLimiter = type => {
-        return Object.entries(statics.limiters[type]).map(l => {
+    renderLimiter = (type) => {
+        return Object.entries(statics.limiters[type]).map((l) => {
             return (
                 <li
                     key={`${type}_${l[1].key}`}
@@ -86,7 +86,7 @@ class SearchSubMenu extends React.Component {
                         <Checkbox
                             id={l[1].key}
                             checked={this.state.limiters[type][l[1].type]}
-                            onChange={e =>
+                            onChange={(e) =>
                                 this.handleLimiter(type, l[1].type, e)
                             }
                         />
@@ -97,14 +97,14 @@ class SearchSubMenu extends React.Component {
         })
     }
 
-    renderCollections = type => {
+    renderCollections = (type) => {
         let selectedCollections = `${type}_selectedCollections`
 
         let data = this.props.collections[type].data
 
         let coll
         if (data) {
-            coll = data.map(item => {
+            coll = data.map((item) => {
                 return (
                     <li
                         key={item.key}
@@ -116,7 +116,7 @@ class SearchSubMenu extends React.Component {
                                 checked={this.state[
                                     selectedCollections
                                 ].includes(item.key)}
-                                onChange={e => this.handleChange(type, e)}
+                                onChange={(e) => this.handleChange(type, e)}
                             />
                             <span>
                                 {item.name} ({item.doc_count})
@@ -143,7 +143,7 @@ class SearchSubMenu extends React.Component {
                 {menuItem !== 'FullText' ? (
                     <React.Fragment>
                         <ul className="categories">{coll}</ul>
-                        <ul className="categories">
+                        {/* <ul className="categories">
                             <li
                                 style={{
                                     listStyle: 'none',
@@ -156,7 +156,7 @@ class SearchSubMenu extends React.Component {
                                 </span>
                             </li>
                             {limiter}
-                        </ul>
+                        </ul> */}
                     </React.Fragment>
                 ) : null}
             </div>
@@ -164,14 +164,15 @@ class SearchSubMenu extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     collections: state.collections.isFetching ? [] : state.collections,
     filters: state.collections.isFetching ? [] : state.collections.filters,
     offset: state.offsets.texts,
     def: state.searchDefinition,
 })
 
-export default connect(
-    mapStateToProps,
-    { fetchResults, setFilter, setLimiter }
-)(SearchSubMenu)
+export default connect(mapStateToProps, {
+    fetchResults,
+    setFilter,
+    setLimiter,
+})(SearchSubMenu)

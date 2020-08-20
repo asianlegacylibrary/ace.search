@@ -2,9 +2,10 @@ import React from 'react'
 import { statics } from '../statics'
 
 const getKeysForHighlights = (result, type) => {
+    console.log(type, result)
     const highlightKeys = Object.keys(result.highlight)
 
-    const highlightRemainingKeys = statics[`hlt_${type}_keys`].filter(m => {
+    const highlightRemainingKeys = statics[`hlt_${type}_keys`].filter((m) => {
         if (result._source[m].length <= 0) {
             return null
         }
