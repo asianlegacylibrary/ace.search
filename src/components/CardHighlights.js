@@ -2,11 +2,10 @@ import React from 'react'
 import { statics } from '../statics'
 
 const getKeysForHighlights = (result, type) => {
-    console.log(type, result)
     const highlightKeys = Object.keys(result.highlight)
 
     const highlightRemainingKeys = statics[`hlt_${type}_keys`].filter((m) => {
-        if (result._source[m].length <= 0) {
+        if (!(m in result._source) || result._source[m].length <= 0) {
             return null
         }
         return highlightKeys.indexOf(m) === -1
@@ -15,6 +14,9 @@ const getKeysForHighlights = (result, type) => {
 }
 
 export default ({ result, type }) => {
+    if (!('highlight' in result)) {
+        return null
+    }
     const { highlightKeys, highlightRemainingKeys } = getKeysForHighlights(
         result,
         type

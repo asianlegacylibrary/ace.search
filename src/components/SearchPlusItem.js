@@ -35,7 +35,7 @@ class SearchPlusItem extends React.Component {
                         className="btn-flat"
                         onClick={() => handleDelete(item.id)}
                     >
-                        <i className="right fad fa-trash new-input-icon" />
+                        <i className="right fa fa-trash new-input-icon" />
                     </button>
                 </div>
             )
@@ -49,8 +49,8 @@ class SearchPlusItem extends React.Component {
                         autoFocus
                         type="text"
                         value={this.state.term}
-                        onChange={e => this.handleInputChange(item.id, e)}
-                        onKeyDown={e =>
+                        onChange={(e) => this.handleInputChange(item.id, e)}
+                        onKeyDown={(e) =>
                             e.key === 'Enter' ? handleNewSearch(e) : null
                         }
                     />
@@ -58,7 +58,7 @@ class SearchPlusItem extends React.Component {
                         className="btn-flat"
                         onClick={() => handleDelete(item.id)}
                     >
-                        <i className="right fad fa-trash new-input-icon" />
+                        <i className="right fa fa-trash new-input-icon" />
                     </button>
                 </div>
             )

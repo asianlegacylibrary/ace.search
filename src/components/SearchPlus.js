@@ -8,7 +8,7 @@ class SearchPlus extends React.Component {
         items: [],
     }
 
-    componentDidUpdate = prevProps => {
+    componentDidUpdate = (prevProps) => {
         if (prevProps.refreshDefinition !== prevProps.refreshDefinition) {
             console.log('prev PROPS', prevProps.refreshDefinition)
             this.props.updateSearchDefinition(this.state.items)
@@ -18,8 +18,8 @@ class SearchPlus extends React.Component {
 
     updateItems = (id, type, itemState) => {
         this.setState(
-            prevState => ({
-                items: prevState.items.map(item =>
+            (prevState) => ({
+                items: prevState.items.map((item) =>
                     item.id === id ? { ...item, [type]: itemState } : item
                 ),
             }),
@@ -29,19 +29,19 @@ class SearchPlus extends React.Component {
         )
     }
 
-    handleDelete = id => {
+    handleDelete = (id) => {
         console.log('delete', id)
         this.setState(
             {
-                items: this.state.items.filter(item => item.id !== id),
+                items: this.state.items.filter((item) => item.id !== id),
             },
             () => this.props.updateSearchDefinition(this.state.items)
         )
     }
 
-    handleAddSearch = e => {
+    handleAddSearch = (e) => {
         e.preventDefault()
-        this.setState(prevState => ({
+        this.setState((prevState) => ({
             items: [
                 ...prevState.items,
                 { id: ID(), term: '', operator: 'AND' },
@@ -52,14 +52,14 @@ class SearchPlus extends React.Component {
     render() {
         let items = null
         if (this.state.items.length > 0) {
-            items = this.state.items.map(item => {
+            items = this.state.items.map((item) => {
                 return (
                     <SearchPlusItem
                         key={item.id}
                         item={item}
                         updateItem={this.updateItems}
                         handleDelete={this.handleDelete}
-                        handleNewSearch={e => this.props.handleNewSearch(e)}
+                        handleNewSearch={(e) => this.props.handleNewSearch(e)}
                     />
                 )
             })
@@ -70,9 +70,9 @@ class SearchPlus extends React.Component {
                 {items}
                 <button
                     className="search-plus btn-flat"
-                    onClick={e => this.handleAddSearch(e)}
+                    onClick={(e) => this.handleAddSearch(e)}
                 >
-                    <i className="fal fa-plus" />
+                    <i className="fa fa-plus" />
                 </button>
             </React.Fragment>
         )

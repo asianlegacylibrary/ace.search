@@ -9,8 +9,7 @@ const buildDetails = (result) => {
     let colophon = []
     const checkLoc = (result, key) => {
         let type = ''
-
-        if (result.highlight[key]) {
+        if ('highlight' in result && result.highlight[key]) {
             type = 'highlight'
         } else if (result._source[key]) {
             type = '_source'
@@ -95,7 +94,7 @@ export default ({ result, handleSelectedText }) => {
                 className="full-text-selection right"
                 onClick={(e) => handleSelectedText(result, e)}
             >
-                Select Full Text <i className="fal fa-file-alt fa-lg" />
+                Select Full Text <i className="fa fa-file-alt fa-lg" />
             </a>
         )
     }

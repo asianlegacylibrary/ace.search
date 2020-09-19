@@ -21,7 +21,7 @@ class NavSidebar extends React.Component {
 
     renderFavorites = () => {
         const { favorites } = this.props
-        return Object.keys(favorites).map(f => {
+        return Object.keys(favorites).map((f) => {
             return (
                 <div key={f}>
                     <span className="result-meta">{f}</span>
@@ -31,11 +31,11 @@ class NavSidebar extends React.Component {
                             className="btn-flat"
                             onClick={() => this.props.removeFromFavorites(f)}
                         >
-                            <i className="fal fa-times" />
+                            <i className="fa fa-times" />
                         </button>
                     </span> */}
                     <span className="meta-item right">
-                        <i className="fal fa-arrow-right nav-indent" />
+                        <i className="fa fa-arrow-right nav-indent" />
                         {favorites[f]._index}
                     </span>
                 </div>
@@ -45,7 +45,7 @@ class NavSidebar extends React.Component {
 
     renderHistory = () => {
         const { history } = this.props
-        return history.map(h => {
+        return history.map((h) => {
             return (
                 <div key={h}>
                     <span className="result-meta">{h}</span>
@@ -60,7 +60,7 @@ class NavSidebar extends React.Component {
                 <ul id="slide-out" className="sidenav collapsible">
                     <li>
                         <a className="sidenav-close" href="#!">
-                            <i className="fal fa-times" />
+                            <i className="fa fa-times" />
                         </a>
                     </li>
                     <li>
@@ -79,7 +79,7 @@ class NavSidebar extends React.Component {
 
                     <li>
                         <div className="collapsible-header waves-effect">
-                            <i className="fal fa-heart" />
+                            <i className="fa fa-heart" />
                             FAVORITES
                         </div>
                         <div className="collapsible-body">
@@ -89,7 +89,7 @@ class NavSidebar extends React.Component {
 
                     <li>
                         <div className="collapsible-header waves-effect">
-                            <i className="fal fa-search" />
+                            <i className="fa fa-search" />
                             SEARCH HISTORY
                         </div>
                         <div className="collapsible-body">
@@ -102,12 +102,9 @@ class NavSidebar extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     favorites: state.favorites,
     history: state.history,
 })
 
-export default connect(
-    mapStateToProps,
-    { removeFromFavorites }
-)(NavSidebar)
+export default connect(mapStateToProps, { removeFromFavorites })(NavSidebar)

@@ -16,7 +16,7 @@ export default () => {
                             data-target="slide-out"
                             href="#!"
                         >
-                            <i className="fal fa-bars" />
+                            <i className="fa fa-bars" />
                         </a>
                     </div>
                 </div>

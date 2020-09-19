@@ -92,6 +92,7 @@ class SearchForm extends Component {
     handleNext = () => {
         const offset = this.props.offsets[this.props.searchTypeDisplay]
         const total = this.props.results[this.props.searchTypeDisplay].total
+            .value
         let newOffset = offset
 
         if (total > offset + statics.searchOptions.resultSetSize) {
@@ -170,7 +171,7 @@ class SearchForm extends Component {
     setUpControls = () => {
         const offset = this.props.offsets[this.props.searchTypeDisplay]
         const total = this.props.results[this.props.searchTypeDisplay]
-            ? this.props.results[this.props.searchTypeDisplay].total
+            ? this.props.results[this.props.searchTypeDisplay].total.value
             : 0
         const properOffset =
             offset + statics.searchOptions.resultSetSize > total

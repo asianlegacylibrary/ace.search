@@ -24,7 +24,7 @@ class Card extends Component {
         }
     }
 
-    handleDetails = e => {
+    handleDetails = (e) => {
         e.preventDefault()
         this.setState({ activeDetails: !this.state.activeDetails })
     }
@@ -59,7 +59,7 @@ class Card extends Component {
         })
     }
 
-    setColColor = col => {
+    setColColor = (col) => {
         let colColor
         if (col === 'TG') {
             colColor = 'col-gold'
@@ -77,7 +77,7 @@ class Card extends Component {
         return colColor
     }
 
-    buildDetails = result => {
+    buildDetails = (result) => {
         let meta = []
         let author = []
         let title = []
@@ -141,17 +141,17 @@ class Card extends Component {
         return { meta, author, title }
     }
 
-    buildFullTextButton = result => {
+    buildFullTextButton = (result) => {
         const activatedText = this.props.textActive ? 'text-active' : ''
         return (
             <React.Fragment>
                 <a
                     key={result._id}
                     href="#!"
-                    onClick={e => this.handleSelectedText(result, e)}
+                    onClick={(e) => this.handleSelectedText(result, e)}
                     className="text right"
                 >
-                    <i className={`fal fa-file-alt fa-lg ${activatedText}`} />
+                    <i className={`fa fa-file-alt fa-lg ${activatedText}`} />
                 </a>
             </React.Fragment>
         )
@@ -172,7 +172,7 @@ class Card extends Component {
 
         //const colColor = this.setColColor(result._source.collection)
         const coll = statics.collections[type].find(
-            c => result._source.collection === c.key
+            (c) => result._source.collection === c.key
         )
         return (
             <React.Fragment>
@@ -196,18 +196,18 @@ class Card extends Component {
                     <CardHighlights result={result} type={type} />
                 </div>
                 <div className="card-action">
-                    <a href="#!" onClick={e => this.handleDetails(e)}>
+                    <a href="#!" onClick={(e) => this.handleDetails(e)}>
                         {this.state.activeDetails
                             ? 'Hide Details'
                             : 'Show Details'}
                     </a>
                     <a
                         href="#!"
-                        onClick={e => this.handleFavorites(result, e)}
+                        onClick={(e) => this.handleFavorites(result, e)}
                         className="favorites right"
                     >
                         <i
-                            className={`fal fa-star fa-lg ${activatedFavorite}`}
+                            className={`fa fa-star fa-lg ${activatedFavorite}`}
                         />
                     </a>
 
@@ -233,20 +233,17 @@ class Card extends Component {
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     favorites: state.favorites,
     selectedText: state.selectedText,
     term: state.currentSearchTerm,
     definition: state.searchDefinition,
 })
 
-export default connect(
-    mapStateToProps,
-    {
-        addToFavorites,
-        removeFromFavorites,
-        fetchFullText,
-        deleteFullText,
-        setFullTextDetails,
-    }
-)(Card)
+export default connect(mapStateToProps, {
+    addToFavorites,
+    removeFromFavorites,
+    fetchFullText,
+    deleteFullText,
+    setFullTextDetails,
+})(Card)

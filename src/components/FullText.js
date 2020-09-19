@@ -30,7 +30,7 @@ class FullText extends Component {
         document.removeEventListener('keydown', this.keyDowns, false)
     }
 
-    keyDowns = e => {
+    keyDowns = (e) => {
         if (e.key === 'ArrowRight') {
             if (
                 this.state.currentPageIdx <
@@ -45,11 +45,11 @@ class FullText extends Component {
         }
     }
 
-    selectedPage = renderedPageIdx => {
+    selectedPage = (renderedPageIdx) => {
         return this.props.text.fulltext[renderedPageIdx]
     }
 
-    setPage = name => {
+    setPage = (name) => {
         const { termLocations } = this.props.text
         if (name === 'matchIdx') {
             if (
@@ -62,7 +62,7 @@ class FullText extends Component {
         } else {
             // check if you're at a page in the match index
             let matchIndex = termLocations.findIndex(
-                idx => idx === this.state.currentPageIdx
+                (idx) => idx === this.state.currentPageIdx
             )
             // and if you are, match it
             if (matchIndex >= 0) {
@@ -112,7 +112,7 @@ class FullText extends Component {
                         }
                     } else {
                         this.setState(
-                            prevState => ({
+                            (prevState) => ({
                                 [name]: prevState[name] + 1,
                             }),
                             () => {
@@ -122,14 +122,14 @@ class FullText extends Component {
                     }
                 } else {
                     this.setState(
-                        prevState => ({ [name]: prevState[name] + 1 }),
+                        (prevState) => ({ [name]: prevState[name] + 1 }),
                         () => this.setPage(name)
                     )
                 }
                 break
             case 'decrease':
                 this.setState(
-                    prevState => ({ [name]: prevState[name] - 1 }),
+                    (prevState) => ({ [name]: prevState[name] - 1 }),
                     () => {
                         this.setPage(name)
                     }
@@ -164,7 +164,7 @@ class FullText extends Component {
                     disabled={
                         termLocations[0] === currentPageIdx ? true : false
                     }
-                    onClick={e => this.handleCounter(e, 'matchIdx', 'min')}
+                    onClick={(e) => this.handleCounter(e, 'matchIdx', 'min')}
                 >
                     {`  GO TO MATCH ${fulltext[termLocations[0]].id}`}
                 </a>
@@ -176,7 +176,7 @@ class FullText extends Component {
                         href="#/"
                         className="btn-flat"
                         disabled={matchIdx <= 0 ? true : false}
-                        onClick={e =>
+                        onClick={(e) =>
                             this.handleCounter(
                                 e,
                                 'matchIdx',
@@ -193,7 +193,7 @@ class FullText extends Component {
                         disabled={
                             matchIdx >= termLocations.length - 1 ? true : false
                         }
-                        onClick={e =>
+                        onClick={(e) =>
                             this.handleCounter(
                                 e,
                                 'matchIdx',
@@ -233,17 +233,17 @@ class FullText extends Component {
                     href="#!"
                     disabled={currentPageIdx <= 0 ? true : false}
                     className="btn-flat"
-                    onClick={e =>
+                    onClick={(e) =>
                         this.handleCounter(e, 'currentPageIdx', 'min')
                     }
                 >
-                    <i className="fad fa-chevron-double-left" />
+                    <i className="fa fa-chevron-double-left" />
                 </a>
                 <a
                     href="#!"
                     disabled={currentPageIdx <= 0 ? true : false}
                     className="btn-flat"
-                    onClick={e =>
+                    onClick={(e) =>
                         this.handleCounter(
                             e,
                             'currentPageIdx',
@@ -252,7 +252,7 @@ class FullText extends Component {
                         )
                     }
                 >
-                    <i className="fad fa-chevron-left" />
+                    <i className="fa fa-chevron-left" />
                 </a>
                 <a
                     href="#!"
@@ -260,7 +260,7 @@ class FullText extends Component {
                         currentPageIdx >= fulltext.length - 1 ? true : false
                     }
                     className="btn-flat"
-                    onClick={e =>
+                    onClick={(e) =>
                         this.handleCounter(
                             e,
                             'currentPageIdx',
@@ -269,7 +269,7 @@ class FullText extends Component {
                         )
                     }
                 >
-                    <i className="fad fa-chevron-right" />
+                    <i className="fa fa-chevron-right" />
                 </a>
                 <a
                     href="#!"
@@ -277,7 +277,7 @@ class FullText extends Component {
                         currentPageIdx >= fulltext.length - 1 ? true : false
                     }
                     className="btn-flat"
-                    onClick={e =>
+                    onClick={(e) =>
                         this.handleCounter(
                             e,
                             'currentPageIdx',
@@ -286,7 +286,7 @@ class FullText extends Component {
                         )
                     }
                 >
-                    <i className="fad fa-chevron-double-right" />
+                    <i className="fa fa-chevron-double-right" />
                 </a>
                 <p className="full-text-pages">{fulltext[currentPageIdx].id}</p>
             </div>
@@ -307,7 +307,9 @@ class FullText extends Component {
                 ? fulltext[1].id
                 : fulltext[0].id
 
-        let paginationMsg = `Folios ${firstPage} to ${fulltext[fulltext.length - 1].id}.`
+        let paginationMsg = `Folios ${firstPage} to ${
+            fulltext[fulltext.length - 1].id
+        }.`
         if (fulltext[fulltext.length - 1].id === '@000') {
             paginationMsg = `Text not split into folios.`
         }
@@ -337,7 +339,7 @@ class FullText extends Component {
     }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     text: state.selectedText,
     term: state.currentSearchTerm,
     def: state.searchDefinition,

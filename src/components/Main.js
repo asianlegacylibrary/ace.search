@@ -8,7 +8,7 @@ export default () => {
     return (
         <main>
             <div className="container">
-                <i className="absolute-diamond fal fa-dagger fa-rotate-180 fa-10x" />
+                <i className="absolute-diamond fa fa-dagger fa-rotate-180 fa-10x" />
                 <SearchForm />
                 <SearchHits />
             </div>
